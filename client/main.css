@@ -1,0 +1,93 @@
+/* body {
+  font-family: sans-serif;
+  position: relative;
+  padding: 0;
+  margin: 0;
+
+  font-size: 14px;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.logo {
+  font-size: 25px;
+  font-family: fantasy;
+}
+
+.main::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background: inherit;
+}
+
+header {
+  background: #d2edf4;
+  background-image: linear-gradient(to bottom, #d0edf5, #e8eefd 100%);
+  padding: 20px 15px 15px 15px;
+  position: relative;
+}
+
+.app-bar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.login-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 500px;
+}
+
+.login-form > div {
+  margin: 8px;
+}
+
+.login-form > div > label {
+  font-weight: bold;
+}
+
+.login-form > div  > input {
+  flex-grow: 1;
+  box-sizing: border-box;
+  font-size: 1em;
+  margin-right: 16px;
+  margin-top: 4px;
+}
+
+.user {
+  font-family: sans-serif;
+  font-size: 20px;
+}
+.loading {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  justify-content: center;
+  align-items: center;
+
+  font-weight: bold;
+}
+
+.list-group-item:hover {
+  background-color: #e6fdef;
+  cursor: pointer;
+}
+
+.list-group-item span {
+  position: relative;
+  top: 5px;
+}
+*/
+
+.loading-icons {
+  margin: auto;
+  margin-top: 100px;
+} 
