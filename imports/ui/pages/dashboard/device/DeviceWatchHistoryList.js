@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -19,16 +19,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Checkbox from '@mui/material/Checkbox';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import { visuallyHidden } from '@mui/utils';
 
 import {
-  Chip,
   List,
   ListItem,
   Divider,
@@ -36,7 +29,9 @@ import {
   ListItemAvatar,
   Avatar
 } from '@mui/material';
-import Label from '../../components/Label';
+
+import DeviceWatchDetailDialog from './DeviceWatchDetailDialog';
+import Label from '../../../components/Label';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -83,7 +78,7 @@ const headCells = [
   },
   {
     id: 'createdAt',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
     label: 'Created At',
   },
@@ -143,44 +138,14 @@ WatchTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
 const WatchTableToolbar = (props) => {
-  const { onChooseDevice, deviceList } = props;
   const { numSelected, count } = props;
-
-  const [selectedDevices, setSelectedDevices] = useState([]);
-
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setSelectedDevices(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
-  };
-
-  useEffect(() => {
-    onChooseDevice(selectedDevices);
-  }, [selectedDevices]);
 
   return (
     <Toolbar
       sx={{
         pl: { sm: 2 },
         pr: { xs: 1, sm: 1 },
-        display: 'flex',
-        justifyContent: 'space-between',
         ...(numSelected > 0 && {
           bgcolor: (theme) =>
             alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
@@ -197,34 +162,14 @@ const WatchTableToolbar = (props) => {
           {numSelected} selected
         </Typography>
       ) : (
-        <FormControl sx={{ m: 1, minWidth: 300 }}>
-          <InputLabel id="demo-multiple-chip-label">Choose the devices</InputLabel>
-          <Select
-            labelId="demo-multiple-chip-label"
-            id="demo-multiple-chip"
-            multiple
-            value={selectedDevices}
-            onChange={handleChange}
-            input={<OutlinedInput id="select-multiple-chip" label="Choose the devices" />}
-            renderValue={(selected) => (
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                {selected.map((item, index) => (
-                  <Chip key={index} label={item.name} />
-                ))}
-              </Box>
-            )}
-            MenuProps={MenuProps}
-          >
-            {deviceList.map((item, index) => (
-              <MenuItem
-                key={index}
-                value={item}
-              >
-                {item.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <Typography
+          sx={{ flex: '1 1 100%' }}
+          variant="h6"
+          id="tableTitle"
+          component="div"
+        >
+          Rolls List ({count})
+        </Typography>
       )}
 
       {numSelected > 0 ? (
@@ -245,18 +190,20 @@ const WatchTableToolbar = (props) => {
 };
 
 WatchTableToolbar.propTypes = {
-  deviceList: PropTypes.array,
   numSelected: PropTypes.number.isRequired,
-  onChooseDevice: PropTypes.func,
 };
 
-export default function DeviceWatchList({ watchList, deviceList, onChooseDevice }) {
+export default function DeviceWatchList({ watchList }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('elapsedTime');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  // watch detail
+  const [showDetail, setShowDetail] = React.useState(false);
+  const [data, setData] = React.useState({});
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -294,8 +241,9 @@ export default function DeviceWatchList({ watchList, deviceList, onChooseDevice 
 
   return (
     <Box sx={{ width: '100%' }}>
+      <DeviceWatchDetailDialog isOpen={showDetail} data={data} device onCloseDialog={() => setShowDetail(false)} />
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <WatchTableToolbar deviceList={deviceList} onChooseDevice={onChooseDevice} numSelected={selected.length} count={watchList.length} />
+        <WatchTableToolbar numSelected={selected.length} count={watchList.length} />
         <TableContainer>
           <Table
             sx={{ minWidth: 500 }}
@@ -345,13 +293,12 @@ export default function DeviceWatchList({ watchList, deviceList, onChooseDevice 
                         <Label 
                           variant="ghost" 
                           color={
-                                (row.elapsedTime > 4 && 'error') ||
-                                (row.elapsedTime > 3 && 'warning') ||
-                                (row.elapsedTime > 2 && 'primary') ||
+                                (row.elapsedTime > 10 && 'warning') ||
+                                (row.elapsedTime > 5 && 'primary') ||
                                 'success'
                               }
                         >
-                          {row.elapsedTime < 1 ? 'Just now' : (row.elapsedTime >= 1 && row.elapsedTime < 5 ? row.elapsedTime+' minutes ago' : 'long time ago')}
+                          {row.elapsedTime > 1 ? row.elapsedTime+' minutes ago' : 'Just now'}
                         </Label>
                       </TableCell>
                     </TableRow>,
@@ -359,7 +306,7 @@ export default function DeviceWatchList({ watchList, deviceList, onChooseDevice 
                       <TableCell colSpan={5}>
                         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
                           {row.results.map((item, i) => 
-                            <Box key={i}>
+                            <Box key={item.coverImg}>
                               <ListItem alignItems="flex-start">
                                 <ListItemAvatar>
                                   <Avatar alt="Remy Sharp" src={item.coverImg} />

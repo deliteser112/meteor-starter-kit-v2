@@ -10,14 +10,14 @@ import { RollsCollection } from '/imports/db';
 import { useQuery } from "@apollo/react-hooks";
 
 // import queries
-import {rollsQuery, devicesQuery} from '../queries'
+import {rollsQuery, devicesQuery} from '../../queries'
 
 // components
-import Page from '../../components/Page';
+import Page from '../../../components/Page';
 import DeviceWatchList from './DeviceWatchList';
 
 // utils
-import getDateFromTimestamp from '../../utils/getDateFromTimeStamp';
+import getDateFromTimestamp from '../../../utils/getDateFromTimeStamp';
 // ----------------------------------------------------------------------
 
 export default function Watch() {

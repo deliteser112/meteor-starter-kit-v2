@@ -10,10 +10,10 @@ import { RollsCollection } from '/imports/db/RollsCollection';
 import { useQuery } from "@apollo/react-hooks";
 
 // import queries
-import {rollsQuery} from '../queries'
+import {rollsQuery} from '../../queries'
 
 // components
-import Page from '../../components/Page';
+import Page from '../../../components/Page';
 import RollList from './RollList';
 
 // ----------------------------------------------------------------------

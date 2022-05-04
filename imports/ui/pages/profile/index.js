@@ -18,7 +18,7 @@ import {devicesQuery, usersQuery} from '../queries'
 // components
 import Page from '../../components/Page';
 import ProfileCover from './ProfileCover';
-import DeviceList from '../device/DeviceList';
+import DeviceList from '../dashboard/device/DeviceList';
 
 import account from '../../_mock/account';
 

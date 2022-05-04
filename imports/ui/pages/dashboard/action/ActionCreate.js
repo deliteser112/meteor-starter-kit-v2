@@ -13,11 +13,11 @@ import {
 } from '@mui/material';
 
 // components
-import Page from '../../components/Page';
+import Page from '../../../components/Page';
 import ActionNewForm from './ActionNewForm';
 
 // import queries
-import { actionsQuery } from '../queries'
+import { actionsQuery } from '../../queries'
 // ----------------------------------------------------------------------
 
 export default function ActionCreate() {

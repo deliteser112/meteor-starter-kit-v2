@@ -6,7 +6,7 @@ import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@mui/mat
 import Iconify from '../../../components/Iconify';
 
 import ConfirmDialog from '../../../components/confirmDialog';
-import DeviceWatchDialog from '../../../pages/device/DeviceWatchDialog';
+import DeviceWatchDialog from '../../../pages/dashboard/device/DeviceWatchDialog';
 
 // ----------------------------------------------------------------------
 
@@ -45,7 +45,7 @@ export default function DeviceTableMoreMenu({ loggedUser, owner, followers, onDe
 
   return (
     <>
-      <ConfirmDialog onAgree={handleAgree} isOpen={dialogOpen} title="iDie | Confirm" content="Are you sure to delete this item?" />
+      <ConfirmDialog onAgree={handleAgree} isOpen={dialogOpen} title="Meteor Starter Kit | Confirm" content="Are you sure to delete this item?" />
       <DeviceWatchDialog isOpen={deviceDialogOpen} macAddr={macAddr} onCloseDialog={() => setDeviceDialogOpen(false)} />
       <IconButton ref={ref} onClick={() => setIsOpen(true)}>
         <Iconify icon="eva:more-vertical-fill" width={20} height={20} />

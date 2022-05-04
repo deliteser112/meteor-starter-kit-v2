@@ -27,13 +27,13 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
 // components
-import UploadAvatar from '../../components/UploadAvatar';
+import UploadAvatar from '../../../components/UploadAvatar';
 
 // graphql
-import { diceMutation, diceUpdateMutation } from '../mutations';
+import { diceMutation, diceUpdateMutation } from '../../mutations';
 
 // utils
-import stringAvatar from '../../utils/stringAvatar';
+import stringAvatar from '../../../utils/stringAvatar';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;

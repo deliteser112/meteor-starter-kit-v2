@@ -21,10 +21,10 @@ import { RollsCollection } from '/imports/db/RollsCollection';
 import { useQuery } from "@apollo/react-hooks";
 
 // import queries
-import { rollsByMACQuery } from '../queries'
+import { rollsByMACQuery } from '../../queries'
 
 // utils
-import getDateFromTimestamp from '../../utils/getDateFromTimeStamp';
+import getDateFromTimestamp from '../../../utils/getDateFromTimeStamp';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {

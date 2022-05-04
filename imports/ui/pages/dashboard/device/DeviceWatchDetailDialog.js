@@ -28,7 +28,7 @@ import { useTracker } from "meteor/react-meteor-data";
 import { useQuery } from "@apollo/react-hooks";
 
 // import queries
-import { actionsQuery, dicesQuery } from "../queries";
+import { actionsQuery, dicesQuery } from "../../queries";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {

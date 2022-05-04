@@ -17,12 +17,12 @@ import {
   TablePagination,
 } from '@mui/material';
 // components
-import Label from '../../components/Label';
-import Scrollbar from '../../components/Scrollbar';
-import SearchNotFound from '../../components/SearchNotFound';
-import { TableListHead, TableListToolbar, TableMoreMenu } from '../../sections/@dashboard/table';
+import Label from '../../../components/Label';
+import Scrollbar from '../../../components/Scrollbar';
+import SearchNotFound from '../../../components/SearchNotFound';
+import { TableListHead, TableListToolbar, TableMoreMenu } from '../../../sections/@dashboard/table';
 // utils
-import stringAvatar from '../../utils/stringAvatar';
+import stringAvatar from '../../../utils/stringAvatar';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [

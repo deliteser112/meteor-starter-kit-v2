@@ -11,13 +11,13 @@ import { DevicesCollection } from '/imports/db/DevicesCollection';
 import { useQuery } from "@apollo/react-hooks";
 
 // import queries
-import {devicesQuery, usersQuery} from '../queries'
+import {devicesQuery, usersQuery} from '../../queries'
 
 // components
-import Page from '../../components/Page';
+import Page from '../../../components/Page';
 import DeviceList from './DeviceList';
 // sections
-import Iconify from '../../components/Iconify';
+import Iconify from '../../../components/Iconify';
 // ----------------------------------------------------------------------
 
 export default function Device() {

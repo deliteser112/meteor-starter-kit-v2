@@ -11,12 +11,12 @@ import { ActionsCollection } from '/imports/db/ActionsCollection';
 import { useQuery } from "@apollo/react-hooks";
 
 // import queries
-import {actionsQuery} from '../queries'
+import {actionsQuery} from '../../queries'
 
 // components
-import Page from '../../components/Page';
+import Page from '../../../components/Page';
 import ActionList from './ActionList';
-import Iconify from '../../components/Iconify';
+import Iconify from '../../../components/Iconify';
 
 // ----------------------------------------------------------------------
 

@@ -27,10 +27,10 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 // graphql
-import { deviceMutation, deviceUpdateMutation } from '../mutations';
+import { deviceMutation, deviceUpdateMutation } from '../../mutations';
 
 // utils
-import stringAvatar from '../../utils/stringAvatar';
+import stringAvatar from '../../../utils/stringAvatar';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;

@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 
 // graphql
-import { actionMutation, actionUpdateMutation } from "../mutations";
+import { actionMutation, actionUpdateMutation } from "../../mutations";
 
 // ----------------------------------------------------------------------
 

@@ -26,7 +26,7 @@ export default function DiceMoreButton({ onDelete, editLink }) {
 
   return (
     <>
-      <ConfirmDialog onAgree={handleAgree} isOpen={dialogOpen} title="iDie | Confirm" content="Are you sure to delete this item?" />
+      <ConfirmDialog onAgree={handleAgree} isOpen={dialogOpen} title="Meteor Starter Kit | Confirm" content="Are you sure to delete this item?" />
       <IconButton ref={ref} onClick={() => setIsOpen(true)}>
         <Iconify icon="eva:more-vertical-fill" width={30} height={30} sx={{ color: 'green', backgroundColor: 'white', borderRadius: '50%' }} />
       </IconButton>

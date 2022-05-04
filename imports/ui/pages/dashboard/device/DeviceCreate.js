@@ -1,6 +1,7 @@
 // meteors
 import { Meteor } from 'meteor/meteor';
 import { useQuery } from "@apollo/react-hooks";
+import { useTracker } from 'meteor/react-meteor-data';
 
 import React, { useEffect, useState } from 'react';
 import ReactLoading from 'react-loading';
@@ -8,44 +9,39 @@ import { useParams, useLocation } from 'react-router-dom';
 // material
 import { 
   Container, 
-  Stack,
+  Stack, 
   Typography
 } from '@mui/material';
 
 // components
-import Page from '../../components/Page';
-import DiceNewForm from './DiceNewForm';
+import Page from '../../../components/Page';
+import DeviceNewForm from './DeviceNewForm';
 
 // import queries
-import {usersQuery, dicesQuery, actionsQuery} from '../queries'
+import {usersQuery, devicesQuery} from '../../queries'
 // ----------------------------------------------------------------------
 
-export default function DiceCreate() {
-  const [currentDice, setCurrentDice] = useState(null);
-  const [actionList, setActionList] = useState([]);
+export default function DeviceCreate() {
+  const [currentDevice, setCurrentDevice] = useState(null)
   const { pathname } = useLocation();
   const { id } = useParams();
   const isEdit = pathname.includes('edit');
 
-  const dicesData = useQuery(dicesQuery).data;
-  const actionsData = useQuery(actionsQuery).data;
+  const devicesData = useQuery(devicesQuery).data;
 
   useEffect(() => {
-    if(actionsData) {
-      const { actions } = actionsData;
-      setActionList(actions);
+    if(isEdit && devicesData) {
+      const { devices } = devicesData;
+      const cDevice = devices.find((device) => device._id === id);
+      setCurrentDevice(cDevice);
     }
-  }, [actionsData]);
-
-  useEffect(() => {
-    if(isEdit && dicesData) {
-      const { dices } = dicesData;
-      const cDice = dices.find((dice) => dice._id === id);
-      setCurrentDice(cDice);
-    }
-  }, [dicesData, isEdit])
+  }, [devicesData, isEdit])
 
   const  { loading, data, refetch } = useQuery(usersQuery);
+
+  useTracker(() => {
+    Meteor.subscribe('users');
+  });
 
   refetch();
 
@@ -54,15 +50,15 @@ export default function DiceCreate() {
   const loggedUser = Meteor.user();
 
   return (
-    <Page title={isEdit ? 'Update a Dice' : 'Create a Dice'}>
+    <Page title={isEdit ? 'Update a Device' : 'Create a Device'}>
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="flex-start" mb={5}>
           <Typography variant="h4" gutterBottom>
-            {isEdit ? 'Update dice' : 'Create a new dice'}
+            {isEdit ? 'Update device' : 'Create a new device'}
           </Typography>
         </Stack>
         {loading ? <ReactLoading className="loading-icons" type={'bars'} color={'grey'} height={30} width={30} /> : 
-          <DiceNewForm isEdit={isEdit} loggedUser={loggedUser} currentDice={currentDice} userList={userList} actionList={actionList} />
+          <DeviceNewForm isEdit={isEdit} loggedUser={loggedUser} currentDevice={currentDevice} userList={userList} />
         }
       </Container>
     </Page>

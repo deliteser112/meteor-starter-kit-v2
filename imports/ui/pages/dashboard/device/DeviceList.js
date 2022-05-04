@@ -17,12 +17,12 @@ import {
   Tooltip
 } from '@mui/material';
 // components
-import Scrollbar from '../../components/Scrollbar';
-import SearchNotFound from '../../components/SearchNotFound';
-import { TableListHead, TableListToolbar, DeviceTableMoreMenu } from '../../sections/@dashboard/table';
+import Scrollbar from '../../../components/Scrollbar';
+import SearchNotFound from '../../../components/SearchNotFound';
+import { TableListHead, TableListToolbar, DeviceTableMoreMenu } from '../../../sections/@dashboard/table';
 
 // utils
-import stringAvatar from '../../utils/stringAvatar';
+import stringAvatar from '../../../utils/stringAvatar';
 
 // ----------------------------------------------------------------------
 

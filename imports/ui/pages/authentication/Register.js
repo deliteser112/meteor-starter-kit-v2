@@ -70,7 +70,7 @@ export default function Register() {
         <Container>
           <ContentStyle>
             <Typography variant="h4" gutterBottom>
-              Sign up to iDie.
+              Sign up to Meteor Starter Kit.
             </Typography>
 
             <Typography sx={{ color: 'text.secondary', mb: 5 }}>Free forever. No credit card needed.</Typography>
@@ -80,7 +80,7 @@ export default function Register() {
             <RegisterForm />
 
             <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
-              By registering, I agree to iDie&nbsp;
+              By registering, I agree to Meteor Starter Kit&nbsp;
               <Link underline="always" color="text.primary" href="#">
                 Terms of Service
               </Link>

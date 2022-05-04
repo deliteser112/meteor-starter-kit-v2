@@ -28,7 +28,7 @@ export default function LogoOnlyLayout() {
       <HeaderStyle>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Logo /> 
-          <Typography variant="h5" sx={{ marginLeft: 1 }}>iDie</Typography>
+          <Typography variant="h5" sx={{ marginLeft: 1 }}>Meteor Starter Kit</Typography>
         </Box>
       </HeaderStyle>
       <Outlet />

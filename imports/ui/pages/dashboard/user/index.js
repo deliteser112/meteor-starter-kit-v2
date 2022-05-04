@@ -7,10 +7,10 @@ import { Container, Typography, Stack } from '@mui/material';
 import { useQuery } from "@apollo/react-hooks";
 
 // import queries
-import {usersQuery} from '../queries'
+import {usersQuery} from '../../queries'
 
 // components
-import Page from '../../components/Page';
+import Page from '../../../components/Page';
 import UserList from './UserList';
 
 // ----------------------------------------------------------------------

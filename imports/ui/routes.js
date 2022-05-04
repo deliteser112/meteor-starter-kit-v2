@@ -16,25 +16,25 @@ import NotFound from "./pages/other/Page404";
 // import Maintenance from "./pages/other/Maintenance";
 
 // devices
-import Device from "./pages/device";
-import DeviceCreate from "./pages/device/DeviceCreate";
+import Device from "./pages/dashboard/device";
+import DeviceCreate from "./pages/dashboard/device/DeviceCreate";
 
 // watch
-import Watch from "./pages/watch";
+import Watch from "./pages/dashboard/watch";
 
 // dices
-import Dice from "./pages/dice";
-import DiceCreate from "./pages/dice/DiceCreate";
+import Dice from "./pages/dashboard/dice";
+import DiceCreate from "./pages/dashboard/dice/DiceCreate";
 
 // users
-import User from "./pages/user";
+import User from "./pages/dashboard/user";
 
 // actions
-import Action from "./pages/action";
-import ActionCreate from "./pages/action/ActionCreate";
+import Action from "./pages/dashboard/action";
+import ActionCreate from "./pages/dashboard/action/ActionCreate";
 
 // rolls
-import Roll from "./pages/roll";
+import Roll from "./pages/dashboard/roll";
 
 import Profile from "./pages/profile";
 

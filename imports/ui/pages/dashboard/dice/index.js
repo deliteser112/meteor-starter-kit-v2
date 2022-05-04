@@ -4,9 +4,9 @@ import { Link as RouterLink } from 'react-router-dom';
 // material
 import { Grid, Button, Container, Stack, Typography } from '@mui/material';
 // components
-import Page from '../../components/Page';
-import Iconify from '../../components/Iconify';
-import { DiceCard } from '../../sections/@dashboard/dice';
+import Page from '../../../components/Page';
+import Iconify from '../../../components/Iconify';
+import { DiceCard } from '../../../sections/@dashboard/dice';
 
 import { useTracker } from 'meteor/react-meteor-data';
 
@@ -15,7 +15,7 @@ import { DicesCollection } from '/imports/db/DicesCollection';
 import { useQuery } from "@apollo/react-hooks";
 
 // import queries
-import { dicesQuery, usersQuery, actionsQuery } from '../queries'
+import { dicesQuery, usersQuery, actionsQuery } from '../../queries'
 
 // ----------------------------------------------------------------------
 
