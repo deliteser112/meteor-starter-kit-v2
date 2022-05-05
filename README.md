@@ -30,4 +30,3 @@ When you start the app for the first time in development, we create a set of tes
 | Email Address | Password | Roles | Notes |
 |:----------------|:--------:|:-------:|:-------------------------------|
 | meteor@admin.com | root | `admin` | Full access to the application |
-|:----------------|:--------:|:-------:|:-------------------------------|
