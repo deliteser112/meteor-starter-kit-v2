@@ -8,6 +8,8 @@ import { useFormik, Form, FormikProvider } from 'formik';
 // material
 import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+// routes
+import { PATH_AUTH } from '../../../routes/paths';
 // component
 import Iconify from '../../../components/Iconify';
 
@@ -82,7 +84,7 @@ export default function LoginForm() {
             label="Remember me"
           />
 
-          <Link component={RouterLink} variant="subtitle2" to="#" underline="hover">
+          <Link component={RouterLink} variant="subtitle2" to={PATH_AUTH.resetPassword} underline="hover">
             Forgot password?
           </Link>
         </Stack>

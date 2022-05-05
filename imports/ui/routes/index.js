@@ -43,8 +43,12 @@ import Roll from "../pages/dashboard/roll";
 
 import Profile from "../pages/profile";
 
+// authentications
 import Login from "../pages/authentication/Login";
 import Register from "../pages/authentication/Register";
+import ResetPassword from '../pages/authentication/ResetPassword';
+import NewPassword from '../pages/authentication/NewPassword';
+import VerifyCode from '../pages/authentication/VerifyCode';
 
 // ----------------------------------------------------------------------
 
@@ -132,17 +136,22 @@ export default function Router() {
             </GuestGuard>
           )
         },
-        { 
+        {
           path: "register", 
           element: (
             <GuestGuard>
               <Register />
             </GuestGuard>
           ) 
-        }
+        },
+        { path: 'login-unprotected', element: <Login /> },
+        { path: 'register-unprotected', element: <Register /> },
+        { path: 'reset-password', element: <ResetPassword /> },
+        { path: 'new-password', element: <NewPassword /> },
+        { path: 'verify', element: <VerifyCode /> },
       ],
     },
-    // Main Routes
+    // Main RoutesResetPassword
     {
       path: '*',
       element: <LogoOnlyLayout />,
