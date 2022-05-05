@@ -34,6 +34,7 @@ const TABLE_HEAD = [
   { id: 'name', label: 'Document Name', alignRight: false },
   { id: 'owner', label: 'Owner', alignRight: false },
   { id: 'followers', label: 'Co-Author', alignRight: false },
+  { id: 'createdAt', label: 'Created At', alignRight: false },
   { id: '' },
 ];
 
@@ -147,7 +148,7 @@ export default function DocumentList({ loggedUser, documentList, onDelete }) {
             />
             <TableBody>
               {filteredItems.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                const { _id, name, mac, owner, followers } = row;
+                const { _id, name, mac, owner, followers, createdAt } = row;
                 const isItemSelected = selected.indexOf(name) !== -1;
 
                 return (
@@ -184,6 +185,7 @@ export default function DocumentList({ loggedUser, documentList, onDelete }) {
                         : 'No followers'
                       }  
                     </TableCell>
+                    <TableCell align="left">{createdAt}</TableCell>
                     <TableCell align="right">
                       <DocumentTableMoreMenu loggedUser={loggedUser} owner={owner} followers={followers} onDelete={() => onDelete(_id)} editLink={`${PATH_DASHBOARD.documents}/${_id}/edit`} macAddr={mac} />
                     </TableCell>

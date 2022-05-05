@@ -21,6 +21,9 @@ import Page from '../../../components/Page';
 import DocumentList from './DocumentList';
 // sections
 import Iconify from '../../../components/Iconify';
+
+// utils
+import { fDate } from '../../../utils/formatTime'
 // ----------------------------------------------------------------------
 
 export default function Document() {
@@ -69,7 +72,7 @@ export default function Document() {
     if(users.length > 0 && documentData.length > 0) {
       const newDocumentArr = [];
       documentData.map((item) => {
-        const { _id, name, mac, ownerId, followerIds } = item;
+        const { _id, name, mac, ownerId, followerIds, createdAt } = item;
         const followers = [];
         let owner = {};
         users.map((user) => {
@@ -84,7 +87,8 @@ export default function Document() {
           name,
           mac,
           owner,
-          followers
+          followers,
+          createdAt: fDate(new Date())
         }
 
         newDocumentArr.push(row);
@@ -96,7 +100,7 @@ export default function Document() {
 
   return (
     <Page title="Document">
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
             Documents ({documentCount})

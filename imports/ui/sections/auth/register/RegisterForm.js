@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { useNavigate } from 'react-router-dom';
 // material
-import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
+import { Stack, TextField, IconButton, InputAdornment, Alert, Box } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // component
 import Iconify from '../../../components/Iconify';
@@ -19,6 +19,8 @@ export default function RegisterForm() {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [isError, setError] = useState(false);
+  const [errorText, setErrorText] = useState('');
 
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('First name required'),
@@ -35,7 +37,7 @@ export default function RegisterForm() {
       password: '',
     },
     validationSchema: RegisterSchema,
-    onSubmit: (values) => {
+    onSubmit: (values, { setSubmitting }) => {
       const { firstName, lastName, email, password } = values;
       Accounts.createUser({
         email,
@@ -48,7 +50,10 @@ export default function RegisterForm() {
       },
       error => {
         if(!error) return;
-        console.log(error);
+        const { reason } = error;
+        setError(true);
+        setErrorText(reason);
+        setSubmitting(false);
       });
     },
   });
@@ -58,6 +63,8 @@ export default function RegisterForm() {
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+        {isError && <Alert severity="error">{errorText}</Alert>}
+        <Box m={2} />
         <Stack spacing={3}>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <TextField

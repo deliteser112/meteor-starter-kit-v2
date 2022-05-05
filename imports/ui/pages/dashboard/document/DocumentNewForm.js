@@ -320,7 +320,7 @@ export default function DocumentNewForm({ isEdit, loggedUser, currentDocument, u
                     )}
                     style={{ width: 500 }}
                     renderInput={(params) => (
-                      <TextField {...params} label="Co-Authors" placeholder="Choose following users" />
+                      <TextField {...params} label="Co-Authors" placeholder="Choose co-authors" />
                     )}
                   />
                 </Grid>

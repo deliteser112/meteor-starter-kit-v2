@@ -16,7 +16,8 @@ export const UserResolvers = {
       }
     },
     User: {
-      email: ( user ) => user.emails[0].address
+      email: ( user ) => user.emails[0].address,
+      verified: ( user ) => user.emails[0].verified
     }
     
 };

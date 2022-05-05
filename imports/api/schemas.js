@@ -8,6 +8,7 @@ export const UserSchema = `
     type User {
       _id: String
       email: String
+      verified: Boolean
       profile: Profile
     }
 

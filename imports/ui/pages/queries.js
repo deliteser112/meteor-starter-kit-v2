@@ -5,6 +5,7 @@ export const usersQuery = gql`
         allUsers {
             _id,
             email,
+            verified,
             profile {
                 firstName,
                 lastName,
@@ -21,7 +22,8 @@ export const documentsQuery = gql`
             mac,
             name,
             ownerId,
-            followerIds
+            followerIds,
+            createdAt
         }
     }
 `;

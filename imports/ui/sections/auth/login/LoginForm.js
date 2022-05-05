@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 // material
-import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel } from '@mui/material';
+import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel, Alert } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // routes
 import { PATH_AUTH } from '../../../routes/paths';
@@ -19,6 +19,8 @@ export default function LoginForm() {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [isError, setError] = useState(false);
+  const [errorText, setErrorText] = useState('');
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
@@ -32,9 +34,16 @@ export default function LoginForm() {
       remember: true,
     },
     validationSchema: LoginSchema,
-    onSubmit: (values) => {
+    onSubmit: (values, { setSubmitting }) => {
       const { email, password } = values;
-      Meteor.loginWithPassword(email, password);
+      Meteor.loginWithPassword(email, password, function(error) {
+        if (error) {
+          const { reason } = error;
+          setError(true);
+          setErrorText(reason);
+          setSubmitting(false);
+        }
+      });
     },
   });
 
@@ -48,6 +57,7 @@ export default function LoginForm() {
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
+          {isError && <Alert severity="error">{errorText}</Alert>}
           <TextField
             fullWidth
             autoComplete="username"

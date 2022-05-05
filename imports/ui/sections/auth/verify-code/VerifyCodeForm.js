@@ -107,7 +107,7 @@ export default function VerifyCodeForm() {
       await new Promise((resolve) => setTimeout(resolve, 500));
       console.log('data', Object.values(data).join(''));
 
-      enqueueSnackbar('Verify success!');
+      enqueueSnackbar('Your email is not verified');
 
       navigate(PATH_DASHBOARD.root, { replace: true });
     } catch (error) {

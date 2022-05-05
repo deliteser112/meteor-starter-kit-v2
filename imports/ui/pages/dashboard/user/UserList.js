@@ -19,6 +19,7 @@ import {
 // components
 import Label from '../../../components/Label';
 import Scrollbar from '../../../components/Scrollbar';
+import Iconify from '../../../components/Iconify';
 import SearchNotFound from '../../../components/SearchNotFound';
 import { TableListHead, TableListToolbar, TableMoreMenu } from '../../../sections/@dashboard/table';
 // utils
@@ -30,6 +31,7 @@ const TABLE_HEAD = [
   { id: 'email', label: 'Email', alignRight: false },
   { id: 'role', label: 'Role', alignRight: false },
   { id: 'status', label: 'Status', alignRight: false },
+  { id: 'verified', label: 'Email Verified', alignRight: false },
   { id: '' },
 ];
 
@@ -143,8 +145,8 @@ export default function UserList({ userList }) {
               onSelectAllClick={handleSelectAllClick}
             />
             <TableBody>
-              {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                const { _id, profile, email } = row;
+              {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
+                const { _id, profile, email, verified } = row;
                 const isItemSelected = selected.indexOf(email) !== -1;
 
                 return (
@@ -174,7 +176,17 @@ export default function UserList({ userList }) {
                         Active
                       </Label>
                     </TableCell>
-
+                    <TableCell align="center">
+                      <Iconify
+                        icon={verified ? 'eva:checkmark-circle-fill' : 'eva:clock-outline'}
+                        sx={{
+                          width: 20,
+                          height: 20,
+                          color: 'success.main',
+                          ...(!verified && { color: 'warning.main' }),
+                        }}
+                      />
+                    </TableCell>
                     <TableCell align="right">
                       <TableMoreMenu onDelete={() => console.log('')} editLink="#" />
                     </TableCell>
