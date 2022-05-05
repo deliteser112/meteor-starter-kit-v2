@@ -28,7 +28,7 @@ export default function Users() {
 
   return (
     <Page title="User">
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <HeaderBreadcrumbs
           heading={`Users (${users.length})`}
           links={[

@@ -1,13 +1,16 @@
 
 import React from 'react';
-import { useParams } from 'react-router-dom';
 
 // material
-import {  Card, Container } from '@mui/material';
+import {  Card, Container, Grid, Stack } from '@mui/material';
 
 // components
 import Page from '../../components/Page';
+//
 import ProfileCover from './ProfileCover';
+import ProfileAbout from './ProfileAbout';
+import ProfilePostInput from './ProfilePostInput';
+import ProfileFollowInfo from './ProfileFollowInfo';
 
 import account from '../../_mock/account';
 
@@ -38,6 +41,19 @@ export default function UserProfile() {
         >
           <ProfileCover myProfile={myProfile} />
         </Card>
+
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={4}>
+            <Stack spacing={3}>
+              <ProfileFollowInfo profile={myProfile} />
+              <ProfileAbout profile={{...myProfile, country: 'Madagascar', role: 'Manager', company: 'Gleichner, Mueller and Tromp', school: ' Nikolaus - Leuschke' }} />
+            </Stack>
+          </Grid>
+
+          <Grid item xs={12} md={8}>
+            <ProfilePostInput />
+          </Grid>
+        </Grid>
       </Container>
     </Page>
   );
