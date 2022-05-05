@@ -17,6 +17,7 @@ import ContactPage from "../pages/external_pages/Contact";
 
 // others
 import DieAnalytics from "../pages/other/DieAnalytics";
+import GeneralApp from "../pages/dashboard/GeneralApp";
 import NotFound from "../pages/other/Page404";
 // import Maintenance from "./pages/other/Maintenance";
 
@@ -64,7 +65,7 @@ export default function Router() {
       children: [
         { path: "/", element: <Navigate to="/dashboard/analytics" /> },
         { path: "profile/:userId", element: <Profile /> },
-        { path: "analytics", element: <DieAnalytics /> },
+        { path: "analytics", element: <GeneralApp /> },
         { path: "device", element: <Device /> },
         { path: "device/create", element: <DeviceCreate /> },
         { 
