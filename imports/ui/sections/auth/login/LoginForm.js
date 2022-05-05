@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 
 import * as Yup from 'yup';
 import React, { useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 // material
 import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel, Alert } from '@mui/material';
@@ -16,7 +16,6 @@ import Iconify from '../../../components/Iconify';
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
-  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
   const [isError, setError] = useState(false);
@@ -42,6 +41,8 @@ export default function LoginForm() {
           setError(true);
           setErrorText(reason);
           setSubmitting(false);
+        } else {
+          console.log(Meteor.user());
         }
       });
     },

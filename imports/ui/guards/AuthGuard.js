@@ -17,6 +17,9 @@ AuthGuard.propTypes = {
 };
 
 export default function AuthGuard({ children }) {
+  // useTracker(() => Meteor.user());
+  // const isAuthenticated = localStorage.getItem('Meteor.userId');
+  // console.log(isAuthenticated);
   const isAuthenticated = useTracker(() => Meteor.user());
   const { pathname } = useLocation();
   const [requestedLocation, setRequestedLocation] = useState(null);
