@@ -1,45 +1,50 @@
 import React from "react";
 import { Navigate, useRoutes } from "react-router-dom";
 // guards
-import GuestGuard from "./guards/GuestGuard";
-import AuthGuard from "./guards/AuthGuard";
-import OwnerBasedGuard from "./guards/OwnerBasedGuard";
-import RoleBasedGuard from "./guards/RoleBasedGuard";
+import GuestGuard from "../guards/GuestGuard";
+import AuthGuard from "../guards/AuthGuard";
+// import OwnerBasedGuard from "../guards/OwnerBasedGuard";
+import RoleBasedGuard from "../guards/RoleBasedGuard";
 
 // layouts
-import DashboardLayout from "./layouts/dashboard";
-import LogoOnlyLayout from "./layouts/LogoOnlyLayout";
+import MainLayout from "../layouts/main";
+import DashboardLayout from "../layouts/dashboard";
+import LogoOnlyLayout from "../layouts/LogoOnlyLayout";
+
+// main pages
+import HomePage from "../pages/external_pages/Home";
+import ContactPage from "../pages/external_pages/Contact";
 
 // others
-import DieAnalytics from "./pages/other/DieAnalytics";
-import NotFound from "./pages/other/Page404";
+import DieAnalytics from "../pages/other/DieAnalytics";
+import NotFound from "../pages/other/Page404";
 // import Maintenance from "./pages/other/Maintenance";
 
 // devices
-import Device from "./pages/dashboard/device";
-import DeviceCreate from "./pages/dashboard/device/DeviceCreate";
+import Device from "../pages/dashboard/device";
+import DeviceCreate from "../pages/dashboard/device/DeviceCreate";
 
 // watch
-import Watch from "./pages/dashboard/watch";
+import Watch from "../pages/dashboard/watch";
 
 // dices
-import Dice from "./pages/dashboard/dice";
-import DiceCreate from "./pages/dashboard/dice/DiceCreate";
+import Dice from "../pages/dashboard/dice";
+import DiceCreate from "../pages/dashboard/dice/DiceCreate";
 
 // users
-import User from "./pages/dashboard/user";
+import User from "../pages/dashboard/user";
 
 // actions
-import Action from "./pages/dashboard/action";
-import ActionCreate from "./pages/dashboard/action/ActionCreate";
+import Action from "../pages/dashboard/action";
+import ActionCreate from "../pages/dashboard/action/ActionCreate";
 
 // rolls
-import Roll from "./pages/dashboard/roll";
+import Roll from "../pages/dashboard/roll";
 
-import Profile from "./pages/profile";
+import Profile from "../pages/profile";
 
-import Login from "./pages/authentication/Login";
-import Register from "./pages/authentication/Register";
+import Login from "../pages/authentication/Login";
+import Register from "../pages/authentication/Register";
 
 // ----------------------------------------------------------------------
 
@@ -115,10 +120,10 @@ export default function Router() {
       ],
     },
     {
-      path: "/",
+      path: "auth",
       element: <LogoOnlyLayout />,
       children: [
-        { path: "/", element: <Navigate to="/login" /> },
+        { path: "/", element: <Navigate to="login" /> },
         { 
           path: "login", 
           element: (
@@ -134,9 +139,24 @@ export default function Router() {
               <Register />
             </GuestGuard>
           ) 
-        },
-        { path: "404", element: <NotFound /> },
-        { path: "*", element: <Navigate to="/404" /> },
+        }
+      ],
+    },
+    // Main Routes
+    {
+      path: '*',
+      element: <LogoOnlyLayout />,
+      children: [
+        { path: '404', element: <NotFound /> },
+        { path: '*', element: <Navigate to="/404" replace /> },
+      ],
+    },
+    {
+      path: '/',
+      element: <MainLayout />,
+      children: [
+        { element: <HomePage />, index: true },
+        { path: 'contact-us', element: <ContactPage /> }
       ],
     },
     { path: "*", element: <Navigate to="/404" replace /> },

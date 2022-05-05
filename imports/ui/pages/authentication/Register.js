@@ -5,6 +5,8 @@ import { styled } from '@mui/material/styles';
 import { Link, Container, Typography } from '@mui/material';
 // hooks
 import useResponsive from '../../hooks/useResponsive';
+// routes
+import { PATH_AUTH } from '../../routes/paths';
 // components
 import Page from '../../components/Page';
 
@@ -60,7 +62,7 @@ export default function Register() {
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
               Already have an account? {''}
-              <Link variant="subtitle2" component={RouterLink} to="/login">
+              <Link variant="subtitle2" component={RouterLink} to={PATH_AUTH.login}>
                 Login
               </Link>
             </Typography>
@@ -94,7 +96,7 @@ export default function Register() {
             {!smUp && (
               <Typography variant="body2" sx={{ mt: 3, textAlign: 'center' }}>
                 Already have an account?{' '}
-                <Link variant="subtitle2" to="/login" component={RouterLink}>
+                <Link variant="subtitle2" to={PATH_AUTH.login} component={RouterLink}>
                   Login
                 </Link>
               </Typography>
