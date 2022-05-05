@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import { filter } from 'lodash';
-import { sentenceCase } from 'change-case';
-import { Link as RouterLink } from 'react-router-dom';
 // material
 import {
   Card,
   Table,
-  Stack,
-  Avatar,
   Checkbox,
   TableRow,
   TableBody,
   TableCell,
-  Typography,
   TableContainer,
   TablePagination,
 } from '@mui/material';

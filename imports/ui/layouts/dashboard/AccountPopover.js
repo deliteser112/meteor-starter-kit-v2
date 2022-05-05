@@ -7,6 +7,8 @@ import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { alpha } from '@mui/material/styles';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton } from '@mui/material';
+// routes
+import { PATH_AUTH, PATH_DASHBOARD } from '../../routes/paths';
 // components
 import MenuPopover from '../../components/MenuPopover';
 // mocks_
@@ -27,9 +29,9 @@ const MENU_OPTIONS = [
     linkTo: `/dashboard/profile/my-profile`,
   },
   {
-    label: 'Settings',
+    label: 'Dashboard',
     icon: 'eva:settings-2-fill',
-    linkTo: '#',
+    linkTo: `${PATH_AUTH.root}`,
   },
 ];
 
@@ -44,7 +46,7 @@ export default function AccountPopover() {
   useEffect(() => {
     if(user) {
       const { _id } = user;
-      const profileLink = `/dashboard/profile/${_id}`;
+      const profileLink = `${PATH_DASHBOARD.profile}/${_id}`;
       const newMenu = [];
       menuOptions.map((item) => {
         const { label } = item;

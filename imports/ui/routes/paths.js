@@ -36,5 +36,6 @@ export const PATH_PAGE = {
 
 export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
+  profile: path(ROOTS_DASHBOARD, '/profile'),
   permissionDenied: path(ROOTS_DASHBOARD, '/permission-denied'),
 };

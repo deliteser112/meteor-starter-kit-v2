@@ -2,9 +2,7 @@
 import React from 'react';
 // material
 import { useTheme, alpha } from '@mui/material/styles';
-import { Stack, Button, Divider, Typography, Box } from '@mui/material';
-// component
-// import Iconify from '../../components/Iconify';
+import { Button, Divider, Typography, Box } from '@mui/material';
 
 // ----------------------------------------------------------------------
 

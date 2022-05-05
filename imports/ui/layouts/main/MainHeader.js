@@ -1,3 +1,6 @@
+import { Meteor } from 'meteor/meteor';
+import { useTracker } from 'meteor/react-meteor-data';
+
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 // @mui
@@ -14,6 +17,7 @@ import { HEADER } from '../../config';
 import { PATH_AUTH } from '../../routes/paths';
 // components
 import Logo from '../../components/Logo';
+import AccountPopover from '../dashboard/AccountPopover';
 //
 import MenuDesktop from './MenuDesktop';
 import MenuMobile from './MenuMobile';
@@ -48,6 +52,8 @@ const ToolbarShadowStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function MainHeader() {
+  const user = useTracker(() => Meteor.user());
+
   const isOffset = useOffSetTop(HEADER.MAIN_DESKTOP_HEIGHT);
 
   const theme = useTheme();
@@ -82,17 +88,20 @@ export default function MainHeader() {
           <Box sx={{ flexGrow: 1 }} />
 
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
-
           {isDesktop && (
-            <Button
-              variant="contained"
-              rel="noopener"
-              href={PATH_AUTH.login}
-            >
-              Login
-            </Button>
-          )}
-          
+              <>
+                {user ? <AccountPopover />: (
+                  <Button
+                    variant="contained"
+                    rel="noopener"
+                    href={PATH_AUTH.login}
+                  >
+                    Login
+                  </Button>
+                )}
+              </>
+            )
+          }
           {!isDesktop && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
         </Container>
       </ToolbarStyle>

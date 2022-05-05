@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import ReactLoading from "react-loading";
 import PropTypes from "prop-types";
 import { styled } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";

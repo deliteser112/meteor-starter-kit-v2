@@ -24,7 +24,6 @@ export default function Watch() {
   const [rollHistory, setRollHistory] = useState([]);
   const [deviceList, setDeviceList] = useState([]);
   const [currentDevices, setCurrentDevices] = useState([]);
-  const [rollList, setRollList] = useState([]);
 
   const  { loading, data, refetch } = useQuery(rollsQuery);
   const devices = useQuery(devicesQuery).data;

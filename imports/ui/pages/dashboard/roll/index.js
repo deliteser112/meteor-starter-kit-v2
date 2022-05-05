@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ReactLoading from 'react-loading';
 // @mui
 import { Container, Typography, Stack } from '@mui/material';
