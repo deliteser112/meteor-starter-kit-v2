@@ -2,6 +2,8 @@ import React from 'react';
 // component
 import Iconify from '../../components/Iconify';
 
+import { PATH_DASHBOARD } from '../../routes/paths';
+
 // ----------------------------------------------------------------------
 
 const getIcon = (name) => <Iconify icon={name} width={22} height={22} />;
@@ -14,26 +16,11 @@ const navConfig = [
         title: 'dashboard',
         path: '/dashboard/analytics',
         icon: getIcon('eva:pie-chart-2-fill'),
-      }
-    ]
-  },
-  {
-    subheader: 'User',
-    items: [
-      {
-        title: 'device',
-        path: '/dashboard/device',
-        icon: getIcon('ic:twotone-on-device-training'),
       },
       {
-        title: 'dice',
-        path: '/dashboard/dice',
-        icon: getIcon('ion:dice-outline'),
-      },
-      {
-        title: 'watch',
-        path: '/dashboard/watch',
-        icon: getIcon('la:eye'),
+        title: 'documents',
+        path: `${PATH_DASHBOARD.documents}`,
+        icon: getIcon('gala:file-doc'),
       }
     ]
   },
@@ -42,18 +29,8 @@ const navConfig = [
     items: [
       {
         title: 'user',
-        path: '/dashboard/user',
+        path: `${PATH_DASHBOARD.users}`,
         icon: getIcon('gis:globe-users'),
-      },
-      {
-        title: 'action',
-        path: '/dashboard/action',
-        icon: getIcon('carbon:touch-interaction'),
-      },
-      {
-        title: 'roll',
-        path: '/dashboard/roll',
-        icon: getIcon('fa6-solid:dice'),
       }
     ]
   },

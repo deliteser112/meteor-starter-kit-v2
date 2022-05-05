@@ -16,31 +16,16 @@ import HomePage from "../pages/external_pages/Home";
 import ContactPage from "../pages/external_pages/Contact";
 
 // others
-import DieAnalytics from "../pages/other/DieAnalytics";
 import GeneralApp from "../pages/dashboard/GeneralApp";
 import NotFound from "../pages/other/Page404";
 // import Maintenance from "./pages/other/Maintenance";
 
-// devices
-import Device from "../pages/dashboard/device";
-import DeviceCreate from "../pages/dashboard/device/DeviceCreate";
-
-// watch
-import Watch from "../pages/dashboard/watch";
-
-// dices
-import Dice from "../pages/dashboard/dice";
-import DiceCreate from "../pages/dashboard/dice/DiceCreate";
+// documents
+import Documents from "../pages/dashboard/document";
+import DocumentCreate from "../pages/dashboard/document/DocumentCreate";
 
 // users
 import User from "../pages/dashboard/user";
-
-// actions
-import Action from "../pages/dashboard/action";
-import ActionCreate from "../pages/dashboard/action/ActionCreate";
-
-// rolls
-import Roll from "../pages/dashboard/roll";
 
 import Profile from "../pages/profile";
 
@@ -66,62 +51,21 @@ export default function Router() {
         { path: "/", element: <Navigate to="/dashboard/analytics" /> },
         { path: "profile/:userId", element: <Profile /> },
         { path: "analytics", element: <GeneralApp /> },
-        { path: "device", element: <Device /> },
-        { path: "device/create", element: <DeviceCreate /> },
+        
+        // documents
+        { path: "documents", element: <Documents /> },
+        { path: "documents/create", element: <DocumentCreate /> },
+        { path: "documents/:id/edit", element: <DocumentCreate /> },
+        
+        // Admin/users
         { 
-          path: "device/:id/edit", 
-          element: (
-            // <OwnerBasedGuard>
-              <DeviceCreate />
-            // </OwnerBasedGuard>
-          ) 
-        },
-        { path: "dice", element: <Dice /> },
-        { path: "dice/create", element: <DiceCreate /> },
-        { path: "dice/:id/edit", element: <DiceCreate /> },
-
-        { path: "watch", element: <Watch /> },
-        // Admin
-        { 
-          path: "user", 
+          path: "users", 
           element: (
             <RoleBasedGuard>
               <User />
             </RoleBasedGuard>
           ) 
-        },
-        { 
-          path: "action", 
-          element: (
-            <RoleBasedGuard>
-              <Action />
-            </RoleBasedGuard>
-          ) 
-        },
-        { 
-          path: "action/create", 
-          element: (
-            <RoleBasedGuard>
-              <ActionCreate />
-            </RoleBasedGuard>
-          ) 
-        },
-        { 
-          path: "action/:id/edit", 
-          element: (
-            <RoleBasedGuard>
-              <ActionCreate />
-            </RoleBasedGuard>
-          ) 
-        },
-        { 
-          path: "roll", 
-          element: (
-            <RoleBasedGuard>
-              <Roll />
-            </RoleBasedGuard>
-          )  
-        },
+        }
       ],
     },
     {

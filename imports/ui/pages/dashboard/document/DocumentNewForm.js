@@ -26,8 +26,12 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
+// routes
+import { PATH_DASHBOARD } from '../../../routes/paths';
+
 // graphql
-import { deviceMutation, deviceUpdateMutation } from '../../mutations';
+import { documentMutation, documentUpdateMutation } from '../../mutations';
 
 // utils
 import stringAvatar from '../../../utils/stringAvatar';
@@ -36,15 +40,15 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 // ----------------------------------------------------------------------
 
-DeviceNewForm.propTypes = {
+DocumentNewForm.propTypes = {
   isEdit: PropTypes.bool,
-  currentDevice: PropTypes.object,
+  currentDocument: PropTypes.object,
   userList: PropTypes.array
 };
 
-export default function DeviceNewForm({ isEdit, loggedUser, currentDevice, userList }) {
-  const [addDeviceMutation] = useMutation(deviceMutation);
-  const [updateDeviceUpdateMutation] = useMutation(deviceUpdateMutation);
+export default function DocumentNewForm({ isEdit, loggedUser, currentDocument, userList }) {
+  const [addDocumentMutation] = useMutation(documentMutation);
+  const [updateDocumentUpdateMutation] = useMutation(documentUpdateMutation);
   const [defaultOwner, setDefalutOwner] = useState({});
   const [followers, setFollowers] = useState([]);
   const [isAdmin, setAdmin] = useState(false);
@@ -57,13 +61,13 @@ export default function DeviceNewForm({ isEdit, loggedUser, currentDevice, userL
   const { enqueueSnackbar } = useSnackbar();
 
   const NewSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    mac: Yup.string().required('MAC is required')
+    name: Yup.string().required('Document Name is required'),
+    mac: Yup.string().required('Document ID is required')
   });
 
   useEffect(() => {
-    if(currentDevice && isEdit && userList.length > 0) {
-      const { followerIds, ownerId } = currentDevice;
+    if(currentDocument && isEdit && userList.length > 0) {
+      const { followerIds, ownerId } = currentDocument;
       const tmpFollowers = [];
       followerIds.map(fId => {
         userList.map((item) => {
@@ -77,7 +81,7 @@ export default function DeviceNewForm({ isEdit, loggedUser, currentDevice, userL
 
       setFollowers([...tmpFollowers]);
     }
-  }, [currentDevice, isEdit, userList]);
+  }, [currentDocument, isEdit, userList]);
   
   useEffect(() => {
     if (loggedUser && !isEdit) {
@@ -105,9 +109,9 @@ export default function DeviceNewForm({ isEdit, loggedUser, currentDevice, userL
   }, [loggedUser])
 
   useEffect(() => {
-    if (loggedUser && currentDevice && isEdit) {
+    if (loggedUser && currentDocument && isEdit) {
       const { _id, profile } = loggedUser;
-      const { ownerId, followerIds } = currentDevice;
+      const { ownerId, followerIds } = currentDocument;
      
       const { role } = profile;
       setFollowed(followerIds.includes(_id));
@@ -115,13 +119,13 @@ export default function DeviceNewForm({ isEdit, loggedUser, currentDevice, userL
     } else {
       setOwner(true);
     }
-  }, [loggedUser, currentDevice, isEdit])
+  }, [loggedUser, currentDocument, isEdit])
 
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      name: currentDevice?.name || '',
-      mac: currentDevice?.mac || ''
+      name: currentDocument?.name || '',
+      mac: currentDocument?.mac || ''
     },
     validationSchema: NewSchema,
     onSubmit: async (values, { setSubmitting, resetForm, setErrors }) => {
@@ -134,29 +138,29 @@ export default function DeviceNewForm({ isEdit, loggedUser, currentDevice, userL
         });
 
         if(!isEdit) {
-          addDeviceMutation({
+          addDocumentMutation({
             variables: {
               mac,
               name,
               ownerId,
               followerIds
             },
-            refetchQueries: () => ['devices']
+            refetchQueries: () => ['documents']
           })
           .then(({data}) => {
-            const { addDevice } = data;
-            if(addDevice) {
+            const { addDocument } = data;
+            if(addDocument) {
               enqueueSnackbar(!isEdit ? 'Create success' : 'Update success', { variant: 'success' });
-              navigate('/dashboard/device');
+              navigate(PATH_DASHBOARD.documents);
             }
             else {
-              enqueueSnackbar('The MAC should be unique', { variant: 'warning' });
+              enqueueSnackbar('The Document ID should be unique', { variant: 'warning' });
             }
           })
-          .catch(e => console.error('Error trying to add device', e));
+          .catch(e => console.error('Error trying to add document', e));
         } else {
-          const { _id } = currentDevice;
-          updateDeviceUpdateMutation({
+          const { _id } = currentDocument;
+          updateDocumentUpdateMutation({
             variables: {
               deviceId: _id,
               mac,
@@ -164,13 +168,13 @@ export default function DeviceNewForm({ isEdit, loggedUser, currentDevice, userL
               ownerId,
               followerIds
             },
-            refetchQueries: () => ['devices']
+            refetchQueries: () => ['documents']
           })
           .then(({data}) => {
             enqueueSnackbar(!isEdit ? 'Create success' : 'Update success', { variant: 'success' });
-            navigate('/dashboard/device');
+            navigate(PATH_DASHBOARD.documents);
           })
-          .catch(e => console.error('Error trying to add device', e));
+          .catch(e => console.error('Error trying to add document', e));
         }
         setSubmitting(false);
         
@@ -238,7 +242,7 @@ export default function DeviceNewForm({ isEdit, loggedUser, currentDevice, userL
                   <TextField
                     fullWidth
                     disabled={!isOwner}
-                    label="Device Name"
+                    label="Document Name"
                     {...getFieldProps('name')}
                     error={Boolean(touched.name && errors.name)}
                     helperText={touched.name && errors.name}
@@ -246,7 +250,7 @@ export default function DeviceNewForm({ isEdit, loggedUser, currentDevice, userL
                   <TextField
                     fullWidth
                     disabled={!isOwner}
-                    label="Device MAC"
+                    label="Document ID"
                     {...getFieldProps('mac')}
                     error={Boolean(touched.mac && errors.mac)}
                     helperText={touched.mac && errors.mac}
@@ -316,14 +320,25 @@ export default function DeviceNewForm({ isEdit, loggedUser, currentDevice, userL
                     )}
                     style={{ width: 500 }}
                     renderInput={(params) => (
-                      <TextField {...params} label="Followers" placeholder="Choose following users" />
+                      <TextField {...params} label="Co-Authors" placeholder="Choose following users" />
                     )}
                   />
                 </Grid>
 
+                <Grid item xs={12} sm={6} md={9}>
+                  <TextField
+                    fullWidth
+                    id="standard-multiline-flexible"
+                    label="Document Detail"
+                    multiline
+                    rows={4}
+                    variant="outlined"
+                  />
+                </Grid>
+                
                 <Box sx={{ mt: 3, display: 'flex', justifyContent: 'flex-end' }}>
                   <LoadingButton type="submit" variant="contained" loading={isSubmitting} disabled={!isOwner && !selected}>
-                    {!isEdit ? 'Create Device' : selected ? 'Submit Request' : 'Save Changes'}
+                    {!isEdit ? 'Create Document' : selected ? 'Submit Request' : 'Save Changes'}
                   </LoadingButton>
                 </Box>
               </Stack>

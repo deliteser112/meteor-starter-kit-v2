@@ -45,7 +45,7 @@ export default function ConfirmDialog({ isOpen, title, content, onAgree }) {
           <Button variant="outlined" color="error"  onClick={handleAgree}>
             Yes
           </Button>
-          <Button variant="contained" color="success" onClick={handleClose} autoFocus>
+          <Button variant="contained" color="primary" onClick={handleClose} autoFocus>
             No
           </Button>
         </DialogActions>

@@ -4,24 +4,36 @@ import { filter } from 'lodash';
 import {
   Card,
   Table,
+  Stack,
+  Avatar,
+  AvatarGroup,
   Checkbox,
   TableRow,
   TableBody,
   TableCell,
+  Typography,
   TableContainer,
   TablePagination,
+  Tooltip
 } from '@mui/material';
 // components
 import Scrollbar from '../../../components/Scrollbar';
 import SearchNotFound from '../../../components/SearchNotFound';
-import { TableListHead, TableListToolbar, ActionTableMoreMenu } from '../../../sections/@dashboard/table';
+import { TableListHead, TableListToolbar, DocumentTableMoreMenu } from '../../../sections/@dashboard/table';
+
+// routes
+import { PATH_DASHBOARD } from '../../../routes/paths';
+
+// utils
+import stringAvatar from '../../../utils/stringAvatar';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Action Name', alignRight: false },
-  { id: 'action', label: 'Action', alignRight: false },
-  { id: 'equation', label: 'Equation', alignRight: false },
+  { id: 'mac', label: 'Document ID', alignRight: false },
+  { id: 'name', label: 'Document Name', alignRight: false },
+  { id: 'owner', label: 'Owner', alignRight: false },
+  { id: 'followers', label: 'Co-Author', alignRight: false },
   { id: '' },
 ];
 
@@ -51,12 +63,12 @@ function applySortFilter(array, comparator, query) {
     return a[1] - b[1];
   });
   if (query) {
-    return filter(array, (_item) => _item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+    return filter(array, (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
   }
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function ActionList({ actionList, onDelete }) {
+export default function DocumentList({ loggedUser, documentList, onDelete }) {
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -67,7 +79,7 @@ export default function ActionList({ actionList, onDelete }) {
 
   const [filterName, setFilterName] = useState('');
 
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -77,7 +89,7 @@ export default function ActionList({ actionList, onDelete }) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = actionList.map((n) => n.name);
+      const newSelecteds = documentList.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -112,16 +124,15 @@ export default function ActionList({ actionList, onDelete }) {
     setFilterName(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - actionList.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - documentList.length) : 0;
 
-  const filteredItems = applySortFilter(actionList, getComparator(order, orderBy), filterName);
+  const filteredItems = applySortFilter(documentList, getComparator(order, orderBy), filterName);
 
   const isItemNotFound = filteredItems.length === 0;
 
   return (
     <Card>
       <TableListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
-
       <Scrollbar>
         <TableContainer sx={{ minWidth: 800 }}>
           <Table>
@@ -129,14 +140,14 @@ export default function ActionList({ actionList, onDelete }) {
               order={order}
               orderBy={orderBy}
               headLabel={TABLE_HEAD}
-              rowCount={actionList.length}
+              rowCount={documentList.length}
               numSelected={selected.length}
               onRequestSort={handleRequestSort}
               onSelectAllClick={handleSelectAllClick}
             />
             <TableBody>
               {filteredItems.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                const { _id, name, action, equation } = row;
+                const { _id, name, mac, owner, followers } = row;
                 const isItemSelected = selected.indexOf(name) !== -1;
 
                 return (
@@ -151,12 +162,30 @@ export default function ActionList({ actionList, onDelete }) {
                     <TableCell padding="checkbox">
                       <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, name)} />
                     </TableCell>
+                    <TableCell align="left">{mac}</TableCell>
                     <TableCell align="left">{name}</TableCell>
-                    <TableCell align="left">{action}</TableCell>
-                    <TableCell align="left"> {equation} </TableCell>
-
+                    <TableCell component="th" scope="row" padding="none">
+                      <Stack direction="row" alignItems="center" spacing={1}>
+                        <Avatar {...stringAvatar(`${owner.profile.firstName} ${owner.profile.lastName}`)} />
+                        <Typography variant="subtitle2" noWrap>
+                          {`${owner.profile.firstName} ${owner.profile.lastName}`}
+                        </Typography>
+                      </Stack>
+                    </TableCell>
+                    <TableCell align="left">
+                      {followers.length > 0 ? 
+                        <AvatarGroup max={4} sx={{ justifyContent: 'flex-end' }}>
+                          {followers.map((item, index) => 
+                            <Tooltip key={index} title={`${item.profile.firstName} ${item.profile.lastName}`} placement="top">
+                              <Avatar {...stringAvatar(`${item.profile.firstName} ${item.profile.lastName}`)} />
+                            </Tooltip>
+                          )}
+                        </AvatarGroup>
+                        : 'No followers'
+                      }  
+                    </TableCell>
                     <TableCell align="right">
-                      <ActionTableMoreMenu onDelete={() => onDelete(_id)} editLink={`/dashboard/action/${_id}/edit`} />
+                      <DocumentTableMoreMenu loggedUser={loggedUser} owner={owner} followers={followers} onDelete={() => onDelete(_id)} editLink={`${PATH_DASHBOARD.documents}/${_id}/edit`} macAddr={mac} />
                     </TableCell>
                   </TableRow>
                 );
@@ -184,7 +213,7 @@ export default function ActionList({ actionList, onDelete }) {
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={actionList.length}
+        count={documentList.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

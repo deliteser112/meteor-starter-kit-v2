@@ -23,17 +23,17 @@ export const UserSchema = `
     
 `;
 
-export const DeviceSchema = `
+export const DocumentSchema = `
   type Query {
-    devices: [Device]
+    documents: [Document]
   } 
   
   type Mutation {
-    addDevice(mac: String!, name: String!, ownerId: String!, followerIds: [String]): Device
-    updateDevice(deviceId: ID!, mac: String!, name: String!, ownerId: String, followerIds: [String]): Device
+    addDocument(mac: String!, name: String!, ownerId: String!, followerIds: [String]): Document
+    updateDocument(deviceId: ID!, mac: String!, name: String!, ownerId: String, followerIds: [String]): Document
   }
   
-  type Device {
+  type Document {
     _id: ID!
     mac: String
     name: String
@@ -41,74 +41,4 @@ export const DeviceSchema = `
     followerIds: [String]
     createdAt: String
   }
-`;
-
-export const DiceSchema = `
-  type Query {
-    dices: [Dice]
-  } 
-  
-  type Mutation {
-    addDice(did: String!, name: String!, userId: String!, actionIds: [String]!, coverImg: String): Dice
-    updateDice(diceId: ID!, did: String!, name: String!, userId: String!, actionIds: [String]!, coverImg: String): Dice
-  }
-  
-  type Dice {
-    _id: ID!
-    did: String
-    name: String
-    userId: String
-    actionIds: [String]
-    coverImg: String
-    createdAt: String
-  }
-`;
-
-export const ActionSchema = `
-  type Query {
-    actions: [Action]
-  } 
-  
-  type Mutation {
-    addAction(name: String!, action: String!, equation: String!): Action
-    updateAction(actionId: ID!, name: String!, action: String!, equation: String!): Action
-  }
-  
-  type Action {
-    _id: ID!
-    action: String!
-    name: String!
-    equation: String!
-    user: User
-    createdAt: String
-  }
-`;
-
-export const RollSchema = `
-  type Query {
-    rolls: [Roll]
-    rollsByMAC(device: String!): [Roll]
-  } 
-  
-  type Mutation {
-    addRoll(device: String!, dice: String!): Roll
-  }
-
-  type Roll {
-    _id: ID!
-    device: String
-    dice: String
-    results: [Result]
-    createdAt: String
-  }
-
-  type Result {
-    coverImg: String
-    name: String
-    result: String
-    calculation: String
-    equation: String
-  }
-  
- 
 `;

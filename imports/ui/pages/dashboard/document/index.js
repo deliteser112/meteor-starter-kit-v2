@@ -7,50 +7,53 @@ import { Button, Container, Typography, Stack } from '@mui/material';
 import { useTracker } from 'meteor/react-meteor-data';
 
 // graphql & collections
-import { DevicesCollection } from '/imports/db/DevicesCollection';
+import { DocumentsCollection } from '/imports/db/DocumentsCollection';
 import { useQuery } from "@apollo/react-hooks";
 
 // import queries
-import {devicesQuery, usersQuery} from '../../queries'
+import {documentsQuery, usersQuery} from '../../queries'
+
+// routes
+import { PATH_DASHBOARD } from '../../../routes/paths';
 
 // components
 import Page from '../../../components/Page';
-import DeviceList from './DeviceList';
+import DocumentList from './DocumentList';
 // sections
 import Iconify from '../../../components/Iconify';
 // ----------------------------------------------------------------------
 
-export default function Device() {
+export default function Document() {
   const [users, setUsers] = useState([]);
-  const [devices, setDevices] = useState([]);
+  const [documents, setDocuments] = useState([]);
 
   const loggedUser = Meteor.user();
 
   const tmpUsers = useQuery(usersQuery).data;
-  const  { loading, data, refetch } = useQuery(devicesQuery);
+  const  { loading, data, refetch } = useQuery(documentsQuery);
 
   refetch();
 
-  const { isLoading, deviceCount } = useTracker(() => {
-    const noDataAvailable = { deviceCount: 0 };
+  const { isLoading, documentCount } = useTracker(() => {
+    const noDataAvailable = { documentCount: 0 };
     if (!Meteor.user()) {
       return noDataAvailable;
     }
-    const handler = Meteor.subscribe('devices');
+    const handler = Meteor.subscribe('documents');
 
     if (!handler.ready() || loading) {
       return { ...noDataAvailable, isLoading: true };
     }
 
-    const deviceCount = DevicesCollection.find({}).count();
+    const documentCount = DocumentsCollection.find({}).count();
 
-    return { deviceCount };
+    return { documentCount };
   });
  
-  const devicesData = data && data.devices || [];
+  const documentData = data && data.documents || [];
 
-  const deleteDevice = (_id) => {
-    Meteor.call('devices.remove', _id);
+  const deleteDocument = (_id) => {
+    Meteor.call('documents.remove', _id);
     refetch();
   };
 
@@ -63,9 +66,9 @@ export default function Device() {
   }, [tmpUsers])
 
   useEffect(() => {
-    if(users.length > 0 && devicesData.length > 0) {
-      const newDeviceArr = [];
-      devicesData.map((item) => {
+    if(users.length > 0 && documentData.length > 0) {
+      const newDocumentArr = [];
+      documentData.map((item) => {
         const { _id, name, mac, ownerId, followerIds } = item;
         const followers = [];
         let owner = {};
@@ -84,26 +87,26 @@ export default function Device() {
           followers
         }
 
-        newDeviceArr.push(row);
+        newDocumentArr.push(row);
       });
 
-      setDevices(newDeviceArr);
+      setDocuments(newDocumentArr);
     }
-  }, [users, devicesData])
+  }, [users, documentData])
 
   return (
-    <Page title="Device">
+    <Page title="Document">
       <Container maxWidth="lg">
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Device ({deviceCount})
+            Documents ({documentCount})
           </Typography>
-          <Button variant="contained" component={RouterLink} to="/dashboard/device/create" startIcon={<Iconify icon="eva:plus-fill" />}>
-            Add Device
+          <Button variant="contained" component={RouterLink} to={PATH_DASHBOARD.documentCreate} startIcon={<Iconify icon="eva:plus-fill" />}>
+            New Document
           </Button>
         </Stack>
         {isLoading ? <ReactLoading className="loading-icons" type={'bars'} color={'grey'} height={30} width={30} /> : 
-          <DeviceList deviceList={devices} loggedUser={loggedUser} onDelete={(id) => deleteDevice(id)} />
+          <DocumentList documentList={documents} loggedUser={loggedUser} onDelete={(id) => deleteDocument(id)} />
         }
       </Container>
     </Page>

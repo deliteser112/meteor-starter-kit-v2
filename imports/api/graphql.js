@@ -5,15 +5,15 @@ import { getUser } from 'meteor/apollo'
 const log = error => console.error('GraphQL server error', error);
 
 // schemas
-import { UserSchema, DeviceSchema, DiceSchema, ActionSchema, RollSchema } from './schemas';
+import { UserSchema, DocumentSchema } from './schemas';
 
 // resolvers
-import { UserResolvers, DeviceResolvers, DiceResolvers, ActionResolvers, RollResolvers } from './resolvers';
+import { UserResolvers, DocumentResolvers } from './resolvers';
 
 
 const server = new ApolloServer({
-  typeDefs: [UserSchema, DeviceSchema, DiceSchema, ActionSchema, RollSchema],
-  resolvers: [UserResolvers, DeviceResolvers, DiceResolvers, ActionResolvers, RollResolvers],
+  typeDefs: [UserSchema, DocumentSchema],
+  resolvers: [UserResolvers, DocumentResolvers],
   context: async ({req}) => ({user: await getUser(req.headers.authorization)}),
   log
 })

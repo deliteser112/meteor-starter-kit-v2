@@ -1,6 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 
-const devicesCollection = Object.assign(new Mongo.Collection('devices'), {
+const documentsCollection = Object.assign(new Mongo.Collection('documents'), {
   save({ mac, name, ownerId, followerIds, userId }) {
     const newDeviceId = this.insert({
       mac,
@@ -12,7 +12,7 @@ const devicesCollection = Object.assign(new Mongo.Collection('devices'), {
     });
     return this.findOne(newDeviceId);
   },
-  updateDevice({ deviceId, mac, name, ownerId, followerIds, userId }) {
+  updateDocument({ deviceId, mac, name, ownerId, followerIds, userId }) {
     const res = this.update(
       { _id: deviceId }, 
       { $set: { mac, name, ownerId, followerIds, userId }}, 
@@ -22,4 +22,4 @@ const devicesCollection = Object.assign(new Mongo.Collection('devices'), {
   }
 });
 
-export { devicesCollection as DevicesCollection }
+export { documentsCollection as DocumentsCollection }

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import ReactLoading from 'react-loading';
 import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
@@ -10,21 +9,6 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
-
-// import components
-import DeviceWatchList from './DeviceWatchHistoryList';
-
-import { useTracker } from 'meteor/react-meteor-data';
-
-// graphql & collections
-import { RollsCollection } from '/imports/db/RollsCollection';
-import { useQuery } from "@apollo/react-hooks";
-
-// import queries
-import { rollsByMACQuery } from '../../queries'
-
-// utils
-import getDateFromTimestamp from '../../../utils/getDateFromTimeStamp';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -64,32 +48,8 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function DeviceWatchDialog({ isOpen, macAddr, onCloseDialog }) {
-  const [rollHistory, setRollHistory] = useState([]);
-  const  { loading, data, refetch } = useQuery(rollsByMACQuery, {
-    variables: { device: macAddr },
-  });
-
-  refetch();
-
-  const { isLoading, rollCount } = useTracker(() => {
-    const noDataAvailable = { rollCount: 0 };
-    if (!Meteor.user()) {
-      return noDataAvailable;
-    }
-    const handler = Meteor.subscribe('rolls');
-
-    if (!handler.ready() || loading) {
-      return { ...noDataAvailable, isLoading: true };
-    }
-
-    const rollCount = RollsCollection.find({device: macAddr}).count();
-
-    return { rollCount };
-  });
- 
-  const rollsByMAC = data && data.rollsByMAC || [];
-
+export default function DocumentDetailDialog({ isOpen, macAddr, onCloseDialog }) {
+  const [detailView, setDetailView] = useState([]);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -98,14 +58,8 @@ export default function DeviceWatchDialog({ isOpen, macAddr, onCloseDialog }) {
 
   useEffect(() => {
     const newWatchList = [];
-    rollsByMAC.map((item) => {
-      const { createdAt } = item;
-      const diff = getDateFromTimestamp(createdAt);
-      newWatchList.push({...item, createdAt: new Date(Number(createdAt)).toDateString(), elapsedTime: diff})
-    })
-
-    setRollHistory(newWatchList);
-  }, [rollsByMAC, isOpen]);
+    setDetailView(newWatchList);
+  }, [isOpen]);
 
   const handleClose = () => {
     onCloseDialog(true);
@@ -120,12 +74,10 @@ export default function DeviceWatchDialog({ isOpen, macAddr, onCloseDialog }) {
         sx={{ '& .MuiPaper-root': { maxWidth: '100%' } }}
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-          <Typography variant="body2" sx={{ fontWeight: 100 }}> (MAC Address: {macAddr})</Typography>
+          <Typography variant="body2" sx={{ fontWeight: 100 }}> (Item ID: {macAddr})</Typography>
         </BootstrapDialogTitle>
         <DialogContent dividers>
-          {isLoading ? <ReactLoading className="loading-icons" type={'bars'} color={'grey'} height={30} width={30} /> : 
-            <DeviceWatchList watchList={rollHistory} />
-          }
+          <Typography variant="h5">Detail view is clicked!</Typography>
         </DialogContent>
         <DialogActions>
           <Button variant="outlined" autoFocus onClick={handleClose}>

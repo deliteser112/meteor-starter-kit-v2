@@ -8,7 +8,7 @@ import { sentenceCase } from 'change-case';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
+import { Box, Link, Drawer, Typography, Avatar, Stack } from '@mui/material';
 // mock
 import account from '../../_mock/account';
 // hooks
@@ -97,15 +97,8 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
           <Box
             component="img"
-            src="/static/illustrations/roll-dice-1.jpg"
-            sx={{ width: 100, position: 'absolute', borderRadius: 2, top: -50 }}
+            src="/static/illustrations/menu-back.png"
           />
-
-          <Box sx={{ textAlign: 'center' }}>
-            <Typography gutterBottom variant="h6">
-              Rolling Dice
-            </Typography>
-          </Box>
         </Stack>
       </Box>
     </Scrollbar>

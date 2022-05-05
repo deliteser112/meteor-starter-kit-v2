@@ -6,11 +6,11 @@ import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@mui/mat
 import Iconify from '../../../components/Iconify';
 
 import ConfirmDialog from '../../../components/confirmDialog';
-import DeviceWatchDialog from '../../../pages/dashboard/device/DeviceWatchDialog';
+import DocumentWatchDialog from '../../../pages/dashboard/document/DocumentDetailDialog';
 
 // ----------------------------------------------------------------------
 
-export default function DeviceTableMoreMenu({ loggedUser, owner, followers, onDelete, editLink, macAddr }) {
+export default function DocumentTableMoreMenu({ loggedUser, owner, followers, onDelete, editLink, macAddr }) {
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -46,7 +46,7 @@ export default function DeviceTableMoreMenu({ loggedUser, owner, followers, onDe
   return (
     <>
       <ConfirmDialog onAgree={handleAgree} isOpen={dialogOpen} title="Meteor Starter Kit | Confirm" content="Are you sure to delete this item?" />
-      <DeviceWatchDialog isOpen={deviceDialogOpen} macAddr={macAddr} onCloseDialog={() => setDeviceDialogOpen(false)} />
+      <DocumentWatchDialog isOpen={deviceDialogOpen} macAddr={macAddr} onCloseDialog={() => setDeviceDialogOpen(false)} />
       <IconButton ref={ref} onClick={() => setIsOpen(true)}>
         <Iconify icon="eva:more-vertical-fill" width={20} height={20} />
       </IconButton>
@@ -64,9 +64,9 @@ export default function DeviceTableMoreMenu({ loggedUser, owner, followers, onDe
         {isFollower && 
           <MenuItem sx={{ color: 'text.secondary' }} onClick={handleDeviceDialogOpen} >
             <ListItemIcon>
-              <Iconify icon="eva:layers-outline" width={24} height={24} />
+              <Iconify icon="fluent:apps-list-detail-20-regular" width={24} height={24} />
             </ListItemIcon>
-            <ListItemText primary="History" primaryTypographyProps={{ variant: 'body2' }} />
+            <ListItemText primary="Detail" primaryTypographyProps={{ variant: 'body2' }} />
           </MenuItem>
         }
         <MenuItem sx={{ color: 'text.secondary' }} onClick={handleDelete}>
