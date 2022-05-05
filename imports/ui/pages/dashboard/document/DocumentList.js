@@ -133,7 +133,7 @@ export default function DocumentList({ loggedUser, documentList, onDelete }) {
 
   return (
     <Card>
-      <TableListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
+      <TableListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} onDelete={() => console.log('')} />
       <Scrollbar>
         <TableContainer sx={{ minWidth: 800 }}>
           <Table>
