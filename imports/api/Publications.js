@@ -9,8 +9,8 @@ Meteor.publish('documents', function publishDocuments() {
   return DocumentsCollection.find({});
 });
 
-// Meteor.publish('rolls', function publishRolls() {
-//   return RollsCollection.find(
+// Meteor.publish('documents', function publishDocuments() {
+//   return DocumentsCollection.find(
 //     { userId: this.userId },
 //     { fields: { _id: 1, userId: 1 } }
 //   );

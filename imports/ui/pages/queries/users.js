@@ -14,16 +14,3 @@ export const usersQuery = gql`
         }
     }
 `;
-
-export const documentsQuery = gql`
-    query getDocuments {
-        documents {
-            _id
-            mac,
-            name,
-            ownerId,
-            followerIds,
-            createdAt
-        }
-    }
-`;
