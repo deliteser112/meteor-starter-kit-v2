@@ -12,7 +12,10 @@ import {usersQuery} from '../../queries'
 // components
 import Page from '../../../components/Page';
 import UserList from './UserList';
+import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 
+// routes
+import { PATH_DASHBOARD } from '../../../routes/paths';
 // ----------------------------------------------------------------------
 
 export default function Users() {
@@ -26,11 +29,13 @@ export default function Users() {
   return (
     <Page title="User">
       <Container maxWidth="lg">
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <Typography variant="h4" gutterBottom>
-            User ({users.length})
-          </Typography>
-        </Stack>
+        <HeaderBreadcrumbs
+          heading={`Users (${users.length})`}
+          links={[
+            { name: 'Dashboard', href: PATH_DASHBOARD.root },
+            { name: 'Users' }
+          ]}
+        />
         {loading ? <ReactLoading className="loading-icons" type={'bars'} color={'grey'} height={30} width={30} /> : 
           <UserList userList={users} />
         }

@@ -7,15 +7,15 @@ import React, { useEffect, useState } from 'react';
 import ReactLoading from 'react-loading';
 import { useParams, useLocation } from 'react-router-dom';
 // material
-import { 
-  Container, 
-  Stack, 
-  Typography
-} from '@mui/material';
+import { Container } from '@mui/material';
 
 // components
 import Page from '../../../components/Page';
 import DocumentNewForm from './DocumentNewForm';
+import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
+
+// routes
+import { PATH_DASHBOARD } from '../../../routes/paths';
 
 // import queries
 import {usersQuery, documentsQuery} from '../../queries'
@@ -51,12 +51,15 @@ export default function DocumentCreate() {
 
   return (
     <Page title={isEdit ? 'Update a Document' : 'Create a Document'}>
-      <Container>
-        <Stack direction="row" alignItems="center" justifyContent="flex-start" mb={5}>
-          <Typography variant="h4" gutterBottom>
-            {isEdit ? 'Update document' : 'Create a new document'}
-          </Typography>
-        </Stack>
+      <Container maxWidth="lg">
+        <HeaderBreadcrumbs
+          heading={isEdit ? 'Update document' : 'Create a new document'}
+          links={[
+            { name: 'Dashboard', href: PATH_DASHBOARD.root },
+            { name: 'Documents', href: PATH_DASHBOARD.documents },
+            { name: isEdit ? 'Edit Document' : 'New Document' }
+          ]}
+        />
         {loading ? <ReactLoading className="loading-icons" type={'bars'} color={'grey'} height={30} width={30} /> : 
           <DocumentNewForm isEdit={isEdit} loggedUser={loggedUser} currentDocument={currentDocument} userList={userList} />
         }

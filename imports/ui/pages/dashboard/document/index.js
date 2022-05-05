@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactLoading from 'react-loading';
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
-import { Button, Container, Typography, Stack } from '@mui/material';
+import { Button, Container } from '@mui/material';
 
 import { useTracker } from 'meteor/react-meteor-data';
 
@@ -18,6 +18,8 @@ import { PATH_DASHBOARD } from '../../../routes/paths';
 
 // components
 import Page from '../../../components/Page';
+import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
+
 import DocumentList from './DocumentList';
 // sections
 import Iconify from '../../../components/Iconify';
@@ -101,14 +103,18 @@ export default function Document() {
   return (
     <Page title="Document">
       <Container maxWidth="xl">
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <Typography variant="h4" gutterBottom>
-            Documents ({documentCount})
-          </Typography>
-          <Button variant="contained" component={RouterLink} to={PATH_DASHBOARD.documentCreate} startIcon={<Iconify icon="eva:plus-fill" />}>
-            New Document
-          </Button>
-        </Stack>
+        <HeaderBreadcrumbs
+          heading={`Documents (${documentCount})`}
+          links={[
+            { name: 'Dashboard', href: PATH_DASHBOARD.root },
+            { name: 'Documents' }
+          ]}
+          action={(
+            <Button variant="contained" component={RouterLink} to={PATH_DASHBOARD.documentCreate} startIcon={<Iconify icon="eva:plus-fill" />}>
+              New Document
+            </Button>
+          )}
+        />
         {isLoading ? <ReactLoading className="loading-icons" type={'bars'} color={'grey'} height={30} width={30} /> : 
           <DocumentList documentList={documents} loggedUser={loggedUser} onDelete={(id) => deleteDocument(id)} />
         }
