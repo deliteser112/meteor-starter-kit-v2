@@ -59,7 +59,7 @@ const HeroImgStyle = styled(m.img)(({ theme }) => ({
   [theme.breakpoints.up('lg')]: {
     right: '8%',
     width: 'auto',
-    height: '48vh',
+    height: '75vh',
   },
 }));
 
