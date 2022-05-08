@@ -22,6 +22,8 @@ import Scrollbar from '../../../components/Scrollbar';
 import Iconify from '../../../components/Iconify';
 import SearchNotFound from '../../../components/SearchNotFound';
 import { TableListHead, TableListToolbar, TableMoreMenu } from '../../../sections/@dashboard/table';
+// routes
+import { PATH_DASHBOARD } from '../../../routes/paths';
 // utils
 import stringAvatar from '../../../utils/stringAvatar';
 // ----------------------------------------------------------------------
@@ -188,7 +190,7 @@ export default function UserList({ userList }) {
                       />
                     </TableCell>
                     <TableCell align="right">
-                      <TableMoreMenu onDelete={() => console.log('')} editLink="#" />
+                      <TableMoreMenu onDelete={() => console.log('')} editLink={`${PATH_DASHBOARD.users}/${_id}/edit`} />
                     </TableCell>
                   </TableRow>
                 );

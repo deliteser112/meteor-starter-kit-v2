@@ -26,6 +26,7 @@ import DocumentCreate from "../pages/dashboard/document/DocumentCreate";
 
 // users
 import User from "../pages/dashboard/user";
+import UserCreate from "../pages/dashboard/user/UserCreate";
 
 import Profile from "../pages/profile";
 
@@ -63,6 +64,22 @@ export default function Router() {
           element: (
             <RoleBasedGuard>
               <User />
+            </RoleBasedGuard>
+          ) 
+        },
+        { 
+          path: "users/create", 
+          element: (
+            <RoleBasedGuard>
+              <UserCreate />
+            </RoleBasedGuard>
+          ) 
+        },
+        { 
+          path: "users/:userId/edit", 
+          element: (
+            <RoleBasedGuard>
+              <UserCreate />
             </RoleBasedGuard>
           ) 
         }
