@@ -22,7 +22,7 @@ yarn install
 ## 2.Start
 
 ```sh
-meteor
+npm run start
 ```
 #### Test Users
 

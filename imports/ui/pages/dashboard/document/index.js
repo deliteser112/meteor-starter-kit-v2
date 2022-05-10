@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import ReactLoading from 'react-loading';
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { Button, Container } from '@mui/material';
@@ -29,6 +28,7 @@ import { fDate } from '../../../utils/formatTime'
 // ----------------------------------------------------------------------
 
 export default function Document() {
+  console.log('Here is setting:', Meteor.isDevelopment, Meteor.settings, process.env.MAIL_URL);
   const [users, setUsers] = useState([]);
   const [documents, setDocuments] = useState([]);
 
@@ -115,9 +115,7 @@ export default function Document() {
             </Button>
           )}
         />
-        {isLoading ? <ReactLoading className="loading-icons" type={'bars'} color={'grey'} height={30} width={30} /> : 
-          <DocumentList documentList={documents} loggedUser={loggedUser} onDelete={(id) => deleteDocument(id)} />
-        }
+        <DocumentList documentList={documents} loggedUser={loggedUser} onDelete={(id) => deleteDocument(id)} />
       </Container>
     </Page>
   );

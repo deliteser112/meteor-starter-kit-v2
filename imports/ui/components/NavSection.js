@@ -151,20 +151,23 @@ function NavItem({ item, active }) {
 
 NavSection.propTypes = {
   navConfig: PropTypes.array,
+  isLoading: PropTypes.bool,
+  user: PropTypes.object,
 };
 
-export default function NavSection({ navConfig, ...other }) {
+export default function NavSection({ navConfig, isLoading, user, ...other }) {
   const [isAdmin, setAdmin] = useState(false);
   const { pathname } = useLocation();
-  const user = useTracker(() => Meteor.user());
 
   const match = (path) => (path ? !!matchPath({ path, end: false }, pathname) : false);
 
   useEffect(() => {
-    const { profile } = user;
-    const { role } = profile;
-    setAdmin(role === 'admin');
-  }, [])
+    if(!isLoading) {
+      const { profile } = user;
+      const { role } = profile;
+      setAdmin(role === 'admin');
+    }
+  }, [isLoading])
   return (
     <Box {...other}>
       {navConfig.map((list) => {

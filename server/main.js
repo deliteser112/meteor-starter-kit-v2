@@ -3,6 +3,8 @@ import { Accounts } from 'meteor/accounts-base';
 import '/imports/api/graphql';
 import '/imports/api/Methods';
 import '/imports/api/Publications';
+import './accounts';
+import './email';
 
 const SEED_FIRSTNAME = "Meteor";
 const SEED_LASTNAME = "Admin";

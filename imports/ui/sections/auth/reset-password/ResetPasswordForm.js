@@ -1,3 +1,5 @@
+import { Accounts } from 'meteor/accounts-base';
+
 import React from 'react';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
@@ -23,7 +25,7 @@ export default function ResetPasswordForm() {
 
   const methods = useForm({
     resolver: yupResolver(ResetPasswordSchema),
-    defaultValues: { email: 'daniel@pasme.com.au' },
+    defaultValues: { email: '' },
   });
 
   const {
@@ -37,7 +39,17 @@ export default function ResetPasswordForm() {
 
       sessionStorage.setItem('email-recovery', data.email);
 
-      navigate(PATH_AUTH.newPassword);
+      const email = data.email;
+
+      Accounts.forgotPassword({ email }, (error) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log(`Check ${email} for a reset link!`, 'success');
+          navigate(PATH_AUTH.newPassword);
+        }
+      });
+
     } catch (error) {
       console.error(error);
     }

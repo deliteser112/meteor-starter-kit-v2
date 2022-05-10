@@ -1,5 +1,4 @@
-import { Meteor } from 'meteor/meteor';
-import { useTracker } from 'meteor/react-meteor-data';
+import PropTypes from 'prop-types';
 
 import React from 'react';
 import { useLocation } from 'react-router-dom';
@@ -51,9 +50,12 @@ const ToolbarShadowStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function MainHeader() {
-  const user = useTracker(() => Meteor.user());
+MainHeader.propTypes = {
+  user: PropTypes.object,
+  isLoading: PropTypes.bool
+};
 
+export default function MainHeader({ user, isLoading }) {
   const isOffset = useOffSetTop(HEADER.MAIN_DESKTOP_HEIGHT);
 
   const theme = useTheme();
@@ -90,7 +92,7 @@ export default function MainHeader() {
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
           {isDesktop && (
               <>
-                {user ? <AccountPopover />: (
+                {!isLoading && user ? <AccountPopover isLoading={isLoading} user={user} />: (
                   <Button
                     variant="contained"
                     rel="noopener"

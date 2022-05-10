@@ -1,6 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import { DocumentsCollection } from '/imports/db';
 
+Meteor.publish('loggedInUser', function publishUsers() {
+  return Meteor.users.find({ _id: this.userId });
+});
+
 Meteor.publish('users', function publishUsers() {
   return Meteor.users.find({});
 });

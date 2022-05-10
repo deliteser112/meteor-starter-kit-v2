@@ -1,7 +1,3 @@
-// meteors
-import { Meteor } from 'meteor/meteor';
-import { useTracker } from 'meteor/react-meteor-data';
-
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { sentenceCase } from 'change-case';
@@ -44,21 +40,18 @@ const AccountStyle = styled('div')(({ theme }) => ({
 DashboardSidebar.propTypes = {
   isOpenSidebar: PropTypes.bool,
   onCloseSidebar: PropTypes.func,
+  user: PropTypes.object,
+  isLoading: PropTypes.bool
 };
 
-export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
-
-  const user = useTracker(() => Meteor.user());
-
+export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar, user, isLoading }) {
   const { pathname } = useLocation();
-
   const isDesktop = useResponsive('up', 'lg');
 
   useEffect(() => {
     if (isOpenSidebar) {
       onCloseSidebar();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const renderContent = (
@@ -79,17 +72,17 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
             <Avatar src={account.photoURL} alt="photoURL" />
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {user.profile.firstName} {user.profile.lastName}
+                {!isLoading && user.profile.firstName} {!isLoading && user.profile.lastName}
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {sentenceCase(user.profile.role)}
+                {!isLoading && sentenceCase(user.profile.role)}
               </Typography>
             </Box>
           </AccountStyle>
         </Link>
       </Box>
 
-      <NavSection navConfig={navConfig} />
+      <NavSection navConfig={navConfig} isLoading={isLoading} user={user} />
 
       <Box sx={{ flexGrow: 1 }} />
 

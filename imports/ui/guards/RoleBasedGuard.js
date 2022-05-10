@@ -1,5 +1,6 @@
 // meteors
 import { Meteor } from 'meteor/meteor';
+import { useTracker } from 'meteor/react-meteor-data';
 
 /* eslint-disable array-callback-return */
 import PropTypes from 'prop-types';
@@ -13,7 +14,8 @@ RoleBasedGuard.propTypes = {
 };
 
 export default function RoleBasedGuard({ children }) {
-  const loggedUser = Meteor.user();
+  // const loggedUser = Meteor.user();
+  const loggedUser = useTracker(() => Meteor.user());
 
   const [accessibleDevice, setAccessibleDevice] = useState(false);
 

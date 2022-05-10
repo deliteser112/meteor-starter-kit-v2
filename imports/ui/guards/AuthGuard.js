@@ -1,8 +1,3 @@
-
-// meteors
-import { Meteor } from 'meteor/meteor';
-import { useTracker } from 'meteor/react-meteor-data';
-
 import React, { useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -17,10 +12,7 @@ AuthGuard.propTypes = {
 };
 
 export default function AuthGuard({ children }) {
-  // useTracker(() => Meteor.user());
-  // const isAuthenticated = localStorage.getItem('Meteor.userId');
-  // console.log(isAuthenticated);
-  const isAuthenticated = useTracker(() => Meteor.user());
+  const isAuthenticated = localStorage.getItem('Meteor.userId');
   const { pathname } = useLocation();
   const [requestedLocation, setRequestedLocation] = useState(null);
 

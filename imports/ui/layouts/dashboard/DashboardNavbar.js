@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import { Box, Stack, AppBar, Toolbar, IconButton } from '@mui/material';
 // components
 import Iconify from '../../components/Iconify';
-import VerifyAlert from './VerifyAlert';
+import EmailVerifyAlert from './EmailVerifyAlert';
 //
 import AccountPopover from './AccountPopover';
 
@@ -13,7 +13,7 @@ import AccountPopover from './AccountPopover';
 
 const DRAWER_WIDTH = 280;
 const APPBAR_MOBILE = 64;
-const APPBAR_DESKTOP = 92;
+const APPBAR_DESKTOP = 65;
 
 const RootStyle = styled(AppBar)(({ theme }) => ({
   boxShadow: 'none',
@@ -37,22 +37,31 @@ const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
 
 DashboardNavbar.propTypes = {
   onOpenSidebar: PropTypes.func,
+  isLoading: PropTypes.bool,
+  user: PropTypes.object
 };
 
-export default function DashboardNavbar({ onOpenSidebar }) {
+export default function DashboardNavbar({ onOpenSidebar, isLoading, user }) {
+  const [email, setEmail] = useState('');
+  const [emailVerified, setEmailVerified] = useState(false);
 
+  useEffect(() => {
+    if (user && user.emails) {
+      const { emails, profile } = user;
+      setEmail(emails[0].address);
+      setEmailVerified(emails[0].verified);
+    }
+  }, [user])
   return (
     <RootStyle>
+      {!emailVerified && <EmailVerifyAlert email={email} verifyEmail={() => console.log('sending the code')} />}
       <ToolbarStyle>
         <IconButton onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary', display: { lg: 'none' } }}>
           <Iconify icon="eva:menu-2-fill" />
         </IconButton>
-
-        <VerifyAlert />
         <Box sx={{ flexGrow: 1 }} />
-
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-          <AccountPopover />
+          <AccountPopover isLoading={isLoading} user={user} />
         </Stack>
       </ToolbarStyle>
     </RootStyle>

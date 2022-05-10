@@ -1,7 +1,9 @@
-import React from 'react';
+import { useTracker } from 'meteor/react-meteor-data';
+import React, { useState } from 'react';
+
 import { useLocation, Outlet } from 'react-router-dom';
 // @mui
-import { Box, Link, Container, Typography, Stack } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 // components
 import Logo from '../../components/Logo';
 //
@@ -12,12 +14,29 @@ import MainHeader from './MainHeader';
 
 export default function MainLayout() {
   const { pathname } = useLocation();
+  const { isLoading, user } = useTracker(() => {
+    const handler = Meteor.subscribe('loggedInUser');
+
+    let user = {};
+    
+    const userInfo = Meteor.user();
+
+    const isUser = userInfo && userInfo.profile && userInfo.profile.firstName;
+
+    if (!handler.ready() || !isUser) {
+      return { isLoading: true };
+    }
+
+    if (isUser) user = userInfo;
+
+    return { isLoading: false, user };
+  });
 
   const isHome = pathname === '/';
 
   return (
     <Stack sx={{ minHeight: 1 }}>
-      <MainHeader />
+      <MainHeader isLoading={isLoading} user={user} />
 
       <Outlet />
 

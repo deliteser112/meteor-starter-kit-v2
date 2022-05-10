@@ -1,4 +1,7 @@
 
+// meteor
+import { useTracker } from 'meteor/react-meteor-data';
+
 import React from 'react';
 
 // material
@@ -6,6 +9,8 @@ import {  Card, Container, Grid, Stack } from '@mui/material';
 
 // components
 import Page from '../../components/Page';
+import LoadingScreen from '../../components/LoadingScreen';
+
 //
 import ProfileCover from './ProfileCover';
 import ProfileAbout from './ProfileAbout';
@@ -17,7 +22,9 @@ import account from '../../_mock/account';
 // ----------------------------------------------------------------------
 
 export default function UserProfile() {
-  const user = Meteor.user();
+  const user = useTracker(() => Meteor.user());
+  const isUser = user && user.profile && user.profile.role;
+  if (!isUser) return <LoadingScreen />;
   const { _id, profile, emails } = user;
   const { coverURL } = account;
 

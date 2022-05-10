@@ -26,6 +26,8 @@ export default function Users() {
  
   const users = data && data.allUsers || [];
 
+  console.log(users);
+
   return (
     <Page title="User">
       <Container maxWidth="xl">

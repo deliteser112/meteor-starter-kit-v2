@@ -33,7 +33,7 @@ Meteor.startup(() => {
     <ApolloProvider client={client}>
       <App />
     </ApolloProvider>,
-    document.getElementById('idie')
+    document.getElementById('meteor-root')
   );
 });
 

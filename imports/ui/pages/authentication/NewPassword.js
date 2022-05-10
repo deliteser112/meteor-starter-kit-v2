@@ -39,9 +39,9 @@ export default function NewPassword() {
           </Typography>
 
           <Typography sx={{ color: 'text.secondary' }}>
-            We've sent a 6-digit confirmation email to your email.
+            We've sent confirmation email to your email.
             <br />
-            Please enter the code in below box to verify your email.
+            Please enter new password to reset the password.
           </Typography>
 
           <Box sx={{ mt: 5, mb: 3 }}>

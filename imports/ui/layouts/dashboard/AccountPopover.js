@@ -1,9 +1,9 @@
+import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
-import { useTracker } from 'meteor/react-meteor-data';
 
 import React, { useRef, useState, useEffect } from 'react';
 import { sentenceCase } from 'change-case';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // @mui
 import { alpha } from '@mui/material/styles';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton } from '@mui/material';
@@ -37,14 +37,19 @@ const MENU_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
-export default function AccountPopover() {
+AccountPopover.propTypes = {
+  isLoading: PropTypes.bool,
+  user: PropTypes.object
+}
+
+export default function AccountPopover({ isLoading, user }) {
+  const navigate = useNavigate();
   const [menuOptions, setMenuOptions] = useState(MENU_OPTIONS);
-  const user = useTracker(() => Meteor.user());
   const logout = () => Meteor.logout();
   const anchorRef = useRef(null);
 
   useEffect(() => {
-    if(user) {
+    if(!isLoading) {
       const { _id } = user;
       const profileLink = `${PATH_DASHBOARD.profile}/${_id}`;
       const newMenu = [];
@@ -55,7 +60,7 @@ export default function AccountPopover() {
       })
       setMenuOptions(newMenu);
     }
-  }, []);
+  }, [isLoading]);
 
   const [open, setOpen] = useState(null);
 
@@ -66,6 +71,11 @@ export default function AccountPopover() {
   const handleClose = () => {
     setOpen(null);
   };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  }
 
   return (
     <>
@@ -106,10 +116,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {user.profile.firstName} {user.profile.lastName}
+            {!isLoading && user.profile.firstName} {!isLoading && user.profile.lastName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {sentenceCase(user.profile.role)}
+            {!isLoading && sentenceCase(user.profile.role)}
           </Typography>
         </Box>
 
@@ -125,7 +135,7 @@ export default function AccountPopover() {
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        <MenuItem onClick={logout} sx={{ m: 1 }}>
+        <MenuItem onClick={handleLogout} sx={{ m: 1 }}>
           Logout
         </MenuItem>
       </MenuPopover>

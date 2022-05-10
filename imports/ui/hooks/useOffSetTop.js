@@ -7,16 +7,18 @@ export default function useOffSetTop(top) {
   const isTop = top || 100;
 
   useEffect(() => {
-    window.onscroll = () => {
-      if (window.pageYOffset > isTop) {
-        setOffSetTop(true);
-      } else {
-        setOffSetTop(false);
-      }
-    };
-    return () => {
-      window.onscroll = null;
-    };
+    if (Meteor.isClient) {
+      window.onscroll = () => {
+        if (window.pageYOffset > isTop) {
+          setOffSetTop(true);
+        } else {
+          setOffSetTop(false);
+        }
+      };
+      return () => {
+        window.onscroll = null;
+      };
+    }
   }, [isTop]);
 
   return offsetTop;

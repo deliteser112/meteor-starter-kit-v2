@@ -1,5 +1,7 @@
+import { useTracker } from 'meteor/react-meteor-data';
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
+
 // material
 import { styled } from '@mui/material/styles';
 //
@@ -35,10 +37,28 @@ const MainStyle = styled('div')(({ theme }) => ({
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
 
+  const { isLoading, user } = useTracker(() => {
+    const handler = Meteor.subscribe('loggedInUser');
+
+    let user = {};
+    
+    const userInfo = Meteor.user();
+
+    const isUser = userInfo && userInfo.profile && userInfo.profile.firstName;
+
+    if (!handler.ready() || !isUser) {
+      return { isLoading: true };
+    }
+
+    if (isUser) user = userInfo;
+
+    return { isLoading: false, user };
+  });
+
   return (
     <RootStyle>
-      <DashboardNavbar onOpenSidebar={() => setOpen(true)} />
-      <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
+      <DashboardNavbar isLoading={isLoading} user={user} onOpenSidebar={() => setOpen(true)} />
+      <DashboardSidebar isLoading={isLoading} user={user} isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
       <MainStyle>
         <Outlet />
       </MainStyle>
