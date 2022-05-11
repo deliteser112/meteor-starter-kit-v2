@@ -1,4 +1,4 @@
 // import './userSettings';
-// import './oauth';
+import './oauth';
 import './emailTemplates';
-// import './onCreateUser';
+import './onCreateUser';

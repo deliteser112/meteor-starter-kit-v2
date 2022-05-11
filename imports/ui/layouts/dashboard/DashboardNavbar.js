@@ -1,3 +1,4 @@
+import { useMutation } from "@apollo/react-hooks";
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 // material
@@ -9,6 +10,8 @@ import EmailVerifyAlert from './EmailVerifyAlert';
 //
 import AccountPopover from './AccountPopover';
 
+// graphql
+import { sendVerificationEmailMutation } from '../../pages/mutations';
 // ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;
@@ -42,8 +45,9 @@ DashboardNavbar.propTypes = {
 };
 
 export default function DashboardNavbar({ onOpenSidebar, isLoading, user }) {
+  const [sendVerificationEmail] = useMutation(sendVerificationEmailMutation);
   const [email, setEmail] = useState('');
-  const [emailVerified, setEmailVerified] = useState(false);
+  const [emailVerified, setEmailVerified] = useState(true);
 
   useEffect(() => {
     if (user && user.emails) {
@@ -51,10 +55,15 @@ export default function DashboardNavbar({ onOpenSidebar, isLoading, user }) {
       setEmail(emails[0].address);
       setEmailVerified(emails[0].verified);
     }
-  }, [user])
+  }, [user]);
+
+  const handleSendVerifyEmail = async () => {
+    sendVerificationEmail();
+    return { data: 'success' };
+  }
   return (
     <RootStyle>
-      {!emailVerified && <EmailVerifyAlert email={email} verifyEmail={() => console.log('sending the code')} />}
+      {!emailVerified && <EmailVerifyAlert email={email} verifyEmail={handleSendVerifyEmail} />}
       <ToolbarStyle>
         <IconButton onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary', display: { lg: 'none' } }}>
           <Iconify icon="eva:menu-2-fill" />

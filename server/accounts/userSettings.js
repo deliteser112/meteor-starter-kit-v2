@@ -1,4 +1,3 @@
-// https://cleverbeagle.com/pup/v2/admin/user-settings
 
 import UserSettings from '../../../api/UserSettings/UserSettings';
 

@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import { Stack, Typography, Slide, Link, IconButton } from '@mui/material';
-
+import CheckIcon from '@mui/icons-material/Check';
 // routes
 import { PATH_AUTH } from '../../routes/paths';
 // ----------------------------------------------------------------------
@@ -46,6 +46,7 @@ export default function EmailVerifyAlert({ email, verifyEmail }) {
   const navigate = useNavigate();
   const [isOpen, setOpen] = useState(true);
   const [isLoading, setLoading] = useState(false);
+  const [isSent, setSent] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
@@ -53,13 +54,15 @@ export default function EmailVerifyAlert({ email, verifyEmail }) {
 
   const handleVerifyEmail = async () => {
     setLoading(true);
+    setSent(false);
     const res = await verifyEmail(email);
     const { data } = res;
     if (data === 'success') {
-      setLoading(false);
-      navigate(PATH_AUTH.verify);
+      setTimeout(() => {
+        setLoading(false);
+        setSent(true);
+      }, 1000)
     }
-    // navigate(PATH_AUTH.verify);
   };
 
   return (
@@ -87,11 +90,12 @@ export default function EmailVerifyAlert({ email, verifyEmail }) {
               variant="body2"
               onClick={handleVerifyEmail}
               // component={RouterLink}
-              sx={{ display: 'block', '&:hover': { cursor: 'pointer' } }}
+              sx={{ display: 'block', marginRight: 1, '&:hover': { cursor: 'pointer' } }}
             >
               Send verification email
             </Link>
-            {isLoading && <ReactLoading type="bars" color="grey" height={30} width={30} />}
+            {isLoading && <ReactLoading type="spin" color="grey" height={15} width={15} />}
+            {isSent && <CheckIcon color="success" sx={{ width: 20, heigth: 20 }} />}
           </Stack>
           <IconButton size="small" onClick={handleClose}>
             <Icon icon={'eva:close-fill'} />
@@ -101,3 +105,12 @@ export default function EmailVerifyAlert({ email, verifyEmail }) {
     </Slide>
   );
 }
+// blank
+// balls
+// bars
+// bubbles
+// cubes
+// cylon
+// spin
+// spinningBubbles
+// spokes

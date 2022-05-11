@@ -5,7 +5,7 @@ import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from '@mui/mat
 // component
 import Iconify from '../../../components/Iconify';
 
-import ConfirmDialog from '../../../components/confirmDialog';
+import ConfirmDialog from '../../../components/ConfirmDialog';
 import DocumentWatchDialog from '../../../pages/dashboard/document/DocumentDetailDialog';
 
 // ----------------------------------------------------------------------

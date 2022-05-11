@@ -3,6 +3,7 @@ const UserSchema = `
     type Query {
       loggedUser: User
       allUsers: [User]
+      oAuthServices(services: [String]): [String]
     } 
     
     type User {
@@ -20,6 +21,7 @@ const UserSchema = `
 
     type Mutation {
       createUser( email: String!, password: String! ): User
+      sendVerificationEmail(userId: String): User
     }
     
 `;

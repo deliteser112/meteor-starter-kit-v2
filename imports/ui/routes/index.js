@@ -35,7 +35,7 @@ import Login from "../pages/authentication/Login";
 import Register from "../pages/authentication/Register";
 import ResetPassword from '../pages/authentication/ResetPassword';
 import NewPassword from '../pages/authentication/NewPassword';
-import VerifyCode from '../pages/authentication/VerifyCode';
+import VerifyEmail from '../pages/authentication/VerifyEmail';
 
 // ----------------------------------------------------------------------
 
@@ -109,10 +109,10 @@ export default function Router() {
         { path: 'login-unprotected', element: <Login /> },
         { path: 'register-unprotected', element: <Register /> },
         { path: 'reset-password', element: <ResetPassword /> },
-        { path: 'new-password', element: <NewPassword /> },
-        { path: 'verify', element: <VerifyCode /> },
       ],
     },
+    { path: '/verify-email/:token', element: <VerifyEmail /> },
+    { path: '/reset-password/:token', element: <NewPassword /> },
     // Main RoutesResetPassword
     {
       path: '*',

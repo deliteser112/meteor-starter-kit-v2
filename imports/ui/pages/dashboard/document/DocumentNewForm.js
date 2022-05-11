@@ -18,8 +18,7 @@ import {
   Checkbox,
   TextField,
   Avatar,
-  ToggleButton,
-  IconButton
+  ToggleButton
 } from '@mui/material';
 
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';

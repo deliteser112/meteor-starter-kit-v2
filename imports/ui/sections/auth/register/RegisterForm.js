@@ -8,6 +8,9 @@ import { useNavigate } from 'react-router-dom';
 // material
 import { Stack, TextField, IconButton, InputAdornment, Alert, Box } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+
+// routes
+import { PATH_DASHBOARD } from '../../../routes/paths';
 // component
 import Iconify from '../../../components/Iconify';
 

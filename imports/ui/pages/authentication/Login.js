@@ -12,7 +12,7 @@ import Page from '../../components/Page';
 
 // sections
 import { LoginForm } from '../../sections/auth/login';
-import AuthSocial from '../../sections/auth/AuthSocial';
+import AuthSocial from '../../sections/auth/OAuthSocial';
 
 // ----------------------------------------------------------------------
 

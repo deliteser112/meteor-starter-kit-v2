@@ -28,7 +28,6 @@ import { fDate } from '../../../utils/formatTime'
 // ----------------------------------------------------------------------
 
 export default function Document() {
-  console.log('Here is setting:', Meteor.isDevelopment, Meteor.settings, process.env.MAIL_URL);
   const [users, setUsers] = useState([]);
   const [documents, setDocuments] = useState([]);
 

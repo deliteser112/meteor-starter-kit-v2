@@ -34,6 +34,6 @@ export default (handlebarsMarkup, context, options) => {
   }
 
   throw new Error(
-    '[Pup] Please pass Handlebars markup to compile and a context object with data mapping to the Handlebars expressions used in your template (e.g., {{expressionToReplace}}).',
+    'Please pass Handlebars markup to compile and a context object with data mapping to the Handlebars expressions used in your template (e.g., {{expressionToReplace}}).',
   );
 };

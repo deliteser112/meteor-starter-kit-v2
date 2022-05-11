@@ -1,9 +1,9 @@
 {
   "public": {
-    "MAIL_URL": "smtps://postmaster@sandboxaa5701a2d43e4976be4fe4e4b297acfa.mailgun.org:475808d7590ab44bc720617019ffbd6e-100b5c8d-5fe751e1@smtp.mailgun.org:587",
     "graphQL": {
       "httpUri": "http://localhost:3000/graphql"
     },
+    "services": ["google", "github", "facebook"],
     "productName": "Product Name",
     "copyrightStartYear": "2018",
     "twitterUsername": "product",
@@ -21,14 +21,14 @@
       },
       "google": {
         "enabled": true,
-        "clientId": "",
-        "secret": "",
+        "clientId": "204760194276-q6iunplenq0b69s7m9d66u7bk8ugbv3c.apps.googleusercontent.com",
+        "secret": "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",
         "loginStyle": "popup"
       },
       "github": {
         "enabled": true,
-        "clientId": "",
-        "secret": "",
+        "clientId": "f31b8b8f7d5bd668dbce",
+        "secret": "3fe30c2ce9214d77f879d91c3a91c40ed8ac14e9",
         "loginStyle": "popup"
       }
     },

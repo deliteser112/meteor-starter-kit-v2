@@ -14,3 +14,9 @@ export const usersQuery = gql`
         }
     }
 `;
+
+export const oAuthServicesQuery = gql`
+    query oAuthServices($services: [String]) {
+        oAuthServices(services: $services)
+    }
+`;

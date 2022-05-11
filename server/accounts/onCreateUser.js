@@ -1,17 +1,20 @@
 import { Accounts } from 'meteor/accounts-base';
-import sendWelcomeEmail from '../../../api/Users/actions/sendWelcomeEmail';
-import UserSettings from '../../../api/UserSettings/UserSettings';
-import isOAuthUser from '../../../api/Users/actions/isOAuthUser';
+// import sendWelcomeEmail from '../../../api/Users/actions/sendWelcomeEmail';
+// import UserSettings from '../../../api/UserSettings/UserSettings';
+// import isOAuthUser from '../../../api/Users/actions/isOAuthUser';
 
 Accounts.onCreateUser((options, user) => {
+  console.log('HHHHHHH:', user);
+  console.log('BBBBBBB:', options);
   const userToCreate = user;
   if (options.profile) userToCreate.profile = options.profile;
-  if (isOAuthUser({ user: userToCreate })) sendWelcomeEmail({ user: userToCreate }); // NOTE: Sent for OAuth accounts only here. Sent for password accounts after email verification (https://cleverbeagle.com/pup/v2/accounts/email-verification).
+  // if (isOAuthUser({ user: userToCreate })) sendWelcomeEmail({ user: userToCreate }); // NOTE: Sent for OAuth accounts only here. Sent for password accounts after email verification.
 
-  userToCreate.roles = ['user'];
+  // userToCreate.roles = ['user'];
 
-  const settings = UserSettings.find().fetch();
-  userToCreate.settings = settings;
+  // const settings = UserSettings.find().fetch();
+  // userToCreate.settings = settings;
+  console.log('RESULT:', userToCreate);
 
   return userToCreate;
 });

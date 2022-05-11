@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 
 export default (key, valueOnly, notCurrentUserId) => {
   if (!key) {
-    console.warn('[Pup] Please pass a setting key to retrieve.');
+    console.warn('Please pass a setting key to retrieve.');
     return null;
   }
 

@@ -55,6 +55,8 @@ export default function DashboardLayout() {
     return { isLoading: false, user };
   });
 
+  console.log(Meteor.user());
+
   return (
     <RootStyle>
       <DashboardNavbar isLoading={isLoading} user={user} onOpenSidebar={() => setOpen(true)} />
