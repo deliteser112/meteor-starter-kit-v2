@@ -1,6 +1,11 @@
+import { Roles } from 'meteor/alanning:roles';
+
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink as RouterLink, matchPath, useLocation } from 'react-router-dom';
+
+// hooks
+import useAuth from '../hooks/useAuth';
 
 // material
 import { alpha, useTheme, styled } from '@mui/material/styles';
@@ -147,24 +152,21 @@ function NavItem({ item, active }) {
 }
 
 NavSection.propTypes = {
-  navConfig: PropTypes.array,
-  isLoading: PropTypes.bool,
-  user: PropTypes.object,
+  navConfig: PropTypes.array
 };
 
-export default function NavSection({ navConfig, isLoading, user, ...other }) {
+export default function NavSection({ navConfig, ...other }) {
+  const { user } = useAuth();
   const [isAdmin, setAdmin] = useState(false);
   const { pathname } = useLocation();
 
   const match = (path) => (path ? !!matchPath({ path, end: false }, pathname) : false);
 
   useEffect(() => {
-    if(!isLoading) {
-      const { profile } = user;
-      const { role } = profile;
-      setAdmin(role === 'admin');
+    if (user && Roles.userIsInRole(user._id, 'admin')) {
+      setAdmin(true);
     }
-  }, [isLoading])
+  }, [user])
   return (
     <Box {...other}>
       {navConfig.map((list) => {

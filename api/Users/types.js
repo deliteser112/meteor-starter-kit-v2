@@ -33,6 +33,7 @@ export default `
     name: Name
     username: String
     emailAddress: String
+    emailVerified: Boolean
     oAuthProvider: String
     roles: [Role]
     settings: [UserSetting] # From /api/UserSettings/types.js

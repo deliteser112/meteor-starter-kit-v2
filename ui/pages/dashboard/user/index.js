@@ -7,7 +7,7 @@ import { Container, Typography, Stack } from '@mui/material';
 import { useQuery } from "@apollo/react-hooks";
 
 // import queries
-import {usersQuery} from '../../queries'
+import { users as usersQuery } from '../../../_queries/Users.gql'
 
 // components
 import Page from '../../../components/Page';
@@ -24,7 +24,7 @@ export default function Users() {
 
   refetch();
  
-  const users = data && data.allUsers || [];
+  const users = data && data.users || [];
 
   console.log(users);
 
@@ -32,14 +32,14 @@ export default function Users() {
     <Page title="User">
       <Container maxWidth="xl">
         <HeaderBreadcrumbs
-          heading={`Users (${users.length})`}
+          heading={`Users`}
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.root },
             { name: 'Users' }
           ]}
         />
         {loading ? <ReactLoading className="loading-icons" type={'bars'} color={'grey'} height={30} width={30} /> : 
-          <UserList userList={users} />
+          <UserList userList={users.users} />
         }
       </Container>
     </Page>

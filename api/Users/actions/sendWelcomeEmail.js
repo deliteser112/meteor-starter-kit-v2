@@ -7,7 +7,7 @@ import sendEmail from '../../../modules/server/sendEmail';
 const getEmailOptions = (user) => {
   try {
     console.log(user);
-    const firstName = 'user.profile.name.first';
+    const firstName = 'user.profile.name.first;'
     const { productName } = Meteor.settings.public;
 
     return {

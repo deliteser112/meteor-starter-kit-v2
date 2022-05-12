@@ -8,7 +8,7 @@ import { Divider, Typography } from '@mui/material';
 import OAuthLoginButton from './OAuthLoginButton';
 
 // import { oAuthServicesQuery } from '../../pages/queries';
-import oAuthServicesQuery from '../../queries/OAuth.gql';
+import oAuthServicesQuery from '../../_queries/OAuth.gql';
 // ----------------------------------------------------------------------
 
 export default function OAuthSocial() {

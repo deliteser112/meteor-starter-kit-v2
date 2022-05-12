@@ -1,14 +1,18 @@
 import { useTracker } from 'meteor/react-meteor-data';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
 // material
 import { styled } from '@mui/material/styles';
+// hooks
+import useAuth from '../../hooks/useAuth';
 //
 import DashboardNavbar from './DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
 
 // ----------------------------------------------------------------------
+
+const services = ['github', 'facebook','google'];
 
 const APP_BAR_MOBILE = 64;
 const APP_BAR_DESKTOP = 92;
@@ -37,30 +41,10 @@ const MainStyle = styled('div')(({ theme }) => ({
 export default function DashboardLayout() {
   const [open, setOpen] = useState(false);
 
-  const { isLoading, user } = useTracker(() => {
-    const handler = Meteor.subscribe('loggedInUser');
-
-    let user = {};
-    
-    const userInfo = Meteor.user();
-
-    const isUser = userInfo && userInfo.profile && userInfo.profile.firstName;
-
-    if (!handler.ready() || !isUser) {
-      return { isLoading: true };
-    }
-
-    if (isUser) user = userInfo;
-
-    return { isLoading: false, user };
-  });
-
-  console.log(Meteor.user());
-
   return (
     <RootStyle>
-      <DashboardNavbar isLoading={isLoading} user={user} onOpenSidebar={() => setOpen(true)} />
-      <DashboardSidebar isLoading={isLoading} user={user} isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
+      <DashboardNavbar onOpenSidebar={() => setOpen(true)} />
+      <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
       <MainStyle>
         <Outlet />
       </MainStyle>

@@ -20,10 +20,13 @@ export default (options) => {
   try {
     const normalizedMeteorUserData = normalizeMeteorUserData(options);
 
+    // console.log('QQQ', normalizedMeteorUserData);
+
     return {
       _id: normalizedMeteorUserData._id,
-      name: normalizedMeteorUserData.profile.name,
+      name: normalizedMeteorUserData.profile ? normalizedMeteorUserData.profile.name : { first: normalizedMeteorUserData.username },
       emailAddress: normalizedMeteorUserData.emails[0].address,
+      emailVerified: normalizedMeteorUserData.emails[0].verified,
       roles: getActiveRoles(normalizedMeteorUserData._id),
       oAuthProvider:
         normalizedMeteorUserData.service !== 'password' ? normalizedMeteorUserData.service : null,

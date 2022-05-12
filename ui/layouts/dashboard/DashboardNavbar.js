@@ -7,12 +7,13 @@ import { Box, Stack, AppBar, Toolbar, IconButton } from '@mui/material';
 // components
 import Iconify from '../../components/Iconify';
 import EmailVerifyAlert from './EmailVerifyAlert';
-//
 import AccountPopover from './AccountPopover';
 
+// hooks
+import useAuth from '../../hooks/useAuth';
+
 // graphql
-// import { sendVerificationEmailMutation } from '../../pages/mutations';
-import { sendVerificationEmail as sendVerificationEmailMutation } from '../../mutations/Users.gql';
+import { sendVerificationEmail as sendVerificationEmailMutation } from '../../_mutations/Users.gql';
 
 // ----------------------------------------------------------------------
 
@@ -41,13 +42,12 @@ const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 DashboardNavbar.propTypes = {
-  onOpenSidebar: PropTypes.func,
-  isLoading: PropTypes.bool,
-  user: PropTypes.object
+  onOpenSidebar: PropTypes.func
 };
 
-export default function DashboardNavbar({ onOpenSidebar, isLoading, user }) {
-  // const [sendVerificationEmail] = useMutation(sendVerificationEmailMutation);
+export default function DashboardNavbar({ onOpenSidebar }) {
+  const { user } = useAuth();
+  const [sendVerificationEmail] = useMutation(sendVerificationEmailMutation);
   const [email, setEmail] = useState('');
   const [emailVerified, setEmailVerified] = useState(true);
 
@@ -72,7 +72,7 @@ export default function DashboardNavbar({ onOpenSidebar, isLoading, user }) {
         </IconButton>
         <Box sx={{ flexGrow: 1 }} />
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-          <AccountPopover isLoading={isLoading} user={user} />
+          <AccountPopover />
         </Stack>
       </ToolbarStyle>
     </RootStyle>

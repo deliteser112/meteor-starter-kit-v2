@@ -1,11 +1,12 @@
 // meteors
-import { Meteor } from 'meteor/meteor';
-import { useTracker } from 'meteor/react-meteor-data';
+import { Roles } from 'meteor/alanning:roles';
 
 /* eslint-disable array-callback-return */
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Container, Alert, AlertTitle } from '@mui/material';
+// hooks
+import useAuth from '../hooks/useAuth';
 
 // ----------------------------------------------------------------------
 
@@ -14,18 +15,16 @@ RoleBasedGuard.propTypes = {
 };
 
 export default function RoleBasedGuard({ children }) {
-  // const loggedUser = Meteor.user();
-  const loggedUser = useTracker(() => Meteor.user());
+  const { user } = useAuth();
 
   const [accessibleDevice, setAccessibleDevice] = useState(false);
 
   useEffect(() => {
-    if (loggedUser) {
-      const { profile } = loggedUser;
-      if (profile.role === 'admin') setAccessibleDevice(true);
+    if (user) {
+      if (Roles.userIsInRole(user._id, 'admin')) setAccessibleDevice(true);
       else setAccessibleDevice(false);
     }
-  }, [loggedUser]);
+  }, [user]);
 
   if (!accessibleDevice) {
     return (

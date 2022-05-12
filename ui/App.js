@@ -14,19 +14,25 @@ import ThemeProvider from './theme';
 import ScrollToTop from './components/ScrollToTop';
 import { BaseOptionChartStyle } from './components/chart/BaseOptionChart';
 import NotistackProvider from './components/NotistackProvider';
+
+// auth
+import { AuthProvider } from './contexts/AuthContext';
+
 // ----------------------------------------------------------------------
 
 export default function App() {
   return (
     <HelmetProvider>
       <BrowserRouter>
-        <ThemeProvider>
-          <NotistackProvider>
-            <ScrollToTop />
-            <BaseOptionChartStyle />
-            <Router />
-          </NotistackProvider>
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider>
+            <NotistackProvider>
+              <ScrollToTop />
+              <BaseOptionChartStyle />
+              <Router />
+            </NotistackProvider>
+          </ThemeProvider>
+        </AuthProvider>
       </BrowserRouter>
     </HelmetProvider>
   );

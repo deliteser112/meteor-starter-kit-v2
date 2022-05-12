@@ -8,6 +8,9 @@ import { useTracker } from 'meteor/react-meteor-data';
 // routes
 import { PATH_DASHBOARD } from '../routes/paths';
 
+// hooks
+import useAuth from '../hooks/useAuth';
+
 // ----------------------------------------------------------------------
 
 GuestGuard.propTypes = {
@@ -15,7 +18,8 @@ GuestGuard.propTypes = {
 };
 
 export default function GuestGuard({ children }) {
-  const isAuthenticated = useTracker(() => Meteor.user());
+  // const isAuthenticated = useTracker(() => Meteor.user());
+  const { isAuthenticated } = useAuth();
   if (isAuthenticated) {
     return <Navigate to={PATH_DASHBOARD.root} />;
   }

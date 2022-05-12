@@ -30,9 +30,9 @@ import stringAvatar from '../../../utils/stringAvatar';
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', alignRight: false },
-  { id: 'email', label: 'Email', alignRight: false },
+  { id: 'emailAddress', label: 'Email', alignRight: false },
   { id: 'role', label: 'Role', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
+  { id: 'loggedWith', label: 'Logged With', alignRight: false },
   { id: 'verified', label: 'Email Verified', alignRight: false },
   { id: '' },
 ];
@@ -63,7 +63,7 @@ function applySortFilter(array, comparator, query) {
     return a[1] - b[1];
   });
   if (query) {
-    return filter(array, (_user) => _user.email.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+    return filter(array, (_user) => _user.emailAddress.toLowerCase().indexOf(query.toLowerCase()) !== -1);
   }
   return stabilizedThis.map((el) => el[0]);
 }
@@ -75,7 +75,7 @@ export default function UserList({ userList }) {
 
   const [selected, setSelected] = useState([]);
 
-  const [orderBy, setOrderBy] = useState('email');
+  const [orderBy, setOrderBy] = useState('emailAddress');
 
   const [filterName, setFilterName] = useState('');
 
@@ -89,18 +89,18 @@ export default function UserList({ userList }) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = userList.map((n) => n.email);
+      const newSelecteds = userList.map((n) => n.emailAddress);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, email) => {
-    const selectedIndex = selected.indexOf(email);
+  const handleClick = (event, emailAddress) => {
+    const selectedIndex = selected.indexOf(emailAddress);
     let newSelected = [];
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, email);
+      newSelected = newSelected.concat(selected, emailAddress);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -148,8 +148,8 @@ export default function UserList({ userList }) {
             />
             <TableBody>
               {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
-                const { _id, profile, email, verified } = row;
-                const isItemSelected = selected.indexOf(email) !== -1;
+                const { _id, name, emailAddress, emailVerified, oAuthProvider, roles } = row;
+                const isItemSelected = selected.indexOf(emailAddress) !== -1;
 
                 return (
                   <TableRow
@@ -161,31 +161,49 @@ export default function UserList({ userList }) {
                     aria-checked={isItemSelected}
                   >
                     <TableCell padding="checkbox">
-                      <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, email)} />
+                      <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, emailAddress)} />
                     </TableCell>
                     <TableCell component="th" scope="row" padding="none">
                       <Stack direction="row" alignItems="center" spacing={2}>
-                        <Avatar {...stringAvatar(`${profile.firstName} ${profile.lastName}`)} style={{ marginRight: 8 }} />
+                        <Avatar {...stringAvatar(`${name.first} ${name.last}`)} style={{ marginRight: 8 }} />
                         <Typography variant="subtitle2" noWrap>
-                          {profile.firstName} {profile.lastName}
+                          {`${name.first} ${name.last}`}
                         </Typography>
                       </Stack>
                     </TableCell>
-                    <TableCell align="left">{email}</TableCell>
-                    <TableCell align="left">{sentenceCase(profile.role)}</TableCell>
+                    <TableCell align="left">{emailAddress}</TableCell>
                     <TableCell align="left">
-                      <Label variant="ghost" color={'success'}>
-                        Active
-                      </Label>
+                      {roles.map(({ name, inRole }, index) => (
+                        inRole && (
+                          <Label key={index} variant="ghost" color={name === 'admin' ? 'success' : 'primary'}>
+                            {sentenceCase(name)}
+                          </Label>
+                        )
+                      ))}
+                      
                     </TableCell>
                     <TableCell align="center">
                       <Iconify
-                        icon={verified ? 'eva:checkmark-circle-fill' : 'eva:clock-outline'}
+                        icon={oAuthProvider ? `bi:${oAuthProvider}` : 'fluent:password-16-regular'}
+                        sx={{
+                          width: 20,
+                          height: 20
+                        }}
+                        color={
+                          (oAuthProvider === 'github' && 'black.main') ||
+                          (oAuthProvider === 'facebook' && 'info.main') ||
+                          (oAuthProvider === 'google' && 'error.main')
+                        }
+                      />
+                    </TableCell>
+                    <TableCell align="center">
+                      <Iconify
+                        icon={emailVerified ? 'eva:checkmark-circle-fill' : 'eva:clock-outline'}
                         sx={{
                           width: 20,
                           height: 20,
                           color: 'success.main',
-                          ...(!verified && { color: 'warning.main' }),
+                          ...(!emailVerified && { color: 'warning.main' }),
                         }}
                       />
                     </TableCell>

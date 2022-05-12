@@ -47,7 +47,6 @@ export default function ResetPasswordForm() {
 
       Accounts.forgotPassword({ email }, (error) => {
         if (error) {
-          console.log(error);
           const { reason } = error;
           setError(true);
           setErrorText(reason);

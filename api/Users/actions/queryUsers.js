@@ -29,18 +29,18 @@ const getQuery = (options) => {
     return options.search
       ? {
           _id: { $ne: options.currentUser._id },
-          $or: [
-            { 'profile.name.first': options.search },
-            { 'profile.name.last': options.search },
-            { 'emails.address': options.search },
-            { 'services.facebook.first_name': options.search },
-            { 'services.facebook.last_name': options.search },
-            { 'services.facebook.email': options.search },
-            { 'services.google.name': options.search },
-            { 'services.google.email': options.search },
-            { 'services.github.email': options.search },
-            { 'services.github.username': options.search },
-          ],
+          // $or: [
+          //   { 'profile.name.first': options.search },
+          //   { 'profile.name.last': options.search },
+          //   { 'emails.address': options.search },
+          //   { 'services.facebook.first_name': options.search },
+          //   { 'services.facebook.last_name': options.search },
+          //   { 'services.facebook.email': options.search },
+          //   { 'services.google.name': options.search },
+          //   { 'services.google.email': options.search },
+          //   { 'services.github.email': options.search },
+          //   { 'services.github.username': options.search },
+          // ],
         }
       : { _id: { $ne: options.currentUser._id } };
   } catch (exception) {
@@ -50,10 +50,10 @@ const getQuery = (options) => {
 
 const getUsers = (options) => {
   try {
-    const query = getQuery(options);
-    const projection = getProjection(options);
+    // const query = getQuery(options);
+    // const projection = getProjection(options);
     return Meteor.users
-      .find(query, projection)
+      .find({ _id: { $ne: options.currentUser._id } })
       .fetch()
       .map((user) => mapMeteorUserToSchema({ user }));
   } catch (exception) {

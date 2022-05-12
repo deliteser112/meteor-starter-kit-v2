@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { styled, useTheme } from '@mui/material/styles';
 import { Box, Button, AppBar, Toolbar, Container, Typography } from '@mui/material';
 // hooks
+import useAuth from '../../hooks/useAuth';
 import useOffSetTop from '../../hooks/useOffSetTop';
 import useResponsive from '../../hooks/useResponsive';
 // utils
@@ -49,13 +50,8 @@ const ToolbarShadowStyle = styled('div')(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-
-MainHeader.propTypes = {
-  user: PropTypes.object,
-  isLoading: PropTypes.bool
-};
-
-export default function MainHeader({ user, isLoading }) {
+export default function MainHeader() {
+  const { user } = useAuth();
   const isOffset = useOffSetTop(HEADER.MAIN_DESKTOP_HEIGHT);
 
   const theme = useTheme();
@@ -92,7 +88,7 @@ export default function MainHeader({ user, isLoading }) {
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
           {isDesktop && (
               <>
-                {!isLoading && user ? <AccountPopover isLoading={isLoading} user={user} />: (
+                {user ? <AccountPopover />: (
                   <Button
                     variant="contained"
                     rel="noopener"

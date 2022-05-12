@@ -21,14 +21,14 @@ import NotFound from "../pages/other/Page404";
 // import Maintenance from "./pages/other/Maintenance";
 
 // documents
-// import Documents from "../pages/dashboard/document";
+import Documents from "../pages/dashboard/document";
 // import DocumentCreate from "../pages/dashboard/document/DocumentCreate";
 
 // users
-// import User from "../pages/dashboard/user";
+import User from "../pages/dashboard/user";
 // import UserCreate from "../pages/dashboard/user/UserCreate";
 
-// import Profile from "../pages/profile";
+import Profile from "../pages/profile";
 
 // authentications
 import Login from "../pages/authentication/Login";
@@ -50,23 +50,23 @@ export default function Router() {
       ),
       children: [
         { path: "/", element: <Navigate to="/dashboard/analytics" /> },
-        // { path: "profile/:userId", element: <Profile /> },
+        { path: "profile/:userId", element: <Profile /> },
         { path: "analytics", element: <GeneralApp /> },
         
         // documents
-        // { path: "documents", element: <Documents /> },
+        { path: "documents", element: <Documents /> },
         // { path: "documents/create", element: <DocumentCreate /> },
         // { path: "documents/:id/edit", element: <DocumentCreate /> },
         
         // Admin/users
-        // { 
-        //   path: "users", 
-        //   element: (
-        //     <RoleBasedGuard>
-        //       <User />
-        //     </RoleBasedGuard>
-        //   ) 
-        // },
+        { 
+          path: "users", 
+          element: (
+            <RoleBasedGuard>
+              <User />
+            </RoleBasedGuard>
+          ) 
+        },
         // { 
         //   path: "users/create", 
         //   element: (

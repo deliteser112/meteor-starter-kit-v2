@@ -22,6 +22,8 @@ import OAuthQueries from '../../api/OAuth/queries';
 import '../../api/Documents/server/indexes';
 import '../../api/webhooks';
 
+import '../../api/App/server/publications';
+
 const schema = {
   typeDefs: gql`
     ${UserTypes}

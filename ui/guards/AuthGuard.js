@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 // pages
 import Login from '../pages/authentication/Login';
 
+// hooks
+import useAuth from '../hooks/useAuth';
+
 // ----------------------------------------------------------------------
 
 AuthGuard.propTypes = {
@@ -12,7 +15,7 @@ AuthGuard.propTypes = {
 };
 
 export default function AuthGuard({ children }) {
-  const isAuthenticated = localStorage.getItem('Meteor.userId');
+  const { isAuthenticated } = useAuth();
   const { pathname } = useLocation();
   const [requestedLocation, setRequestedLocation] = useState(null);
 

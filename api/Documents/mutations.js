@@ -3,7 +3,6 @@ import Documents from './Documents';
 
 export default {
   addDocument: async (root, args, context) => {
-    console.log(context.user);
     if (!context.user) throw new Error('Sorry, you must be logged in to add a new document.');
     const date = new Date().toISOString();
     const documentId = Documents.insert({

@@ -14,7 +14,7 @@ const navConfig = [
     items: [
       {
         title: 'dashboard',
-        path: '/dashboard/analytics',
+        path: `${PATH_DASHBOARD.analytics}`,
         icon: getIcon('eva:pie-chart-2-fill'),
       },
       {

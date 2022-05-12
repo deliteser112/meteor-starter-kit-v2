@@ -1,5 +1,6 @@
+import { Roles } from 'meteor/alanning:roles';
 import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { sentenceCase } from 'change-case';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
@@ -8,6 +9,7 @@ import { Box, Link, Drawer, Typography, Avatar, Stack } from '@mui/material';
 // mock
 import account from '../../_mock/account';
 // hooks
+import useAuth from '../../hooks/useAuth';
 import useResponsive from '../../hooks/useResponsive';
 // components
 import Logo from '../../components/Logo';
@@ -15,7 +17,8 @@ import Scrollbar from '../../components/Scrollbar';
 import NavSection from '../../components/NavSection';
 //
 import navConfig from './NavConfig';
-
+// utils
+import isOAuthUser from '../../utils/isOAuthUser';
 // ----------------------------------------------------------------------
 
 const DRAWER_WIDTH = 280;
@@ -40,11 +43,10 @@ const AccountStyle = styled('div')(({ theme }) => ({
 DashboardSidebar.propTypes = {
   isOpenSidebar: PropTypes.bool,
   onCloseSidebar: PropTypes.func,
-  user: PropTypes.object,
-  isLoading: PropTypes.bool
 };
 
-export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar, user, isLoading }) {
+export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
+  const { user } = useAuth();
   const { pathname } = useLocation();
   const isDesktop = useResponsive('up', 'lg');
 
@@ -53,6 +55,21 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar, user, 
       onCloseSidebar();
     }
   }, [pathname]);
+
+  const [displayName, setDisplayName] = useState('');
+  const [role, setRole] = useState('');
+  useEffect(() => {
+    if(user) {
+      const { _id, profile, services } = user;
+      const isOAuth = isOAuthUser(Object.keys(services));
+      setRole(sentenceCase(Roles.getRolesForUser(_id)[0]));
+      if (isOAuth) {
+        setDisplayName(profile.name);
+      } else {
+        setDisplayName(`${profile.name.first} ${profile.name.last}`)
+      }
+    }
+  }, [user]);
 
   const renderContent = (
     <Scrollbar
@@ -72,17 +89,17 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar, user, 
             <Avatar src={account.photoURL} alt="photoURL" />
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {!isLoading && user.profile.firstName} {!isLoading && user.profile.lastName}
+                {displayName}
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {!isLoading && sentenceCase(user.profile.role)}
+                {role}
               </Typography>
             </Box>
           </AccountStyle>
         </Link>
       </Box>
 
-      <NavSection navConfig={navConfig} isLoading={isLoading} user={user} />
+      <NavSection navConfig={navConfig} />
 
       <Box sx={{ flexGrow: 1 }} />
 

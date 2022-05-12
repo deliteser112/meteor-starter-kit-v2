@@ -1,4 +1,5 @@
-import PropTypes from 'prop-types';
+import { Roles } from 'meteor/alanning:roles';
+
 import { Meteor } from 'meteor/meteor';
 
 import React, { useRef, useState, useEffect } from 'react';
@@ -13,7 +14,10 @@ import { PATH_AUTH, PATH_DASHBOARD } from '../../routes/paths';
 import MenuPopover from '../../components/MenuPopover';
 // mocks_
 import account from '../../_mock/account';
-
+// hooks
+import useAuth from '../../hooks/useAuth';
+// utils
+import isOAuthUser from '../../utils/isOAuthUser';
 
 // ----------------------------------------------------------------------
 
@@ -37,20 +41,25 @@ const MENU_OPTIONS = [
 
 // ----------------------------------------------------------------------
 
-AccountPopover.propTypes = {
-  isLoading: PropTypes.bool,
-  user: PropTypes.object
-}
-
-export default function AccountPopover({ isLoading, user }) {
+export default function AccountPopover() {
+  const { user } = useAuth();
   const navigate = useNavigate();
-  const [menuOptions, setMenuOptions] = useState(MENU_OPTIONS);
   const logout = () => Meteor.logout();
   const anchorRef = useRef(null);
 
+  const [menuOptions, setMenuOptions] = useState(MENU_OPTIONS);
+  const [displayName, setDisplayName] = useState('');
+  const [role, setRole] = useState('');
   useEffect(() => {
-    if(!isLoading) {
-      const { _id } = user;
+    if(user) {
+      const { _id, profile, services } = user;
+      const isOAuth = isOAuthUser(Object.keys(services));
+      setRole(sentenceCase(Roles.getRolesForUser(_id)[0]));
+      if (isOAuth) {
+        setDisplayName(profile.name);
+      } else {
+        setDisplayName(`${profile.name.first} ${profile.name.last}`)
+      }
       const profileLink = `${PATH_DASHBOARD.profile}/${_id}`;
       const newMenu = [];
       menuOptions.map((item) => {
@@ -60,7 +69,7 @@ export default function AccountPopover({ isLoading, user }) {
       })
       setMenuOptions(newMenu);
     }
-  }, [isLoading]);
+  }, [user]);
 
   const [open, setOpen] = useState(null);
 
@@ -116,10 +125,10 @@ export default function AccountPopover({ isLoading, user }) {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {!isLoading && user.profile.firstName} {!isLoading && user.profile.lastName}
+            {displayName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {!isLoading && sentenceCase(user.profile.role)}
+            {role}
           </Typography>
         </Box>
 

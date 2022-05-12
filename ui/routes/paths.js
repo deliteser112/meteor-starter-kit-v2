@@ -36,6 +36,7 @@ export const PATH_PAGE = {
 
 export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
+  analytics: path(ROOTS_DASHBOARD, '/analytics'),
   profile: path(ROOTS_DASHBOARD, '/profile'),
 
   // documents

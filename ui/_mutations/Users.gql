@@ -1,4 +1,4 @@
-#import "../queries/Users.gql"
+#import "../_queries/Users.gql"
 
 mutation updateUser($user: UserInput) {
   updateUser(user: $user) {
