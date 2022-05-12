@@ -1,1 +1,0 @@
-export { DocumentsCollection } from './DocumentsCollection';

@@ -27,3 +27,15 @@ service-configuration
 accounts-github
 accounts-facebook
 accounts-google
+alanning:roles
+audit-argument-checks
+observe-sequence
+server-render
+fortawesome:fontawesome
+jquery
+meteorhacks:picker
+session
+browser-policy
+blaze
+templating-runtime
+themeteorchef:bert

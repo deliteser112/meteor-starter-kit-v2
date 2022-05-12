@@ -1,0 +1,35 @@
+#import "../fragments/Documents.gql"
+
+query documents {
+  documents {
+    _id
+    isPublic
+    title
+    updatedAt
+    createdAt
+  }
+}
+
+query editDocument($_id: String) {
+  document(_id: $_id) {
+    ...DocumentAttributes
+  }
+}
+
+query document($_id: String, $sortBy: String) {
+  document(_id: $_id) {
+    ...DocumentAttributes
+    comments(sortBy: $sortBy) {
+      _id
+      comment
+      createdAt
+      user {
+        _id
+        name {
+          first
+          last
+        }
+      }
+    }
+  }
+}
