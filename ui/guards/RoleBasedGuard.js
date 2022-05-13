@@ -17,16 +17,16 @@ RoleBasedGuard.propTypes = {
 export default function RoleBasedGuard({ children }) {
   const { user } = useAuth();
 
-  const [accessibleDevice, setAccessibleDevice] = useState(false);
+  const [isAdmin, setAdmin] = useState(true);
 
   useEffect(() => {
     if (user) {
-      if (Roles.userIsInRole(user._id, 'admin')) setAccessibleDevice(true);
-      else setAccessibleDevice(false);
+      if (Roles.userIsInRole(user._id, 'admin')) setAdmin(true);
+      else setAdmin(false);
     }
   }, [user]);
 
-  if (!accessibleDevice) {
+  if (!isAdmin) {
     return (
       <Container>
         <Alert severity="error">

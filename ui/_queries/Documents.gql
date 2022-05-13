@@ -1,4 +1,4 @@
-#import "../fragments/Documents.gql"
+#import "../_fragments/Documents.gql"
 
 query documents {
   documents {

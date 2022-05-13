@@ -2,10 +2,10 @@ import { Roles } from 'meteor/alanning:roles';
 
 import './accounts';
 import './api';
-import './browserPolicy';
+// import './browserPolicy';
 // import './fixtures';
 import './email';
-import './sitemap';
+// import './sitemap';
 import './graphql';
 // import './ssr';
 

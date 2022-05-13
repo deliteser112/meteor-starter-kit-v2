@@ -29,13 +29,13 @@ const InfoStyle = styled('div')(({ theme }) => ({
   right: 0,
   zIndex: 99,
   position: 'absolute',
-  marginTop: theme.spacing(5),
+  marginTop: theme.spacing(2),
   [theme.breakpoints.up('md')]: {
     right: 'auto',
     display: 'flex',
     alignItems: 'center',
-    left: theme.spacing(3),
-    bottom: theme.spacing(3)
+    left: theme.spacing(2),
+    bottom: theme.spacing(4)
   }
 }));
 
@@ -65,8 +65,8 @@ export default function ProfileCover({ myProfile }) {
             borderWidth: 2,
             borderStyle: 'solid',
             borderColor: 'common.white',
-            width: { xs: 80, md: 128 },
-            height: { xs: 80, md: 128 }
+            width: { xs: 80, md: 90 },
+            height: { xs: 80, md: 90 }
           }}
         />
         <Box
@@ -79,7 +79,7 @@ export default function ProfileCover({ myProfile }) {
         >
           <Typography variant="h4">{displayName}</Typography>
           <Typography sx={{ opacity: 0.72 }}>{sentenceCase(position)}</Typography>
-          <Typography sx={{ opacity: 0.9 }}>{email}</Typography>
+          {/* <Typography sx={{ opacity: 0.9 }}>{email}</Typography> */}
         </Box>
       </InfoStyle>
       <CoverImgStyle alt="profile cover" src={coverURL} />

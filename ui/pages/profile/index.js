@@ -1,66 +1,106 @@
 
 // meteor
-import { useTracker } from 'meteor/react-meteor-data';
+import { Roles } from 'meteor/alanning:roles';
+import { useQuery } from "@apollo/react-hooks";
+import { capitalCase } from 'change-case';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 // material
-import {  Card, Container, Grid, Stack } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { Tabs, Tab, Card, Container, Grid, Stack, Box } from '@mui/material';
 
 // components
 import Page from '../../components/Page';
 import LoadingScreen from '../../components/LoadingScreen';
+import Iconify from '../../components/Iconify';
 
 //
 import ProfileCover from './ProfileCover';
-import ProfileAbout from './ProfileAbout';
-import ProfilePostInput from './ProfilePostInput';
-import ProfileFollowInfo from './ProfileFollowInfo';
+import ProfileSettings from './ProfileSettings';
+import ProfileGeneral from './ProfileGeneral';
 
 import account from '../../_mock/account';
 
+// import queries
+import { user as userQuery } from '../../_queries/Users.gql'
 // ----------------------------------------------------------------------
 
+const TabsWrapperStyle = styled('div')(({ theme }) => ({
+  zIndex: 9,
+  bottom: 0,
+  width: '100%',
+  display: 'flex',
+  position: 'absolute',
+  backgroundColor: theme.palette.background.paper,
+  [theme.breakpoints.up('sm')]: {
+    justifyContent: 'center',
+  },
+  [theme.breakpoints.up('md')]: {
+    justifyContent: 'flex-end',
+    paddingRight: theme.spacing(3),
+  },
+}));
+
 export default function UserProfile() {
-  const user = useTracker(() => Meteor.user());
-  const isUser = user && user.profile && user.profile.role;
+  const [ currentTab, onChangeTab ] = useState('profile');
+  const  { loading, data, refetch } = useQuery(userQuery);
+  const user = data && data.user;
+  const isUser = user && user.name;
   if (!isUser) return <LoadingScreen />;
-  const { _id, profile, emails } = user;
+  const { _id, name, emailAddress } = user;
   const { coverURL } = account;
 
   const myProfile = {
     _id,
-    position: profile.role,
-    email: emails[0].address,
-    displayName: `${profile.firstName} ${profile.lastName}`,
+    position: 'Admin',
+    email: emailAddress,
+    displayName: `${name.first} ${name.last ? name.last : ''}`,
     coverURL
   }
 
+  const PROFILE_TABS = [
+    {
+      value: 'profile',
+      icon: <Iconify icon={'ic:round-account-box'} width={20} height={20} />,
+      component: <ProfileGeneral currentUser={user} isEdit />,
+    },
+    {
+      value: 'settings',
+      icon: <Iconify icon={'eva:heart-fill'} width={20} height={20} />,
+      component: <ProfileSettings profile={{...myProfile, country: 'Madagascar', role: 'Manager', company: 'Gleichner, Mueller and Tromp', school: ' Nikolaus - Leuschke' }} />,
+    }
+  ];
   return (
     <Page title="Profile">
       <Container>
         <Card
           sx={{
             mb: 3,
-            height: 280,
+            height: 220,
             position: 'relative'
           }}
         >
           <ProfileCover myProfile={myProfile} />
+          <TabsWrapperStyle>
+            <Tabs
+              allowScrollButtonsMobile
+              variant="scrollable"
+              scrollButtons="auto"
+              value={currentTab}
+              onChange={(event, newValue) => onChangeTab(newValue)}
+            >
+              {PROFILE_TABS.map((tab) => (
+                <Tab disableRipple key={tab.value} value={tab.value} label={capitalCase(tab.value)} />
+              ))}
+            </Tabs>
+          </TabsWrapperStyle>
         </Card>
 
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={4}>
-            <Stack spacing={3}>
-              <ProfileFollowInfo profile={myProfile} />
-              <ProfileAbout profile={{...myProfile, country: 'Madagascar', role: 'Manager', company: 'Gleichner, Mueller and Tromp', school: ' Nikolaus - Leuschke' }} />
-            </Stack>
-          </Grid>
-
-          <Grid item xs={12} md={8}>
-            <ProfilePostInput />
-          </Grid>
-        </Grid>
+        {PROFILE_TABS.map((tab) => {
+          const isMatched = tab.value === currentTab;
+          return isMatched && <Box key={tab.value}>{tab.component}</Box>;
+        })}
       </Container>
     </Page>
   );
