@@ -28,6 +28,9 @@ import Documents from "../pages/dashboard/document";
 import User from "../pages/dashboard/user";
 // import UserCreate from "../pages/dashboard/user/UserCreate";
 
+// user settings
+import UserSettings from "../pages/dashboard/userSettings";
+
 import Profile from "../pages/profile";
 
 // authentications
@@ -83,6 +86,16 @@ export default function Router() {
         //     </RoleBasedGuard>
         //   ) 
         // }
+
+        // Admin/user-settings
+        { 
+          path: "user-settings", 
+          element: (
+            <RoleBasedGuard>
+              <UserSettings />
+            </RoleBasedGuard>
+          ) 
+        },
       ],
     },
     {

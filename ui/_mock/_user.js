@@ -5,7 +5,7 @@ import { randomNumberRange, randomInArray } from './funcs';
 
 export const _userAbout = {
   id: _mock.id(1),
-  cover: _mock.image.cover(1),
+  cover: '_mock.image.cover(1)',
   position: 'UI Designer',
   follower: randomNumberRange(999, 99999),
   following: randomNumberRange(999, 99999),
@@ -40,7 +40,7 @@ export const _userGallery = [...Array(12)].map((_, index) => ({
   id: _mock.id(index),
   title: _mock.text.title(index),
   postAt: _mock.time(index),
-  imageUrl: _mock.image.cover(index),
+  imageUrl: '_mock.image.cover(index)',
 }));
 
 export const _userFeeds = [...Array(3)].map((_, index) => ({
@@ -86,7 +86,7 @@ export const _userFeeds = [...Array(3)].map((_, index) => ({
 export const _userCards = [...Array(24)].map((_, index) => ({
   id: _mock.id(index),
   avatarUrl: _mock.image.avatar(index),
-  cover: _mock.image.cover(index),
+  cover: '_mock.image.cover(index)',
   name: _mock.name.fullName(index),
   follower: randomNumberRange(999, 99999),
   following: randomNumberRange(999, 99999),

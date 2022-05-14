@@ -47,5 +47,8 @@ export const PATH_DASHBOARD = {
   users: path(ROOTS_DASHBOARD, '/users'),
   userCreate: path(ROOTS_DASHBOARD, '/users/create'),
 
+  // userSettings
+  userSettings: path(ROOTS_DASHBOARD, '/user-settings'),
+
   permissionDenied: path(ROOTS_DASHBOARD, '/permission-denied'),
 };

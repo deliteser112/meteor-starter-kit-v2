@@ -31,6 +31,11 @@ const navConfig = [
         title: 'user',
         path: `${PATH_DASHBOARD.users}`,
         icon: getIcon('gis:globe-users'),
+      },
+      {
+        title: 'user settings',
+        path: `${PATH_DASHBOARD.userSettings}`,
+        icon: getIcon('fluent:people-settings-28-regular'),
       }
     ]
   },

@@ -26,8 +26,6 @@ export default function Users() {
  
   const users = data && data.users || [];
 
-  console.log(users);
-
   return (
     <Page title="User">
       <Container maxWidth="xl">
@@ -38,7 +36,7 @@ export default function Users() {
             { name: 'Users' }
           ]}
         />
-        {loading ? <ReactLoading className="loading-icons" type={'bars'} color={'grey'} height={30} width={30} /> : 
+        {loading ? <ReactLoading className="loading-icons" type={'spin'} color={'grey'} height={30} width={30} /> : 
           <UserList userList={users.users} />
         }
       </Container>

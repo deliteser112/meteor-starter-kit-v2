@@ -59,7 +59,10 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
     firstName: Yup.string().required("First name is required"),
     lastName: Yup.string().required("Last name is required"),
     email: Yup.string().required("Email is required").email(),
-    confirmNewPassword: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Passwords must match'),
+    confirmNewPassword: Yup.string().oneOf(
+      [Yup.ref("newPassword"), null],
+      "Passwords must match"
+    ),
     // avatarUrl: Yup.mixed().test(
     //   "required",
     //   "Avatar is required",
@@ -77,9 +80,9 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
       address: currentUser?.address || "",
       isVerified: currentUser?.isVerified || true,
       status: currentUser?.status,
-      oldPassword: '',
-      newPassword: '',
-      confirmNewPassword: '',
+      oldPassword: "",
+      newPassword: "",
+      confirmNewPassword: "",
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentUser]
@@ -115,47 +118,58 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
   }, [isEdit, currentUser]);
 
   const onSubmit = async (values) => {
-      const { firstName, lastName, email, newPassword, oldPassword } = values;
+    const { firstName, lastName, email, newPassword, oldPassword } = values;
 
-      updateUser({
-        variables: {
-          user: {
-            email,
-            profile: {
-              name: {
-                first: firstName,
-                last: lastName,
-              },
+    console.log({
+      variables: {
+        user: {
+          email,
+          profile: {
+            name: {
+              first: firstName,
+              last: lastName,
             },
           },
         },
+      },
+    });
+    updateUser({
+      variables: {
+        user: {
+          email,
+          profile: {
+            name: {
+              first: firstName,
+              last: lastName,
+            },
+          },
+        },
+      },
+    });
+
+    if (newPassword) {
+      Accounts.changePassword(oldPassword, newPassword, async (error) => {
+        if (error) {
+          console.log(error);
+          enqueueSnackbar(error.reason, { variant: "error" });
+          return;
+        } else {
+          await new Promise((resolve) => setTimeout(resolve, 500));
+          reset();
+          enqueueSnackbar("Update success!", {
+            variant: "success",
+          });
+          navigate(PATH_DASHBOARD.root);
+        }
       });
-
-      if (newPassword) {
-        Accounts.changePassword(oldPassword, newPassword, async (error) => {
-          if (error) {
-            console.log(error);
-            enqueueSnackbar(error.reason, { variant: "error" });
-            return;
-          } else {
-            await new Promise((resolve) => setTimeout(resolve, 500));
-            reset();
-            enqueueSnackbar("Update success!", {
-              variant: "success",
-            });
-            navigate(PATH_DASHBOARD.root);
-          }
-        });
-      } else {
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        reset();
-        enqueueSnackbar("Update success!", {
-          variant: "success",
-        });
-        navigate(PATH_DASHBOARD.root);
-      }
-
-      
+    } else {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      reset();
+      enqueueSnackbar("Update success!", {
+        variant: "success",
+      });
+      navigate(PATH_DASHBOARD.root);
+    }
   };
 
   const handleDrop = useCallback(
@@ -297,11 +311,23 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
                 <RHFTextField name="firstName" label="First Name" />
                 <RHFTextField name="lastName" label="Last Name" />
                 <RHFTextField name="email" label="Email Address" />
-                <RHFTextField name="oldPassword" type="password" label="Old Password" />
-                <RHFTextField name="newPassword" type="password" label="New Password" />
-                <RHFTextField name="confirmNewPassword" type="password" label="Confirm New Password" />
+                <RHFTextField
+                  name="oldPassword"
+                  type="password"
+                  label="Old Password"
+                />
+                <RHFTextField
+                  name="newPassword"
+                  type="password"
+                  label="New Password"
+                />
+                <RHFTextField
+                  name="confirmNewPassword"
+                  type="password"
+                  label="Confirm New Password"
+                />
               </Box>
-              
+
               <Stack alignItems="flex-end" sx={{ mt: 3 }}>
                 <LoadingButton
                   type="submit"

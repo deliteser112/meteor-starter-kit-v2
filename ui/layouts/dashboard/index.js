@@ -6,6 +6,8 @@ import { Outlet } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 // hooks
 import useAuth from '../../hooks/useAuth';
+// components
+import GDPRConsentModal from '../../components/GDPRConsentModal';
 //
 import DashboardNavbar from './DashboardNavbar';
 import DashboardSidebar from './DashboardSidebar';
@@ -43,6 +45,7 @@ export default function DashboardLayout() {
 
   return (
     <RootStyle>
+      <GDPRConsentModal />
       <DashboardNavbar onOpenSidebar={() => setOpen(true)} />
       <DashboardSidebar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
       <MainStyle>

@@ -12,7 +12,7 @@ const handleLogin = (service, callback) => {
     },
     github: {
       requestPermissions: ['user:email'],
-      loginStyle: 'popup',
+      loginStyle: 'redirect',
     },
     google: {
       requestPermissions: ['email', 'profile'],

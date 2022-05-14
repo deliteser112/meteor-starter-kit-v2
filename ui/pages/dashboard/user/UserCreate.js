@@ -35,12 +35,6 @@ export default function UserCreate() {
  
   const users = data && data.allUsers || [];
 
-  console.log(users);
-
-  // const currentUser = _userList.find((user) => paramCase(user.name) === name);
-
-  // console.log(currentUser);
-
   return (
     <Page title="Edit user">
       <Container maxWidth="lg">

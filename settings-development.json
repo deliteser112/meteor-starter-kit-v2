@@ -29,7 +29,7 @@
         "enabled": true,
         "clientId": "f31b8b8f7d5bd668dbce",
         "secret": "3fe30c2ce9214d77f879d91c3a91c40ed8ac14e9",
-        "loginStyle": "popup"
+        "loginStyle": "redirect"
       }
     },
     "supportEmail": "Customer Support <support@product.com>"

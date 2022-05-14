@@ -45,7 +45,7 @@ Editor.propTypes = {
 };
 
 export default function Editor({
-  id = 'minimal-quill',
+  id = 'meteor-quill',
   error,
   value,
   onChange,

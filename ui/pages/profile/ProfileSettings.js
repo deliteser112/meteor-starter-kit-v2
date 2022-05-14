@@ -1,72 +1,173 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from "react";
+import { useSnackbar } from "notistack";
+
 // @mui
-import { styled } from '@mui/material/styles';
-import { Link, Card, Typography, CardHeader, Stack } from '@mui/material';
+import {
+  Switch,
+  ListItem,
+  List,
+  ListItemAvatar,
+  TextField,
+  ListItemText,
+  Avatar,
+  Card,
+  CardContent,
+  FormControlLabel
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
+
+import SettingsIcon from "@mui/icons-material/Settings";
+
+// graphql & collections
+import { useMutation } from "@apollo/react-hooks";
+
+// import mutations
+import { updateUser as updateUserMutation } from "../../_mutations/Users.gql";
+
 // components
-import Iconify from '../../components/Iconify';
+import EmptyContent from "../../components/EmptyContent";
 
 // ----------------------------------------------------------------------
-
-const IconStyle = styled(Iconify)(({ theme }) => ({
-  width: 20,
-  height: 20,
-  marginTop: 1,
-  flexShrink: 0,
-  marginRight: theme.spacing(2),
+const Android12Switch = styled(Switch)(({ theme }) => ({
+  padding: 8,
+  "& .MuiSwitch-track": {
+    borderRadius: 22 / 2,
+    "&:before, &:after": {
+      content: '""',
+      position: "absolute",
+      top: "50%",
+      transform: "translateY(-50%)",
+      width: 16,
+      height: 16,
+    },
+    "&:before": {
+      backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
+        theme.palette.getContrastText(theme.palette.primary.main)
+      )}" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/></svg>')`,
+      left: 12,
+    },
+    "&:after": {
+      backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
+        theme.palette.getContrastText(theme.palette.primary.main)
+      )}" d="M19,13H5V11H19V13Z" /></svg>')`,
+      right: 12,
+    },
+  },
+  "& .MuiSwitch-thumb": {
+    boxShadow: "none",
+    width: 16,
+    height: 16,
+    margin: 2,
+  },
 }));
 
-// ----------------------------------------------------------------------
+ProfileSettings.propTypes = {
+  userId: PropTypes.string,
+  settings: PropTypes.array
+}
 
-ProfileAbout.propTypes = {
-  profile: PropTypes.object,
-};
+export default function ProfileSettings({ userId, settings }) {
+  const { enqueueSnackbar } = useSnackbar();
 
-export default function ProfileAbout({ profile }) {
-  const { quote, country, email, role, company, school } = profile;
+  // mutation define
+  const [updateUser] = useMutation(updateUserMutation);
+
+  const handleUpdateSetting = async (setting) => {
+    const settingsUpdate = [...settings];
+    const settingToUpdate = settingsUpdate.find(({ _id }) => _id === setting._id);
+
+    settingToUpdate.value = setting.value;
+
+    if (!userId) settingToUpdate.lastUpdatedByUser = new Date().toISOString();
+    console.log(settingToUpdate, settingsUpdate);
+
+    console.log({
+      variables: {
+        user: {
+          settings: settingsUpdate,
+        },
+      },
+    })
+    
+    updateUser({
+      variables: {
+        user: {
+          settings: settingsUpdate,
+        }
+      }
+    });
+    enqueueSnackbar("Update success!", {
+      variant: "success",
+    });
+  };
+
+  const renderSettingValue = (type, key, value, onChange) =>
+    ({
+      boolean: () => (
+        <FormControlLabel
+          control={
+            <Android12Switch
+              checked={value === 'true'}
+              onChange={(e) => onChange({ key, value: `${e.target.checked}` })}
+            />
+          }
+        />
+      ),
+      number: () => (
+        <TextField
+          id="outlined-name"
+          label="Default Value"
+          type="number"
+          value={value}
+          onChange={(event) => onChange({ key, value: parseInt(event.target.value, 10) })}
+        />
+      ),
+      string: () => (
+        <TextField
+          id="outlined-name"
+          label="Default Value"
+          type="text"
+          value={value}
+          onChange={(event) => onChange({ key, value: event.target.value })}
+        />
+      ),
+    }[type]());
 
   return (
     <Card>
-      <CardHeader title="About" />
-
-      <Stack spacing={2} sx={{ p: 3 }}>
-        <Typography variant="body2">{quote}</Typography>
-
-        <Stack direction="row">
-          <IconStyle icon={'eva:pin-fill'} />
-          <Typography variant="body2">
-            Live at &nbsp;
-            <Link component="span" variant="subtitle2" color="text.primary">
-              {country}
-            </Link>
-          </Typography>
-        </Stack>
-
-        <Stack direction="row">
-          <IconStyle icon={'eva:email-fill'} />
-          <Typography variant="body2">{email}</Typography>
-        </Stack>
-
-        <Stack direction="row">
-          <IconStyle icon={'ic:round-business-center'} />
-          <Typography variant="body2">
-            {role} at &nbsp;
-            <Link component="span" variant="subtitle2" color="text.primary">
-              {company}
-            </Link>
-          </Typography>
-        </Stack>
-
-        <Stack direction="row">
-          <IconStyle icon={'ic:round-business-center'} />
-          <Typography variant="body2">
-            Studied at &nbsp;
-            <Link component="span" variant="subtitle2" color="text.primary">
-              {school}
-            </Link>
-          </Typography>
-        </Stack>
-      </Stack>
+      <CardContent
+        sx={{ padding: { xs: 0, md: 2 }, paddingBottom: { xs: 0, md: 3 } }}
+      >
+        {settings.length > 0 ? (
+          <List>
+            {settings.map(({ _id, key, label, type, value }, index) => (
+              <ListItem
+                key={index}
+                secondaryAction={
+                  <div>
+                    {renderSettingValue(type, key, value, (update) => handleUpdateSetting({ ...update, _id}))}
+                  </div>
+                }
+              >
+                <ListItemAvatar>
+                  <Avatar>
+                    <SettingsIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={key} secondary={label} />
+              </ListItem>
+            ))}
+          </List>
+        ) : (
+          <EmptyContent
+            title="No Settings"
+            sx={{
+              "& span.MuiBox-root": { height: 160 },
+            }}
+          />
+        )}
+      </CardContent>
     </Card>
   );
 }

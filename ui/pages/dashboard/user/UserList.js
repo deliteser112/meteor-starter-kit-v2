@@ -167,7 +167,7 @@ export default function UserList({ userList }) {
                       <Stack direction="row" alignItems="center" spacing={2}>
                         <Avatar {...stringAvatar(`${name.first} ${name.last}`)} style={{ marginRight: 8 }} />
                         <Typography variant="subtitle2" noWrap>
-                          {`${name.first} ${name.last}`}
+                          {`${name.first} ${name.last ? name.last : ''}`}
                         </Typography>
                       </Stack>
                     </TableCell>

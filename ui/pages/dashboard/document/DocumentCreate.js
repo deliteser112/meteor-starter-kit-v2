@@ -60,7 +60,7 @@ export default function DocumentCreate() {
             { name: isEdit ? 'Edit Document' : 'New Document' }
           ]}
         />
-        {loading ? <ReactLoading className="loading-icons" type={'bars'} color={'grey'} height={30} width={30} /> : 
+        {loading ? <ReactLoading className="loading-icons" type={'spin'} color={'grey'} height={30} width={30} /> : 
           <DocumentNewForm isEdit={isEdit} loggedUser={loggedUser} currentDocument={currentDocument} userList={userList} />
         }
       </Container>

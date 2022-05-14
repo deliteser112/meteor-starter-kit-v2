@@ -48,6 +48,7 @@ export default function UserProfile() {
   const user = data && data.user;
   const isUser = user && user.name;
   if (!isUser) return <LoadingScreen />;
+  console.log(user);
   const { _id, name, emailAddress } = user;
   const { coverURL } = account;
 
@@ -68,7 +69,7 @@ export default function UserProfile() {
     {
       value: 'settings',
       icon: <Iconify icon={'eva:heart-fill'} width={20} height={20} />,
-      component: <ProfileSettings profile={{...myProfile, country: 'Madagascar', role: 'Manager', company: 'Gleichner, Mueller and Tromp', school: ' Nikolaus - Leuschke' }} />,
+      component: <ProfileSettings settings={user.settings} userId={user._id} />,
     }
   ];
   return (
