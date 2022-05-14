@@ -7,7 +7,6 @@ import sendWelcomeEmail from './actions/sendWelcomeEmail';
 
 export default {
   updateUser: async (parent, args, context) => {
-    console.log(args);
     await updateUser({
       currentUser: context.user,
       user: args.user,

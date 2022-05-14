@@ -1,12 +1,11 @@
-import { Roles } from "meteor/alanning:roles";
 import { useMutation } from "@apollo/react-hooks";
 
 import PropTypes from "prop-types";
-import { sentenceCase, capitalCase } from "change-case";
+import { capitalCase, sentenceCase } from "change-case";
 import * as Yup from "yup";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useSnackbar } from "notistack";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // form
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -20,34 +19,34 @@ import {
   Switch,
   Typography,
   FormControlLabel,
-  Checkbox,
-  TextField,
-  Autocomplete,
   Button,
+  Autocomplete,
+  Checkbox,
+  TextField
 } from "@mui/material";
+
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
 // utils
-import { fData } from "../../utils/formatNumber";
+import { fData } from "../../../utils/formatNumber";
 // routes
-import { PATH_DASHBOARD } from "../../routes/paths";
+import { PATH_DASHBOARD } from "../../../routes/paths";
 // components
-import Label from "../../components/Label";
-import Iconify from "../../components/Iconify";
+import Label from "../../../components/Label";
+import Iconify from "../../../components/Iconify";
 
 import {
   FormProvider,
   RHFTextField,
   RHFUploadAvatar,
-} from "../../components/hook-form";
+} from "../../../components/hook-form";
+
+// graphql
+import { updateUser as updateUserMutation } from "../../../_mutations/Users.gql";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
-
-// graphql
-import { updateUser as updateUserMutation } from "../../_mutations/Users.gql";
-
 // ----------------------------------------------------------------------
 
 UserNewEditForm.propTypes = {
@@ -57,7 +56,6 @@ UserNewEditForm.propTypes = {
 
 export default function UserNewEditForm({ isEdit, currentUser }) {
   const [updateUser] = useMutation(updateUserMutation);
-
   const [defaultRoles, setDefaultRoles] = useState([]);
   const [userType, setUserType] = useState("password");
   const [oAuthIcon, setOAuthIcon] = useState("github");
@@ -67,12 +65,12 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
 
   const NewUserSchema = Yup.object().shape({
     firstName: Yup.string().required("First name is required"),
-    lastName: Yup.string().required("Last name is required"),
+    // lastName: Yup.string().required("Last name is required"),
     email: Yup.string().required("Email is required").email(),
-    roles: Yup.array().min(1, "Roles is required"),
-    oldPassword: Yup.string().required('Old Password is required'),
-    newPassword: Yup.string().min(6, 'Password must be at least 6 characters').required('New Password is required'),
-    confirmNewPassword: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Passwords must match'),
+    confirmNewPassword: Yup.string().oneOf(
+      [Yup.ref("newPassword"), null],
+      "Passwords must match"
+    ),
     // avatarUrl: Yup.mixed().test(
     //   "required",
     //   "Avatar is required",
@@ -87,13 +85,13 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
       email: currentUser?.emailAddress || "",
       emailVerified: currentUser?.emailVerified || "",
       avatarUrl: currentUser?.avatarUrl || "",
-      roles: currentUser?.roles || [],
       address: currentUser?.address || "",
       isVerified: currentUser?.isVerified || true,
       status: currentUser?.status,
-      oldPassword: '',
-      newPassword: '',
-      confirmNewPassword: '',
+      roles: currentUser?.roles || [],
+      oldPassword: "",
+      newPassword: "",
+      confirmNewPassword: "",
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentUser]
@@ -134,50 +132,45 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
   }, [isEdit, currentUser]);
 
   const onSubmit = async (values) => {
-    try {
-      const existingUser = currentUser;
-      const isPasswordUser = existingUser && !existingUser.oAuthProvider;
-      // const password = isPasswordUser ? '' : null;
-      const roles = [];
-      defaultRoles.map((item) => {
-        roles.push(item.name);
-      });
-      const { firstName, lastName, email } = values;
-      console.log(values);
+    const { firstName, lastName, email, newPassword } = values;
+    const existingUser = currentUser;
+    const isPasswordUser = existingUser && !existingUser.oAuthProvider;
+    const password = isPasswordUser ? newPassword : null;
 
-      let userUpdate;
-      if (isPasswordUser) {
-        userUpdate = {
-          email: email,
-          // password,
-          profile: {
-            name: {
-              first: firstName,
-              last: lastName,
-            },
+    const roles = [];
+    defaultRoles.map((item) => {
+      roles.push(item.name);
+    });
+
+    let userUpdate;
+
+    if (isPasswordUser) {
+      userUpdate = {
+        email,
+        password,
+        profile: {
+          name: {
+            first: firstName,
+            last: lastName,
           },
-          roles,
-        };
-      }
-
-      if (!isPasswordUser) {
-        userUpdate = {
-          roles,
-        };
-      }
-      if (existingUser) userUpdate._id = existingUser._id;
-      updateUser({ variables: { user: userUpdate } }, () =>
-        console.log("updated!")
-      );
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      reset();
-      enqueueSnackbar(!isEdit ? "Create success!" : "Update success!", {
-        variant: "success",
-      });
-      navigate(PATH_DASHBOARD.root);
-    } catch (error) {
-      console.error(error);
+        },
+        roles,
+      };
     }
+
+    if (!isPasswordUser) {
+      userUpdate = {
+        roles,
+      };
+    }
+
+    if (existingUser) userUpdate._id = existingUser._id;
+    updateUser({ variables: { user: userUpdate } });
+    reset();
+    enqueueSnackbar("Update success!", {
+      variant: "success",
+    });
+    navigate(PATH_DASHBOARD.users);
   };
 
   const handleDrop = useCallback(
@@ -307,8 +300,18 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
         </Grid>
 
         <Grid item xs={12} md={8}>
-          {userType === "password" ? (
             <Card sx={{ p: 3 }}>
+              {userType === 'oauth' && (
+                <Stack direction="row" alignItems="center">
+                  <Typography variant="body2">
+                    {values.firstName} is logged in with
+                    <Label color="success">{capitalCase(oAuthIcon)}</Label>
+                    using the email address
+                    <Label color="primary">{values.email}</Label>
+                  </Typography>
+                </Stack>
+              )}
+              <Box m={2} />
               <Box
                 sx={{
                   display: "grid",
@@ -320,15 +323,12 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
                   },
                 }}
               >
-                <RHFTextField name="firstName" label="First Name" />
-                <RHFTextField name="lastName" label="Last Name" />
-                <RHFTextField name="email" label="Email Address" />
-                <RHFTextField name="oldPassword" type="password" label="Old Password" />
-                <RHFTextField name="newPassword" type="password" label="New Password" />
-                <RHFTextField name="confirmNewPassword" type="password" label="Confirm New Password" />
+                <RHFTextField name="firstName" label="First Name" disabled={userType === 'oauth'} />
+                <RHFTextField name="lastName" label="Last Name" disabled={userType === 'oauth'} />
+                <RHFTextField name="email" label="Email Address" disabled={userType === 'oauth'} />
               </Box>
               <Box m={2} />
-              {/* {currentUser && Roles.userIsInRole(currentUser._id, "admin") && (
+              {/* {currentUser && Roles.userIsInRole(currentUser._id, "admin") && ( */}
                 <Autocomplete
                   multiple
                   id="checkboxes-tags-demo"
@@ -360,7 +360,27 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
                     />
                   )}
                 />
-              )} */}
+              {/* )} */}
+              <Box m={2} />
+              {userType === 'password' && (
+                <Stack direction="column" spacing={2}>
+                  <RHFTextField
+                    name="oldPassword"
+                    type="password"
+                    label="Old Password"
+                  />
+                  <RHFTextField
+                    name="newPassword"
+                    type="password"
+                    label="New Password"
+                  />
+                  <RHFTextField
+                    name="confirmNewPassword"
+                    type="password"
+                    label="Confirm New Password"
+                  />
+                </Stack>
+              )}
 
               <Stack alignItems="flex-end" sx={{ mt: 3 }}>
                 <LoadingButton
@@ -372,34 +392,6 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
                 </LoadingButton>
               </Stack>
             </Card>
-          ) : (
-            <Card sx={{ p: 3 }}>
-              <Stack direction="row" alignItems="center">
-                <Typography variant="body2">
-                  You are logged in with
-                  <Label color="success">{capitalCase(oAuthIcon)}</Label>
-                  using the email address
-                  <Label color="primary">{values.email}</Label>
-                </Typography>
-              </Stack>
-              <Stack alignItems="flex-end" sx={{ mt: 3 }}>
-                <Button
-                  href={
-                    {
-                      facebook: "https://www.facebook.com/settings",
-                      google:
-                        "https://myaccount.google.com/privacy#personalinfo",
-                      github: "https://github.com/settings/profile",
-                    }[oAuthIcon]
-                  }
-                  variant="contained"
-                  target="_blank"
-                >
-                  Edit Profile on {capitalCase(oAuthIcon)}
-                </Button>
-              </Stack>
-            </Card>
-          )}
         </Grid>
       </Grid>
     </FormProvider>

@@ -5,25 +5,26 @@ import { useQuery } from "@apollo/react-hooks";
 import { capitalCase } from 'change-case';
 
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 // material
 import { styled } from '@mui/material/styles';
 import { Tabs, Tab, Card, Container, Grid, Stack, Box } from '@mui/material';
 
 // components
-import Page from '../../components/Page';
-import LoadingScreen from '../../components/LoadingScreen';
-import Iconify from '../../components/Iconify';
+import Page from '../../../components/Page';
+import LoadingScreen from '../../../components/LoadingScreen';
+import Iconify from '../../../components/Iconify';
 
 //
 import ProfileCover from './ProfileCover';
 import ProfileSettings from './ProfileSettings';
 import ProfileGeneral from './ProfileGeneral';
 
-import account from '../../_mock/account';
+import account from '../../../_mock/account';
 
 // import queries
-import { user as userQuery } from '../../_queries/Users.gql'
+import { user as userQuery } from '../../../_queries/Users.gql'
 // ----------------------------------------------------------------------
 
 const TabsWrapperStyle = styled('div')(({ theme }) => ({
@@ -43,8 +44,11 @@ const TabsWrapperStyle = styled('div')(({ theme }) => ({
 }));
 
 export default function UserProfile() {
+  const { userId } = useParams();
+  const  { loading, data, refetch } = useQuery(userQuery, { variables: { _id: userId } });
+  refetch();
   const [ currentTab, onChangeTab ] = useState('profile');
-  const  { loading, data, refetch } = useQuery(userQuery);
+
   const user = data && data.user;
   const isUser = user && user.name;
   if (!isUser) return <LoadingScreen />;

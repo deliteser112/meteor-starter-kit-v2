@@ -120,19 +120,6 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
   const onSubmit = async (values) => {
     const { firstName, lastName, email, newPassword, oldPassword } = values;
 
-    console.log({
-      variables: {
-        user: {
-          email,
-          profile: {
-            name: {
-              first: firstName,
-              last: lastName,
-            },
-          },
-        },
-      },
-    });
     updateUser({
       variables: {
         user: {

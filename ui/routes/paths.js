@@ -45,7 +45,6 @@ export const PATH_DASHBOARD = {
 
   // users
   users: path(ROOTS_DASHBOARD, '/users'),
-  userCreate: path(ROOTS_DASHBOARD, '/users/create'),
 
   // userSettings
   userSettings: path(ROOTS_DASHBOARD, '/user-settings'),

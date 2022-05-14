@@ -1,6 +1,6 @@
-import { Meteor } from 'meteor/meteor';
-import checkIfAuthorized from './checkIfAuthorized';
-import mapMeteorUserToSchema from './mapMeteorUserToSchema';
+import { Meteor } from "meteor/meteor";
+import checkIfAuthorized from "./checkIfAuthorized";
+import mapMeteorUserToSchema from "./mapMeteorUserToSchema";
 
 /* eslint-disable consistent-return */
 
@@ -63,8 +63,9 @@ const getUsers = (options) => {
 
 const validateOptions = (options) => {
   try {
-    if (!options) throw new Error('options object is required.');
-    if (!options.currentUser) throw new Error('options.currentUser is required.');
+    if (!options) throw new Error("options object is required.");
+    if (!options.currentUser)
+      throw new Error("options.currentUser is required.");
   } catch (exception) {
     throw new Error(`[queryUsers.validateOptions] ${exception.message}`);
   }
@@ -73,7 +74,13 @@ const validateOptions = (options) => {
 const queryUsers = (options) => {
   try {
     validateOptions(options);
-    checkIfAuthorized({ as: ['admin'], userId: options.currentUser._id });
+    checkIfAuthorized({ as: ["admin"], userId: options.currentUser._id });
+
+    const users = getUsers(options);
+    console.log(users);
+    users.map((item, index) => {
+      console.log('INDESX:', index, item.roles);
+    })
 
     action.resolve({
       total: getTotalUserCount(options.currentUser._id),

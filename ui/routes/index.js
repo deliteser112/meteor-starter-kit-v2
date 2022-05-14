@@ -26,6 +26,7 @@ import Documents from "../pages/dashboard/document";
 
 // users
 import User from "../pages/dashboard/user";
+import UserProfile from "../pages/dashboard/user-profile";
 // import UserCreate from "../pages/dashboard/user/UserCreate";
 
 // user settings
@@ -78,14 +79,14 @@ export default function Router() {
         //     </RoleBasedGuard>
         //   ) 
         // },
-        // { 
-        //   path: "users/:userId/edit", 
-        //   element: (
-        //     <RoleBasedGuard>
-        //       <UserCreate />
-        //     </RoleBasedGuard>
-        //   ) 
-        // }
+        { 
+          path: "users/:userId/edit", 
+          element: (
+            <RoleBasedGuard>
+              <UserProfile />
+            </RoleBasedGuard>
+          ) 
+        },
 
         // Admin/user-settings
         { 

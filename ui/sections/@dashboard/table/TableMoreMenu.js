@@ -9,7 +9,7 @@ import ConfirmDialog from '../../../components/ConfirmDialog';
 
 // ----------------------------------------------------------------------
 
-export default function TableMoreMenu({ onDelete, editLink }) {
+export default function TableMoreMenu({ _id, onDelete, editLink }) {
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -21,7 +21,7 @@ export default function TableMoreMenu({ onDelete, editLink }) {
   const handleAgree = (isAgree) => {
     setDialogOpen(false);
     setIsOpen(false);
-    if(isAgree) onDelete();
+    if(isAgree) onDelete(_id);
   }
 
   return (

@@ -68,7 +68,7 @@ function applySortFilter(array, comparator, query) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function UserList({ userList }) {
+export default function UserList({ userList, onDelete }) {
   const [page, setPage] = useState(0);
 
   const [order, setOrder] = useState('asc');
@@ -208,7 +208,7 @@ export default function UserList({ userList }) {
                       />
                     </TableCell>
                     <TableCell align="right">
-                      <TableMoreMenu onDelete={() => console.log('')} editLink={`${PATH_DASHBOARD.users}/${_id}/edit`} />
+                      <TableMoreMenu onDelete={onDelete} _id={_id} editLink={`${PATH_DASHBOARD.users}/${_id}/edit`} />
                     </TableCell>
                   </TableRow>
                 );

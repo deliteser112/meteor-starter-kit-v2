@@ -20,7 +20,7 @@ export default (options) => {
   try {
     const normalizedMeteorUserData = normalizeMeteorUserData(options);
 
-    // console.log('QQQ', normalizedMeteorUserData);
+    // console.log('QQQ', getActiveRoles(normalizedMeteorUserData._id));
 
     return {
       _id: normalizedMeteorUserData._id,
