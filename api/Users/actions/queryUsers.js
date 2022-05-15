@@ -76,11 +76,11 @@ const queryUsers = (options) => {
     validateOptions(options);
     checkIfAuthorized({ as: ["admin"], userId: options.currentUser._id });
 
-    const users = getUsers(options);
-    console.log(users);
-    users.map((item, index) => {
-      console.log('INDESX:', index, item.roles);
-    })
+    // const users = getUsers(options);
+    // console.log(users);
+    // users.map((item, index) => {
+    //   console.log('INDESX:', item.roles);
+    // })
 
     action.resolve({
       total: getTotalUserCount(options.currentUser._id),

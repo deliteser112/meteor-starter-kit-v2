@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactLoading from 'react-loading';
 // @mui
 import { Container, Typography, Stack } from '@mui/material';
@@ -26,9 +26,15 @@ export default function Users() {
 
   refetch();
  
-  const users = data && data.users || [];
+  const users = data && data.users && data.users.users || [];
 
-  console.log('USERS', users);
+  useEffect(() => {
+    if (users) {
+      users.map((user) => {
+        console.log(user.roles);
+      })
+    }
+  }, [users]);
 
   const handleDeleteUser = (_id) => {
     removeUser({
@@ -49,7 +55,7 @@ export default function Users() {
           ]}
         />
         {loading ? <ReactLoading className="loading-icons" type={'spin'} color={'grey'} height={30} width={30} /> : 
-          <UserList userList={users.users} onDelete={handleDeleteUser} />
+          <UserList userList={users} onDelete={handleDeleteUser} />
         }
       </Container>
     </Page>
