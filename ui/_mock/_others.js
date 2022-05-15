@@ -1,3 +1,5 @@
+/* eslint-disable import/prefer-default-export */
+/* eslint-disable no-underscore-dangle */
 // ----------------------------------------------------------------------
 
 export const _mapContact = [

@@ -1,16 +1,23 @@
-import { useMutation } from "@apollo/react-hooks";
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/jsx-no-useless-fragment */
+/* eslint-disable no-promise-executor-return */
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable react/require-default-props */
+import { Accounts } from 'meteor/accounts-base';
+import { useMutation } from '@apollo/react-hooks';
 
-import PropTypes from "prop-types";
-import { capitalCase } from "change-case";
-import * as Yup from "yup";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useSnackbar } from "notistack";
-import { useNavigate } from "react-router-dom";
+import PropTypes from 'prop-types';
+import { capitalCase } from 'change-case';
+import * as Yup from 'yup';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { useSnackbar } from 'notistack';
+import { useNavigate } from 'react-router-dom';
 // form
-import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { LoadingButton } from "@mui/lab";
+import { LoadingButton } from '@mui/lab';
 import {
   Box,
   Card,
@@ -20,49 +27,37 @@ import {
   Typography,
   FormControlLabel,
   Button,
-} from "@mui/material";
+} from '@mui/material';
 
 // utils
-import { fData } from "../../utils/formatNumber";
+import { fData } from '../../utils/formatNumber';
 // routes
-import { PATH_DASHBOARD } from "../../routes/paths";
+import { PATH_DASHBOARD } from '../../routes/paths';
 // components
-import Label from "../../components/Label";
-import Iconify from "../../components/Iconify";
+import Label from '../../components/Label';
+import Iconify from '../../components/Iconify';
 
-import {
-  FormProvider,
-  RHFTextField,
-  RHFUploadAvatar,
-} from "../../components/hook-form";
+import { FormProvider, RHFTextField, RHFUploadAvatar } from '../../components/hook-form';
 
 // graphql
-import { updateUser as updateUserMutation } from "../../_mutations/Users.gql";
+import { updateUser as updateUserMutation } from '../../_mutations/Users.gql';
 
 // ----------------------------------------------------------------------
-
-UserNewEditForm.propTypes = {
-  isEdit: PropTypes.bool,
-  currentUser: PropTypes.object,
-};
 
 export default function UserNewEditForm({ isEdit, currentUser }) {
   const [updateUser] = useMutation(updateUserMutation);
 
-  const [userType, setUserType] = useState("password");
-  const [oAuthIcon, setOAuthIcon] = useState("github");
+  const [userType, setUserType] = useState('password');
+  const [oAuthIcon, setOAuthIcon] = useState('github');
   const navigate = useNavigate();
 
   const { enqueueSnackbar } = useSnackbar();
 
   const NewUserSchema = Yup.object().shape({
-    firstName: Yup.string().required("First name is required"),
-    lastName: Yup.string().required("Last name is required"),
-    email: Yup.string().required("Email is required").email(),
-    confirmNewPassword: Yup.string().oneOf(
-      [Yup.ref("newPassword"), null],
-      "Passwords must match"
-    ),
+    firstName: Yup.string().required('First name is required'),
+    lastName: Yup.string().required('Last name is required'),
+    email: Yup.string().required('Email is required').email(),
+    confirmNewPassword: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Passwords must match'),
     // avatarUrl: Yup.mixed().test(
     //   "required",
     //   "Avatar is required",
@@ -72,20 +67,19 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
 
   const defaultValues = useMemo(
     () => ({
-      firstName: currentUser?.name?.first || "",
-      lastName: currentUser?.name?.last || "",
-      email: currentUser?.emailAddress || "",
-      emailVerified: currentUser?.emailVerified || "",
-      avatarUrl: currentUser?.avatarUrl || "",
-      address: currentUser?.address || "",
+      firstName: currentUser?.name?.first || '',
+      lastName: currentUser?.name?.last || '',
+      email: currentUser?.emailAddress || '',
+      emailVerified: currentUser?.emailVerified || '',
+      avatarUrl: currentUser?.avatarUrl || '',
+      address: currentUser?.address || '',
       isVerified: currentUser?.isVerified || true,
       status: currentUser?.status,
-      oldPassword: "",
-      newPassword: "",
-      confirmNewPassword: "",
+      oldPassword: '',
+      newPassword: '',
+      confirmNewPassword: '',
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [currentUser]
+    [currentUser],
   );
 
   const methods = useForm({
@@ -106,15 +100,14 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
 
   useEffect(() => {
     if (isEdit && currentUser) {
-      const { roles, oAuthProvider } = currentUser;
-      setUserType(oAuthProvider ? "oauth" : "password");
+      const { oAuthProvider } = currentUser;
+      setUserType(oAuthProvider ? 'oauth' : 'password');
       setOAuthIcon(oAuthProvider);
       defaultValues;
     }
     if (!isEdit) {
       reset(defaultValues);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEdit, currentUser]);
 
   const onSubmit = async (values) => {
@@ -138,13 +131,12 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
       Accounts.changePassword(oldPassword, newPassword, async (error) => {
         if (error) {
           console.log(error);
-          enqueueSnackbar(error.reason, { variant: "error" });
-          return;
+          enqueueSnackbar(error.reason, { variant: 'error' });
         } else {
           await new Promise((resolve) => setTimeout(resolve, 500));
           reset();
-          enqueueSnackbar("Update success!", {
-            variant: "success",
+          enqueueSnackbar('Update success!', {
+            variant: 'success',
           });
           navigate(PATH_DASHBOARD.root);
         }
@@ -152,8 +144,8 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
     } else {
       await new Promise((resolve) => setTimeout(resolve, 500));
       reset();
-      enqueueSnackbar("Update success!", {
-        variant: "success",
+      enqueueSnackbar('Update success!', {
+        variant: 'success',
       });
       navigate(PATH_DASHBOARD.root);
     }
@@ -165,14 +157,14 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
 
       if (file) {
         setValue(
-          "avatarUrl",
+          'avatarUrl',
           Object.assign(file, {
             preview: URL.createObjectURL(file),
-          })
+          }),
         );
       }
     },
-    [setValue]
+    [setValue],
   );
 
   return (
@@ -182,40 +174,36 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
           <Card sx={{ py: 10, px: 3 }}>
             {isEdit && (
               <>
-                {userType === "password" ? (
+                {userType === 'password' ? (
                   <Label
-                    color={values.emailVerified ? "success" : "error"}
+                    color={values.emailVerified ? 'success' : 'error'}
                     sx={{
-                      textTransform: "uppercase",
-                      position: "absolute",
+                      textTransform: 'uppercase',
+                      position: 'absolute',
                       top: 24,
                       right: 24,
                     }}
                   >
-                    {values.emailVerified ? "Verified" : "Unverfied"}
+                    {values.emailVerified ? 'Verified' : 'Unverfied'}
                   </Label>
                 ) : (
                   <Stack
                     direction="row"
                     spacing={1}
                     alignItems="center"
-                    sx={{ position: "absolute", top: 24, right: 24 }}
+                    sx={{ position: 'absolute', top: 24, right: 24 }}
                   >
                     <Label color="success">Authorized by</Label>
                     <Iconify
-                      icon={
-                        oAuthIcon
-                          ? `bi:${oAuthIcon}`
-                          : "fluent:password-16-regular"
-                      }
+                      icon={oAuthIcon ? `bi:${oAuthIcon}` : 'fluent:password-16-regular'}
                       sx={{
                         width: 20,
                         height: 20,
                       }}
                       color={
-                        (oAuthIcon === "github" && "black.main") ||
-                        (oAuthIcon === "facebook" && "info.main") ||
-                        (oAuthIcon === "google" && "error.main")
+                        (oAuthIcon === 'github' && 'black.main') ||
+                        (oAuthIcon === 'facebook' && 'info.main') ||
+                        (oAuthIcon === 'google' && 'error.main')
                       }
                     />
                   </Stack>
@@ -234,10 +222,10 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
                     variant="caption"
                     sx={{
                       mt: 2,
-                      mx: "auto",
-                      display: "block",
-                      textAlign: "center",
-                      color: "text.secondary",
+                      mx: 'auto',
+                      display: 'block',
+                      textAlign: 'center',
+                      color: 'text.secondary',
                     }}
                   >
                     Allowed *.jpeg, *.jpg, *.png, *.gif
@@ -256,11 +244,9 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
                   render={({ field }) => (
                     <Switch
                       {...field}
-                      checked={field.value !== "active"}
+                      checked={field.value !== 'active'}
                       onChange={(event) =>
-                        field.onChange(
-                          event.target.checked ? "banned" : "active"
-                        )
+                        field.onChange(event.target.checked ? 'banned' : 'active')
                       }
                     />
                   )}
@@ -271,43 +257,35 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
                   <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
                     Banned
                   </Typography>
-                  <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                     Apply disable account
                   </Typography>
                 </>
               }
-              sx={{ mx: 0, mb: 3, width: 1, justifyContent: "space-between" }}
+              sx={{ mx: 0, mb: 3, width: 1, justifyContent: 'space-between' }}
             />
           </Card>
         </Grid>
 
         <Grid item xs={12} md={8}>
-          {userType === "password" ? (
+          {userType === 'password' ? (
             <Card sx={{ p: 3 }}>
               <Box
                 sx={{
-                  display: "grid",
+                  display: 'grid',
                   columnGap: 2,
                   rowGap: 3,
                   gridTemplateColumns: {
-                    xs: "repeat(1, 1fr)",
-                    sm: "repeat(2, 1fr)",
+                    xs: 'repeat(1, 1fr)',
+                    sm: 'repeat(2, 1fr)',
                   },
                 }}
               >
                 <RHFTextField name="firstName" label="First Name" />
                 <RHFTextField name="lastName" label="Last Name" />
                 <RHFTextField name="email" label="Email Address" />
-                <RHFTextField
-                  name="oldPassword"
-                  type="password"
-                  label="Old Password"
-                />
-                <RHFTextField
-                  name="newPassword"
-                  type="password"
-                  label="New Password"
-                />
+                <RHFTextField name="oldPassword" type="password" label="Old Password" />
+                <RHFTextField name="newPassword" type="password" label="New Password" />
                 <RHFTextField
                   name="confirmNewPassword"
                   type="password"
@@ -316,12 +294,8 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
               </Box>
 
               <Stack alignItems="flex-end" sx={{ mt: 3 }}>
-                <LoadingButton
-                  type="submit"
-                  variant="contained"
-                  loading={isSubmitting}
-                >
-                  {!isEdit ? "Create User" : "Save Changes"}
+                <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
+                  {!isEdit ? 'Create User' : 'Save Changes'}
                 </LoadingButton>
               </Stack>
             </Card>
@@ -339,10 +313,9 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
                 <Button
                   href={
                     {
-                      facebook: "https://www.facebook.com/settings",
-                      google:
-                        "https://myaccount.google.com/privacy#personalinfo",
-                      github: "https://github.com/settings/profile",
+                      facebook: 'https://www.facebook.com/settings',
+                      google: 'https://myaccount.google.com/privacy#personalinfo',
+                      github: 'https://github.com/settings/profile',
                     }[oAuthIcon]
                   }
                   variant="contained"
@@ -358,3 +331,8 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
     </FormProvider>
   );
 }
+
+UserNewEditForm.propTypes = {
+  isEdit: PropTypes.bool,
+  currentUser: PropTypes.object,
+};

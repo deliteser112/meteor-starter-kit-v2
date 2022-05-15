@@ -21,8 +21,8 @@ const navConfig = [
         title: 'documents',
         path: `${PATH_DASHBOARD.documents}`,
         icon: getIcon('gala:file-doc'),
-      }
-    ]
+      },
+    ],
   },
   {
     subheader: 'Admin',
@@ -36,8 +36,8 @@ const navConfig = [
         title: 'user settings',
         path: `${PATH_DASHBOARD.userSettings}`,
         icon: getIcon('fluent:people-settings-28-regular'),
-      }
-    ]
+      },
+    ],
   },
 ];
 

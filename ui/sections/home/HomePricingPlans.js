@@ -1,9 +1,21 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { m } from 'framer-motion';
 // @mui
 import { useTheme, styled } from '@mui/material/styles';
-import { Box, Grid, Card, Link, Stack, Button, Divider, Container, Typography } from '@mui/material';
+import {
+  Box,
+  Grid,
+  Card,
+  Link,
+  Stack,
+  Button,
+  Divider,
+  Container,
+  Typography,
+} from '@mui/material';
 // _mock_
 import { _pricingPlans } from '../../_mock/_plans';
 // components
@@ -55,12 +67,12 @@ export default function HomePricingPlans() {
         </Box>
 
         <Grid container spacing={3}>
-            {_pricingPlans.map((card, index) => (
-              <Grid item xs={12} md={4} key={card.subscription}>
-                <PricingPlanCard card={card} index={index} />
-              </Grid>
-            ))}
-          </Grid>
+          {_pricingPlans.map((card, index) => (
+            <Grid item xs={12} md={4} key={card.subscription}>
+              <PricingPlanCard card={card} index={index} />
+            </Grid>
+          ))}
+        </Grid>
 
         <m.div variants={varFade().in}>
           <Box sx={{ p: 5, mt: 10, textAlign: 'center' }}>
@@ -91,15 +103,6 @@ export default function HomePricingPlans() {
 }
 
 // ----------------------------------------------------------------------
-
-PlanCard.propTypes = {
-  plan: PropTypes.shape({
-    license: PropTypes.string,
-    commons: PropTypes.arrayOf(PropTypes.string),
-    icons: PropTypes.arrayOf(PropTypes.string),
-    options: PropTypes.arrayOf(PropTypes.string),
-  }),
-};
 
 function PlanCard({ plan }) {
   const { license, commons, options, icons } = plan;
@@ -138,7 +141,10 @@ function PlanCard({ plan }) {
         <Stack spacing={2.5}>
           {commons.map((option) => (
             <Stack key={option} spacing={1.5} direction="row" alignItems="center">
-              <Iconify icon={'eva:checkmark-fill'} sx={{ color: 'primary.main', width: 20, height: 20 }} />
+              <Iconify
+                icon="eva:checkmark-fill"
+                sx={{ color: 'primary.main', width: 20, height: 20 }}
+              />
               <Typography variant="body2">{option}</Typography>
             </Stack>
           ))}
@@ -163,7 +169,7 @@ function PlanCard({ plan }) {
                 key={option}
               >
                 <Iconify
-                  icon={'eva:checkmark-fill'}
+                  icon="eva:checkmark-fill"
                   sx={{
                     width: 20,
                     height: 20,
@@ -185,7 +191,7 @@ function PlanCard({ plan }) {
             href="#"
             sx={{ typography: 'body2', display: 'flex', alignItems: 'center' }}
           >
-            Learn more <Iconify icon={'eva:chevron-right-fill'} width={20} height={20} />
+            Learn more <Iconify icon="eva:chevron-right-fill" width={20} height={20} />
           </Link>
         </Stack>
 
@@ -202,3 +208,12 @@ function PlanCard({ plan }) {
     </Card>
   );
 }
+
+PlanCard.propTypes = {
+  plan: PropTypes.shape({
+    license: PropTypes.string,
+    commons: PropTypes.arrayOf(PropTypes.string),
+    icons: PropTypes.arrayOf(PropTypes.string),
+    options: PropTypes.arrayOf(PropTypes.string),
+  }),
+};

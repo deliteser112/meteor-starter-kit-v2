@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
 // material
@@ -15,16 +16,6 @@ const visuallyHidden = {
   position: 'absolute',
   whiteSpace: 'nowrap',
   clip: 'rect(0 0 0 0)',
-};
-
-TableListHead.propTypes = {
-  order: PropTypes.oneOf(['asc', 'desc']),
-  orderBy: PropTypes.string,
-  rowCount: PropTypes.number,
-  headLabel: PropTypes.array,
-  numSelected: PropTypes.number,
-  onRequestSort: PropTypes.func,
-  onSelectAllClick: PropTypes.func,
 };
 
 export default function TableListHead({
@@ -64,7 +55,9 @@ export default function TableListHead({
             >
               {headCell.label}
               {orderBy === headCell.id ? (
-                <Box sx={{ ...visuallyHidden }}>{order === 'desc' ? 'sorted descending' : 'sorted ascending'}</Box>
+                <Box sx={{ ...visuallyHidden }}>
+                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                </Box>
               ) : null}
             </TableSortLabel>
           </TableCell>
@@ -73,3 +66,13 @@ export default function TableListHead({
     </TableHead>
   );
 }
+
+TableListHead.propTypes = {
+  order: PropTypes.oneOf(['asc', 'desc']),
+  orderBy: PropTypes.string,
+  rowCount: PropTypes.number,
+  headLabel: PropTypes.array,
+  numSelected: PropTypes.number,
+  onRequestSort: PropTypes.func,
+  onSelectAllClick: PropTypes.func,
+};

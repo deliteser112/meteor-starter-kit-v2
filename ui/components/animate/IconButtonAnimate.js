@@ -1,3 +1,6 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/display-name */
+/* eslint-disable react/jsx-props-no-spreading */
 import PropTypes from 'prop-types';
 import { m } from 'framer-motion';
 import React, { forwardRef } from 'react';
@@ -16,8 +19,17 @@ const IconButtonAnimate = forwardRef(({ children, size = 'medium', ...other }, r
 
 IconButtonAnimate.propTypes = {
   children: PropTypes.node.isRequired,
-  color: PropTypes.oneOf(['inherit', 'default', 'primary', 'secondary', 'info', 'success', 'warning', 'error']),
-  size: PropTypes.oneOf(['small', 'medium', 'large'])
+  color: PropTypes.oneOf([
+    'inherit',
+    'default',
+    'primary',
+    'secondary',
+    'info',
+    'success',
+    'warning',
+    'error',
+  ]),
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
 };
 
 export default IconButtonAnimate;
@@ -26,22 +38,17 @@ export default IconButtonAnimate;
 
 const varSmall = {
   hover: { scale: 1.1 },
-  tap: { scale: 0.95 }
+  tap: { scale: 0.95 },
 };
 
 const varMedium = {
   hover: { scale: 1.09 },
-  tap: { scale: 0.97 }
+  tap: { scale: 0.97 },
 };
 
 const varLarge = {
   hover: { scale: 1.08 },
-  tap: { scale: 0.99 }
-};
-
-AnimateWrap.propTypes = {
-  children: PropTypes.node.isRequired,
-  size: PropTypes.oneOf(['small', 'medium', 'large'])
+  tap: { scale: 0.99 },
 };
 
 function AnimateWrap({ size, children }) {
@@ -55,10 +62,15 @@ function AnimateWrap({ size, children }) {
       whileHover="hover"
       variants={(isSmall && varSmall) || (isLarge && varLarge) || varMedium}
       sx={{
-        display: 'inline-flex'
+        display: 'inline-flex',
       }}
     >
       {children}
     </Box>
   );
 }
+
+AnimateWrap.propTypes = {
+  children: PropTypes.node.isRequired,
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
+};

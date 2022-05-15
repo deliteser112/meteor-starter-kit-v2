@@ -1,1 +1,1 @@
-import '/imports/api/Methods.tests.js';
+import '../api/Methods.tests.js';

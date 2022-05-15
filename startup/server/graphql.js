@@ -21,19 +21,19 @@ const server = new ApolloServer({
 const app = WebApp.connectHandlers;
 
 async function startGraphQLServer() {
-  await server.start()
+  await server.start();
 
   server.applyMiddleware({
     app,
     path: '/graphql',
-    cors: true
-  })
+    cors: true,
+  });
 }
 
 await startGraphQLServer();
 
 app.use('/graphql', (req, res) => {
   if (req.method === 'GET') {
-    res.end()
+    res.end();
   }
-})
+});

@@ -1,3 +1,5 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { m } from 'framer-motion';
@@ -9,11 +11,6 @@ import useResponsive from '../../hooks/useResponsive';
 import { varContainer } from '.';
 
 // ----------------------------------------------------------------------
-
-MotionViewport.propTypes = {
-  children: PropTypes.node.isRequired,
-  disableAnimatedMobile: PropTypes.bool,
-};
 
 export default function MotionViewport({ children, disableAnimatedMobile = true, ...other }) {
   const isDesktop = useResponsive('up', 'sm');
@@ -35,3 +32,8 @@ export default function MotionViewport({ children, disableAnimatedMobile = true,
     </Box>
   );
 }
+
+MotionViewport.propTypes = {
+  children: PropTypes.node.isRequired,
+  disableAnimatedMobile: PropTypes.bool,
+};

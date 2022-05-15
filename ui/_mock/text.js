@@ -40,7 +40,7 @@ export const title = [
   '30 Tips To Grow Your Event',
   '30 Ways To Avoid Event Burnout',
   '30 Ways To Improve Event',
-  'How To Make More Event By Doing Less'
+  'How To Make More Event By Doing Less',
 ];
 
 export const sentence = [
@@ -83,7 +83,7 @@ export const sentence = [
   'Mollitia inventore recusandae provident aut.',
   'Numquam ullam beatae possimus.',
   'Fuga velit cupiditate ex culpa odio aut ut.',
-  'Vero corrupti nam voluptatum excepturi est et.'
+  'Vero corrupti nam voluptatum excepturi est et.',
 ];
 
 export const description = [
@@ -126,5 +126,5 @@ export const description = [
   'Modi quia laboriosam qui ad aut. Fugit quisquam earum distinctio officia est fugit quos. Iure repellat distinctio veritatis voluptate amet ratione repudiandae.',
   'Impedit perferendis vel quis ratione. Id aut id officia. Illum fuga saepe provident voluptate eligendi provident. Et nostrum maxime magni. Nobis cumque id magni in iste earum.',
   'Dolor numquam maiores praesentium dolorem nihil minus praesentium rem dolorem. Est rerum placeat. Numquam sed magni aliquam laborum enim facere ducimus.',
-  'In sint enim nam et itaque et qui. Molestiae a iusto quidem quia temporibus id quia eaque eius. Quis quia consectetur saepe vero et molestias. Rem minima accusamus vitae adipisci molestiae unde voluptate consequatur molestiae. Rerum exercitationem quisquam vitae.'
+  'In sint enim nam et itaque et qui. Molestiae a iusto quidem quia temporibus id quia eaque eius. Quis quia consectetur saepe vero et molestias. Rem minima accusamus vitae adipisci molestiae unde voluptate consequatur molestiae. Rerum exercitationem quisquam vitae.',
 ];

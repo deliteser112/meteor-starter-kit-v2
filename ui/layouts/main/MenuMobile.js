@@ -1,9 +1,20 @@
+/* eslint-disable no-use-before-define */
+/* eslint-disable react/require-default-props */
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { NavLink as RouterLink, useLocation } from 'react-router-dom';
 // @mui
 import { alpha, styled } from '@mui/material/styles';
-import { Box, List, Link, Drawer, Collapse, ListItemText, ListItemIcon, ListItemButton } from '@mui/material';
+import {
+  Box,
+  List,
+  Link,
+  Drawer,
+  Collapse,
+  ListItemText,
+  ListItemIcon,
+  ListItemButton,
+} from '@mui/material';
 // config
 import { NAVBAR } from '../../config';
 // components
@@ -24,12 +35,6 @@ const ListItemStyle = styled(ListItemButton)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-MenuMobile.propTypes = {
-  isOffset: PropTypes.bool,
-  isHome: PropTypes.bool,
-  navConfig: PropTypes.array,
-};
-
 export default function MenuMobile({ isOffset, isHome, navConfig }) {
   const { pathname } = useLocation();
 
@@ -41,7 +46,6 @@ export default function MenuMobile({ isOffset, isHome, navConfig }) {
     if (drawerOpen) {
       handleDrawerClose();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const handleOpen = () => {
@@ -66,7 +70,7 @@ export default function MenuMobile({ isOffset, isHome, navConfig }) {
           ...(isOffset && { color: 'text.primary' }),
         }}
       >
-        <Iconify icon={'eva:menu-2-fill'} />
+        <Iconify icon="eva:menu-2-fill" />
       </IconButtonAnimate>
 
       <Drawer
@@ -88,6 +92,12 @@ export default function MenuMobile({ isOffset, isHome, navConfig }) {
     </>
   );
 }
+
+MenuMobile.propTypes = {
+  isOffset: PropTypes.bool,
+  isHome: PropTypes.bool,
+  navConfig: PropTypes.array,
+};
 
 // ----------------------------------------------------------------------
 
@@ -157,7 +167,8 @@ function MenuMobileItem({ item, isOpen, onOpen }) {
         '&.active': {
           color: 'primary.main',
           fontWeight: 'fontWeightMedium',
-          bgcolor: (theme) => alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
+          bgcolor: (theme) =>
+            alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
         },
       }}
     >

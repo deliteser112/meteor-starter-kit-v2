@@ -1,5 +1,3 @@
-/* eslint-disable consistent-return */
-
 import { Meteor } from 'meteor/meteor';
 
 const getUpdatedUserSettings = (existingUserSettings, newSetting) => {

@@ -1,3 +1,5 @@
+/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable no-underscore-dangle */
 // components
 import Iconify from '../components/Iconify';
 //
@@ -30,21 +32,21 @@ export const _analyticTraffic = [
   {
     name: 'FaceBook',
     value: 323234,
-    icon: <Iconify icon={'eva:facebook-fill'} color="#1877F2" width={32} height={32} />,
+    icon: <Iconify icon="eva:facebook-fill" color="#1877F2" width={32} height={32} />,
   },
   {
     name: 'Google',
     value: 341212,
-    icon: <Iconify icon={'eva:google-fill'} color="#DF3E30" width={32} height={32} />,
+    icon: <Iconify icon="eva:google-fill" color="#DF3E30" width={32} height={32} />,
   },
   {
     name: 'Linkedin',
     value: 411213,
-    icon: <Iconify icon={'eva:linkedin-fill'} color="#006097" width={32} height={32} />,
+    icon: <Iconify icon="eva:linkedin-fill" color="#006097" width={32} height={32} />,
   },
   {
     name: 'Twitter',
     value: 443232,
-    icon: <Iconify icon={'eva:twitter-fill'} color="#1C9CEA" width={32} height={32} />,
+    icon: <Iconify icon="eva:twitter-fill" color="#1C9CEA" width={32} height={32} />,
   },
 ];

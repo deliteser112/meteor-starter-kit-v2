@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import _mock from './_mock';
 import { randomInArray } from './funcs';
 

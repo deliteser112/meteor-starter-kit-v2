@@ -16,7 +16,7 @@ const RootStyle = styled(Page)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   paddingTop: theme.spacing(15),
-  paddingBottom: theme.spacing(10)
+  paddingBottom: theme.spacing(10),
 }));
 
 // ----------------------------------------------------------------------
@@ -28,7 +28,9 @@ export default function Maintenance() {
         <Typography variant="h3" paragraph>
           Website currently under maintenance
         </Typography>
-        <Typography sx={{ color: 'text.secondary' }}>We are currently working hard on this page!</Typography>
+        <Typography sx={{ color: 'text.secondary' }}>
+          We are currently working hard on this page!
+        </Typography>
 
         <MaintenanceIllustration sx={{ my: 10, height: 240 }} />
 

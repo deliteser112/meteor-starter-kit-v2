@@ -1,11 +1,8 @@
-import { useTracker } from 'meteor/react-meteor-data';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 // material
 import { styled } from '@mui/material/styles';
-// hooks
-import useAuth from '../../hooks/useAuth';
 // components
 import GDPRConsentModal from '../../components/GDPRConsentModal';
 //
@@ -14,15 +11,13 @@ import DashboardSidebar from './DashboardSidebar';
 
 // ----------------------------------------------------------------------
 
-const services = ['github', 'facebook','google'];
-
 const APP_BAR_MOBILE = 64;
 const APP_BAR_DESKTOP = 92;
 
 const RootStyle = styled('div')({
   display: 'flex',
   minHeight: '100%',
-  overflow: 'hidden'
+  overflow: 'hidden',
 });
 
 const MainStyle = styled('div')(({ theme }) => ({
@@ -34,8 +29,8 @@ const MainStyle = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('lg')]: {
     paddingTop: APP_BAR_DESKTOP + 24,
     paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2)
-  }
+    paddingRight: theme.spacing(2),
+  },
 }));
 
 // ----------------------------------------------------------------------

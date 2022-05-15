@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import  {Box, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 // components
 import Logo from '../components/Logo';
 
@@ -27,8 +27,10 @@ export default function LogoOnlyLayout() {
     <>
       <HeaderStyle>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Logo /> 
-          <Typography variant="h5" sx={{ marginLeft: 1 }}>Meteor Starter Kit</Typography>
+          <Logo />
+          <Typography variant="h5" sx={{ marginLeft: 1 }}>
+            Meteor Starter Kit
+          </Typography>
         </Box>
       </HeaderStyle>
       <Outlet />

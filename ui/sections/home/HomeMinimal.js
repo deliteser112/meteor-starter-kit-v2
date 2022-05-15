@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import React from 'react';
 import { m } from 'framer-motion';
 // @mui
@@ -5,7 +6,7 @@ import { alpha, useTheme, styled } from '@mui/material/styles';
 import { Box, Card, Container, Typography } from '@mui/material';
 // components
 import Image from '../../components/Image';
-import { MotionViewport, varFade } from '../../components/animate';
+import { varFade } from '../../components/animate';
 
 // ----------------------------------------------------------------------
 
@@ -118,7 +119,9 @@ export default function HomeMinimal() {
         >
           {CARDS.map((card, index) => (
             <m.div variants={varFade().inUp} key={card.title}>
-              <CardStyle className={(index === 0 && 'cardLeft') || (index === 1 && 'cardCenter') || ''}>
+              <CardStyle
+                className={(index === 0 && 'cardLeft') || (index === 1 && 'cardCenter') || ''}
+              >
                 <Image
                   src={card.icon}
                   alt={card.title}
@@ -139,7 +142,9 @@ export default function HomeMinimal() {
                 <Typography variant="h5" paragraph>
                   {card.title}
                 </Typography>
-                <Typography sx={{ color: isLight ? 'text.secondary' : 'common.white' }}>{card.description}</Typography>
+                <Typography sx={{ color: isLight ? 'text.secondary' : 'common.white' }}>
+                  {card.description}
+                </Typography>
               </CardStyle>
             </m.div>
           ))}

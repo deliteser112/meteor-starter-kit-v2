@@ -1,3 +1,5 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/jsx-no-useless-fragment */
 // meteors
 import { Roles } from 'meteor/alanning:roles';
 
@@ -9,10 +11,6 @@ import { Container, Alert, AlertTitle } from '@mui/material';
 import useAuth from '../hooks/useAuth';
 
 // ----------------------------------------------------------------------
-
-RoleBasedGuard.propTypes = {
-  children: PropTypes.node
-};
 
 export default function RoleBasedGuard({ children }) {
   const { user } = useAuth();
@@ -31,7 +29,7 @@ export default function RoleBasedGuard({ children }) {
       <Container>
         <Alert severity="error">
           <AlertTitle>Permission Denied</AlertTitle>
-            You do not have permission to access this page. Make sure you are an admin.
+          You do not have permission to access this page. Make sure you are an admin.
         </Alert>
       </Container>
     );
@@ -39,3 +37,7 @@ export default function RoleBasedGuard({ children }) {
 
   return <>{children}</>;
 }
+
+RoleBasedGuard.propTypes = {
+  children: PropTypes.node,
+};

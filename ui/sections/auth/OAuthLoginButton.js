@@ -32,7 +32,7 @@ const serviceLabel = {
   facebook: (
     <>
       <Box sx={{ mr: { xs: 1, sm: 2, width: 20 } }}>
-          <img src="/static/icons/social-facebook.svg" alt="facebook" width={40} height={40} />
+        <img src="/static/icons/social-facebook.svg" alt="facebook" width={40} height={40} />
       </Box>
       Sign in with Facebook
     </>
@@ -40,7 +40,7 @@ const serviceLabel = {
   github: (
     <>
       <Box sx={{ mr: { xs: 1, sm: 2, width: 20 } }}>
-          <img src="/static/icons/social-github.svg" alt="github" width={40} height={40} />
+        <img src="/static/icons/social-github.svg" alt="github" width={40} height={40} />
       </Box>
       Sign in with Github
     </>
@@ -48,14 +48,14 @@ const serviceLabel = {
   google: (
     <>
       <Box sx={{ mr: { xs: 1, sm: 2, width: 20 } }}>
-          <img src="/static/icons/social-google.svg" alt="google" width={40} height={40} />
+        <img src="/static/icons/social-google.svg" alt="google" width={40} height={40} />
       </Box>
       Sign in with Google
     </>
   ),
 };
 
-const OAuthLoginButton = ({ service, callback }) =>{ 
+function OAuthLoginButton({ service, callback }) {
   const theme = useTheme();
   return (
     <Button
@@ -71,14 +71,14 @@ const OAuthLoginButton = ({ service, callback }) =>{
         backgroundColor: theme.palette.grey[50],
         borderColor: theme.palette.grey[100],
         '&:hover': {
-          backgroundColor: alpha(theme.palette.grey[800], 0.1)
-        }
+          backgroundColor: alpha(theme.palette.grey[800], 0.1),
+        },
       }}
     >
       {serviceLabel[service]}
     </Button>
-  )
-};
+  );
+}
 
 OAuthLoginButton.defaultProps = {
   callback: (error) => {

@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 // ----------------------------------------------------------------------
 
 export const boolean = [
@@ -40,5 +41,5 @@ export const boolean = [
   false,
   true,
   false,
-  false
+  false,
 ];

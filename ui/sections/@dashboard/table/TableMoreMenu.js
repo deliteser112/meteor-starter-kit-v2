@@ -1,3 +1,5 @@
+/* eslint-disable react/require-default-props */
+import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // material
@@ -15,18 +17,23 @@ export default function TableMoreMenu({ _id, onDelete, editLink }) {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleDelete = () => {
-    setDialogOpen(true)
-  }
+    setDialogOpen(true);
+  };
 
   const handleAgree = (isAgree) => {
     setDialogOpen(false);
     setIsOpen(false);
-    if(isAgree) onDelete(_id);
-  }
+    if (isAgree) onDelete(_id);
+  };
 
   return (
     <>
-      <ConfirmDialog onAgree={handleAgree} isOpen={dialogOpen} title="Meteor Starter Kit | Confirm" content="Are you sure to delete this item?" />
+      <ConfirmDialog
+        onAgree={handleAgree}
+        isOpen={dialogOpen}
+        title="Meteor Starter Kit | Confirm"
+        content="Are you sure to delete this item?"
+      />
       <IconButton ref={ref} onClick={() => setIsOpen(true)}>
         <Iconify icon="eva:more-vertical-fill" width={20} height={20} />
       </IconButton>
@@ -58,3 +65,9 @@ export default function TableMoreMenu({ _id, onDelete, editLink }) {
     </>
   );
 }
+
+TableMoreMenu.propTypes = {
+  _id: PropTypes.string,
+  onDelete: PropTypes.func,
+  editLink: PropTypes.string,
+};

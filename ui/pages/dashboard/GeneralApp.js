@@ -1,9 +1,8 @@
 import React from 'react';
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { Container, Grid, Stack, Button } from '@mui/material';
-// _mock_
-import { _appFeatured, _appAuthors, _appInstalled, _appRelated, _appInvoices } from '../../_mock/_app';
+import { Container, Grid, Button } from '@mui/material';
+
 // components
 import Page from '../../components/Page';
 // sections

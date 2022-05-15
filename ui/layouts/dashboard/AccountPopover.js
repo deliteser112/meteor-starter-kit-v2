@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { Roles } from 'meteor/alanning:roles';
 
 import { Meteor } from 'meteor/meteor';
@@ -51,22 +52,22 @@ export default function AccountPopover() {
   const [displayName, setDisplayName] = useState('');
   const [role, setRole] = useState('');
   useEffect(() => {
-    if(user) {
+    if (user) {
       const { _id, profile, services } = user;
       const isOAuth = isOAuthUser(Object.keys(services));
       setRole(sentenceCase(Roles.getRolesForUser(_id)[0]));
       if (isOAuth) {
         setDisplayName(profile.name);
       } else {
-        setDisplayName(`${profile.name.first} ${profile.name.last}`)
+        setDisplayName(`${profile.name.first} ${profile.name.last}`);
       }
       const profileLink = `${PATH_DASHBOARD.profile}/${_id}`;
       const newMenu = [];
       menuOptions.map((item) => {
         const { label } = item;
-        if(label !== 'Profile') newMenu.push(item);
-        else newMenu.push({ ...item, linkTo: profileLink })
-      })
+        if (label !== 'Profile') newMenu.push(item);
+        else newMenu.push({ ...item, linkTo: profileLink });
+      });
       setMenuOptions(newMenu);
     }
   }, [user]);
@@ -84,7 +85,7 @@ export default function AccountPopover() {
   const handleLogout = () => {
     logout();
     navigate('/');
-  }
+  };
 
   return (
     <>
@@ -136,7 +137,12 @@ export default function AccountPopover() {
 
         <Stack sx={{ p: 1 }}>
           {menuOptions.map((option) => (
-            <MenuItem key={option.label} to={option.linkTo} component={RouterLink} onClick={handleClose}>
+            <MenuItem
+              key={option.label}
+              to={option.linkTo}
+              component={RouterLink}
+              onClick={handleClose}
+            >
               {option.label}
             </MenuItem>
           ))}

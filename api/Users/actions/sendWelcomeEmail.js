@@ -1,12 +1,10 @@
-/* eslint-disable consistent-return */
-
 import { Meteor } from 'meteor/meteor';
 import normalizeMeteorUserData from './normalizeMeteorUserData';
 import sendEmail from '../../../modules/server/sendEmail';
 
 const getEmailOptions = (user) => {
   try {
-    const firstName = 'user.profile.name.first;'
+    const firstName = 'user.profile.name.first';
     const { productName } = Meteor.settings.public;
 
     return {

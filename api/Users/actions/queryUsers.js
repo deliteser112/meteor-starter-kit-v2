@@ -1,6 +1,6 @@
-import { Meteor } from "meteor/meteor";
-import checkIfAuthorized from "./checkIfAuthorized";
-import mapMeteorUserToSchema from "./mapMeteorUserToSchema";
+import { Meteor } from 'meteor/meteor';
+import checkIfAuthorized from './checkIfAuthorized';
+import mapMeteorUserToSchema from './mapMeteorUserToSchema';
 
 /* eslint-disable consistent-return */
 
@@ -11,40 +11,6 @@ const getTotalUserCount = (currentUserId) => {
     return Meteor.users.find({ _id: { $ne: currentUserId } }).count();
   } catch (exception) {
     throw new Error(`[queryUsers.getTotalUserCount] ${exception.message}`);
-  }
-};
-
-const getProjection = (options) => {
-  try {
-    return options.search
-      ? { sort: options.sort }
-      : { limit: options.limit, skip: options.skip, sort: options.sort };
-  } catch (exception) {
-    throw new Error(`[queryUsers.getProjection] ${exception.message}`);
-  }
-};
-
-const getQuery = (options) => {
-  try {
-    return options.search
-      ? {
-          _id: { $ne: options.currentUser._id },
-          // $or: [
-          //   { 'profile.name.first': options.search },
-          //   { 'profile.name.last': options.search },
-          //   { 'emails.address': options.search },
-          //   { 'services.facebook.first_name': options.search },
-          //   { 'services.facebook.last_name': options.search },
-          //   { 'services.facebook.email': options.search },
-          //   { 'services.google.name': options.search },
-          //   { 'services.google.email': options.search },
-          //   { 'services.github.email': options.search },
-          //   { 'services.github.username': options.search },
-          // ],
-        }
-      : { _id: { $ne: options.currentUser._id } };
-  } catch (exception) {
-    throw new Error(`[queryUsers.getQuery] ${exception.message}`);
   }
 };
 
@@ -63,9 +29,8 @@ const getUsers = (options) => {
 
 const validateOptions = (options) => {
   try {
-    if (!options) throw new Error("options object is required.");
-    if (!options.currentUser)
-      throw new Error("options.currentUser is required.");
+    if (!options) throw new Error('options object is required.');
+    if (!options.currentUser) throw new Error('options.currentUser is required.');
   } catch (exception) {
     throw new Error(`[queryUsers.validateOptions] ${exception.message}`);
   }
@@ -74,13 +39,9 @@ const validateOptions = (options) => {
 const queryUsers = (options) => {
   try {
     validateOptions(options);
-    checkIfAuthorized({ as: ["admin"], userId: options.currentUser._id });
+    checkIfAuthorized({ as: ['admin'], userId: options.currentUser._id });
 
-    // const users = getUsers(options);
-    // console.log(users);
-    // users.map((item, index) => {
-    //   console.log('INDESX:', item.roles);
-    // })
+    console.log('AAA:', getUsers(options));
 
     action.resolve({
       total: getTotalUserCount(options.currentUser._id),

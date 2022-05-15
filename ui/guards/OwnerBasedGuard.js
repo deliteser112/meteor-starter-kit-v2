@@ -1,6 +1,8 @@
+/* eslint-disable react/jsx-no-useless-fragment */
+/* eslint-disable react/require-default-props */
 // meteors
 import { Meteor } from 'meteor/meteor';
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from '@apollo/react-hooks';
 
 /* eslint-disable array-callback-return */
 import PropTypes from 'prop-types';
@@ -9,15 +11,11 @@ import { useParams, useLocation } from 'react-router-dom';
 import { Container, Alert, AlertTitle } from '@mui/material';
 
 // import queries
-import { devicesQuery } from '../pages/queries'
+import { devicesQuery } from '../pages/queries';
 // ----------------------------------------------------------------------
 
-OwnerBasedGuard.propTypes = {
-  children: PropTypes.node
-};
-
 export default function OwnerBasedGuard({ children }) {
-  const [currentDevice, setCurrentDevice] = useState(null)
+  const [currentDevice, setCurrentDevice] = useState(null);
   const { pathname } = useLocation();
   const { id } = useParams();
   const isEdit = pathname.includes('edit');
@@ -25,12 +23,12 @@ export default function OwnerBasedGuard({ children }) {
   const devicesData = useQuery(devicesQuery).data;
 
   useEffect(() => {
-    if(devicesData) {
+    if (devicesData) {
       const { devices } = devicesData;
       const cDevice = devices.find((device) => device._id === id);
       setCurrentDevice(cDevice);
     }
-  }, [devicesData])
+  }, [devicesData]);
 
   const loggedUser = Meteor.user();
 
@@ -52,7 +50,8 @@ export default function OwnerBasedGuard({ children }) {
       <Container>
         <Alert severity="error">
           <AlertTitle>Permission Denied</AlertTitle>
-            You do not have permission to access this page. Make sure you are an admin, or owner of this device.
+          You do not have permission to access this page. Make sure you are an admin, or owner of
+          this device.
         </Alert>
       </Container>
     );
@@ -60,3 +59,7 @@ export default function OwnerBasedGuard({ children }) {
 
   return <>{children}</>;
 }
+
+OwnerBasedGuard.propTypes = {
+  children: PropTypes.node,
+};

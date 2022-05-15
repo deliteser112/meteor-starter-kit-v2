@@ -1,6 +1,7 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 // routes
-import { PATH_PAGE, PATH_AUTH } from '../../routes/paths';
+import { PATH_PAGE } from '../../routes/paths';
 // components
 import Iconify from '../../components/Iconify';
 
@@ -14,12 +15,12 @@ const ICON_SIZE = {
 const menuConfig = [
   {
     title: 'Home',
-    icon: <Iconify icon={'eva:home-fill'} {...ICON_SIZE} />,
+    icon: <Iconify icon="eva:home-fill" {...ICON_SIZE} />,
     path: '/',
   },
   {
     title: 'Contact Us',
-    icon: <Iconify icon={'eva:book-open-fill'} {...ICON_SIZE} />,
+    icon: <Iconify icon="eva:book-open-fill" {...ICON_SIZE} />,
     path: PATH_PAGE.contact,
   },
 ];

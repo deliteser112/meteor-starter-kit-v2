@@ -5,7 +5,7 @@ import exportUserData from './actions/exportUserData';
 
 export default {
   users: async (parent, args, context) => {
-    return queryUsers({currentUser: context.user});
+    return queryUsers({ currentUser: context.user });
   },
   user: async (parent, args, context) => {
     const userIdFromParentQuery = parent && parent.userId;

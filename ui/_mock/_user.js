@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-underscore-dangle */
 import _mock from './_mock';
 import { randomNumberRange, randomInArray } from './funcs';
 
@@ -9,7 +11,8 @@ export const _userAbout = {
   position: 'UI Designer',
   follower: randomNumberRange(999, 99999),
   following: randomNumberRange(999, 99999),
-  quote: 'Tart I love sugar plum I love oat cake. Sweet roll caramels I love jujubes. Topping cake wafer..',
+  quote:
+    'Tart I love sugar plum I love oat cake. Sweet roll caramels I love jujubes. Topping cake wafer..',
   country: _mock.address.country(1),
   email: _mock.email(1),
   company: _mock.company(1),

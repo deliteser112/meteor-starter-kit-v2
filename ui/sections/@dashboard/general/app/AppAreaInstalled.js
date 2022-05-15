@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/require-default-props */
 import PropTypes from 'prop-types';
 import merge from 'lodash/merge';
 import React, { useState } from 'react';
@@ -8,13 +10,6 @@ import { Card, CardHeader, Box, TextField } from '@mui/material';
 import { BaseOptionChart } from '../../../../components/chart';
 
 // ----------------------------------------------------------------------
-
-AppAreaInstalled.propTypes = {
-  title: PropTypes.string,
-  subheader: PropTypes.string,
-  chartData: PropTypes.array.isRequired,
-  chartLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
-};
 
 export default function AppAreaInstalled({ title, subheader, chartLabels, chartData, ...other }) {
   const [seriesData, setSeriesData] = useState('2019');
@@ -80,3 +75,10 @@ export default function AppAreaInstalled({ title, subheader, chartLabels, chartD
     </Card>
   );
 }
+
+AppAreaInstalled.propTypes = {
+  title: PropTypes.string,
+  subheader: PropTypes.string,
+  chartData: PropTypes.array.isRequired,
+  chartLabels: PropTypes.arrayOf(PropTypes.string).isRequired,
+};

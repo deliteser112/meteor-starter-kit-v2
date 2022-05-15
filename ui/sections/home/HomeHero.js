@@ -1,9 +1,10 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { m } from 'framer-motion';
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Button, Box, Link, Container, Typography, Stack } from '@mui/material';
+import { Button, Box, Container, Typography, Stack } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // components
@@ -71,11 +72,7 @@ export default function HomeHero() {
       <RootStyle>
         <HeroOverlayStyle alt="overlay" src="/static/home/overlay.svg" variants={varFade().in} />
 
-        <HeroImgStyle
-          alt="hero"
-          src="/static/home/hero.png"
-          variants={varFade().inUp}
-        />
+        <HeroImgStyle alt="hero" src="/static/home/hero.png" variants={varFade().inUp} />
 
         <Container>
           <ContentStyle>
@@ -91,8 +88,8 @@ export default function HomeHero() {
 
             <m.div variants={varFade().inRight}>
               <Typography sx={{ color: 'common.white' }}>
-                The starting point for your next project based on easy-to-customize this template helps you build apps faster and
-                better.
+                The starting point for your next project based on easy-to-customize this template
+                helps you build apps faster and better.
               </Typography>
             </m.div>
 
@@ -102,12 +99,11 @@ export default function HomeHero() {
                 variant="contained"
                 component={RouterLink}
                 to={PATH_DASHBOARD.root}
-                startIcon={<Iconify icon={'eva:flash-fill'} width={20} height={20} />}
+                startIcon={<Iconify icon="eva:flash-fill" width={20} height={20} />}
               >
                 Get Started
               </Button>
             </m.div>
-
           </ContentStyle>
         </Container>
       </RootStyle>

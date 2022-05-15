@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 // meteors
 import { Meteor } from 'meteor/meteor';
 
@@ -6,7 +7,16 @@ import React, { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 // material
-import { Link, Stack, Checkbox, TextField, IconButton, InputAdornment, FormControlLabel, Alert } from '@mui/material';
+import {
+  Link,
+  Stack,
+  Checkbox,
+  TextField,
+  IconButton,
+  InputAdornment,
+  FormControlLabel,
+  Alert,
+} from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // routes
 import { PATH_AUTH, PATH_DASHBOARD } from '../../../routes/paths';
@@ -36,7 +46,7 @@ export default function LoginForm() {
     validationSchema: LoginSchema,
     onSubmit: (values, { setSubmitting }) => {
       const { email, password } = values;
-      Meteor.loginWithPassword(email, password, function(error) {
+      Meteor.loginWithPassword(email, password, function (error) {
         if (error) {
           const { reason } = error;
           setError(true);
@@ -97,12 +107,23 @@ export default function LoginForm() {
             label="Remember me"
           />
 
-          <Link component={RouterLink} variant="subtitle2" to={PATH_AUTH.resetPassword} underline="hover">
+          <Link
+            component={RouterLink}
+            variant="subtitle2"
+            to={PATH_AUTH.resetPassword}
+            underline="hover"
+          >
             Forgot password?
           </Link>
         </Stack>
 
-        <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
+        <LoadingButton
+          fullWidth
+          size="large"
+          type="submit"
+          variant="contained"
+          loading={isSubmitting}
+        >
           Login
         </LoadingButton>
       </Form>

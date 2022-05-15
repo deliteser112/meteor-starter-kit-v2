@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { noCase } from 'change-case';
 // _mock
 import _mock from './_mock';
@@ -5,15 +6,17 @@ import { randomNumberRange, randomInArray } from './funcs';
 
 // ----------------------------------------------------------------------
 
-export const _appRelated = ['Chrome', 'Drive', 'Dropbox', 'Evernote', 'Github'].map((appName, index) => ({
-  id: _mock.id(index),
-  name: appName,
-  system: (index === 2 && 'Windows') || (index === 4 && 'Windows') || 'Mac',
-  price: index === 0 || index === 2 || index === 4 ? 0 : _mock.number.price(index),
-  rating: _mock.number.rating(index),
-  review: randomNumberRange(999, 99999),
-  shortcut: `/assets/icons/ic_${noCase(appName)}.svg`,
-}));
+export const _appRelated = ['Chrome', 'Drive', 'Dropbox', 'Evernote', 'Github'].map(
+  (appName, index) => ({
+    id: _mock.id(index),
+    name: appName,
+    system: (index === 2 && 'Windows') || (index === 4 && 'Windows') || 'Mac',
+    price: index === 0 || index === 2 || index === 4 ? 0 : _mock.number.price(index),
+    rating: _mock.number.rating(index),
+    review: randomNumberRange(999, 99999),
+    shortcut: `/assets/icons/ic_${noCase(appName)}.svg`,
+  }),
+);
 
 export const _appInstalled = ['de', 'en', 'fr', 'kr', 'us'].map((country, index) => ({
   id: _mock.id(index),
@@ -40,7 +43,11 @@ export const _appInvoices = [...Array(5)].map((_, index) => ({
 
 export const _appFeatured = [...Array(3)].map((_, index) => ({
   id: _mock.id(index),
-  title: ['Harry Potter and the Deathly Hallows - Part 2', 'Disney Zombies 2', 'Lightroom mobile - Koloro'][index],
+  title: [
+    'Harry Potter and the Deathly Hallows - Part 2',
+    'Disney Zombies 2',
+    'Lightroom mobile - Koloro',
+  ][index],
   description: _mock.text.title(index),
   image: _mock.image.feed(index),
 }));

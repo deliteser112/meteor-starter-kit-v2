@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
 // @mui
@@ -23,11 +24,6 @@ const RootStyle = styled(Card)(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-
-PricingPlanCard.propTypes = {
-  index: PropTypes.number,
-  card: PropTypes.object,
-};
 
 export default function PricingPlanCard({ card, index }) {
   const { subscription, icon, price, caption, lists, labelAction } = card;
@@ -101,7 +97,7 @@ export default function PricingPlanCard({ card, index }) {
             spacing={1.5}
             sx={{ typography: 'body2', color: item.isAvailable ? 'text.primary' : 'text.disabled' }}
           >
-            <Iconify icon={'eva:checkmark-fill'} sx={{ width: 20, height: 20 }} />
+            <Iconify icon="eva:checkmark-fill" sx={{ width: 20, height: 20 }} />
             <Typography variant="body2">{item.text}</Typography>
           </Stack>
         ))}
@@ -113,3 +109,8 @@ export default function PricingPlanCard({ card, index }) {
     </RootStyle>
   );
 }
+
+PricingPlanCard.propTypes = {
+  index: PropTypes.number,
+  card: PropTypes.object,
+};

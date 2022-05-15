@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import ReactLoading from "react-loading";
+/* eslint-disable no-nested-ternary */
+/* eslint-disable react/no-array-index-key */
+import React, { useState } from 'react';
+import ReactLoading from 'react-loading';
 // @mui
 import {
   Container,
@@ -13,36 +15,35 @@ import {
   CardContent,
   Stack,
   Button,
-} from "@mui/material";
+} from '@mui/material';
 
-import DeleteIcon from "@mui/icons-material/Delete";
-import SettingsIcon from "@mui/icons-material/Settings";
-import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from '@mui/icons-material/Delete';
+import SettingsIcon from '@mui/icons-material/Settings';
+import EditIcon from '@mui/icons-material/Edit';
 
 // graphql & collections
-import { useQuery } from "@apollo/react-hooks";
-import { useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
 // import queries
-import userSettingsQuery from "../../../_queries/UserSettings.gql";
+import userSettingsQuery from '../../../_queries/UserSettings.gql';
 
 // import mutations
 import {
   addUserSetting as addUserSettingMutation,
   updateUserSetting as updateUserSettingMutation,
   removeUserSetting as removeUserSettingMutation,
-} from "../../../_mutations/UserSettings.gql";
+} from '../../../_mutations/UserSettings.gql';
 
 // components
-import Page from "../../../components/Page";
-import EmptyContent from "../../../components/EmptyContent";
-import HeaderBreadcrumbs from "../../../components/HeaderBreadcrumbs";
-import Iconify from "../../../components/Iconify";
+import Page from '../../../components/Page';
+import EmptyContent from '../../../components/EmptyContent';
+import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
+import Iconify from '../../../components/Iconify';
 
-import SettingDialog from "./SettingDialog";
+import SettingDialog from './SettingDialog';
 
 // routes
-import { PATH_DASHBOARD } from "../../../routes/paths";
+import { PATH_DASHBOARD } from '../../../routes/paths';
 // ----------------------------------------------------------------------
 
 export default function UserSettings() {
@@ -98,11 +99,8 @@ export default function UserSettings() {
       />
       <Container maxWidth="xl">
         <HeaderBreadcrumbs
-          heading={`User Settings`}
-          links={[
-            { name: "Dashboard", href: PATH_DASHBOARD.root },
-            { name: "User Settings" },
-          ]}
+          heading="User Settings"
+          links={[{ name: 'Dashboard', href: PATH_DASHBOARD.root }, { name: 'User Settings' }]}
           action={
             <Button
               variant="contained"
@@ -114,14 +112,12 @@ export default function UserSettings() {
           }
         />
         <Card>
-          <CardContent
-            sx={{ padding: { xs: 0, md: 2 }, paddingBottom: { xs: 0, md: 3 } }}
-          >
+          <CardContent sx={{ padding: { xs: 0, md: 2 }, paddingBottom: { xs: 0, md: 3 } }}>
             {loading ? (
               <ReactLoading
                 className="loading-icons"
-                type={"spin"}
-                color={"grey"}
+                type="spin"
+                color="grey"
                 height={30}
                 width={30}
               />
@@ -164,7 +160,7 @@ export default function UserSettings() {
               <EmptyContent
                 title="No Settings"
                 sx={{
-                  "& span.MuiBox-root": { height: 160 },
+                  '& span.MuiBox-root': { height: 160 },
                 }}
               />
             )}

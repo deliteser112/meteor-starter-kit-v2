@@ -1,3 +1,5 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import PropTypes from 'prop-types';
 import merge from 'lodash/merge';
@@ -32,13 +34,6 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-
-AppCurrentDownload.propTypes = {
-  title: PropTypes.string,
-  subheader: PropTypes.string,
-  chartColors: PropTypes.arrayOf(PropTypes.string).isRequired,
-  chartData: PropTypes.array.isRequired,
-};
 
 export default function AppCurrentDownload({ title, subheader, chartData, chartColors, ...other }) {
   const theme = useTheme();
@@ -91,3 +86,10 @@ export default function AppCurrentDownload({ title, subheader, chartData, chartC
     </Card>
   );
 }
+
+AppCurrentDownload.propTypes = {
+  title: PropTypes.string,
+  subheader: PropTypes.string,
+  chartColors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  chartData: PropTypes.array.isRequired,
+};

@@ -11,7 +11,7 @@ export function BaseOptionChartStyle() {
   const background = {
     backdropFilter: 'blur(6px)',
     WebkitBackdropFilter: 'blur(6px)', // Fix on Mobile
-    backgroundColor: alpha(theme.palette.background.default, 0.72)
+    backgroundColor: alpha(theme.palette.background.default, 0.72),
   };
 
   return (
@@ -26,7 +26,7 @@ export function BaseOptionChartStyle() {
             color: theme.palette.text.primary,
             borderRadius: Number(theme.shape.borderRadius) * 1.5,
             '&:before': { borderBottomColor: 'transparent' },
-            '&:after': { borderBottomColor: alpha(theme.palette.background.default, 0.72) }
+            '&:after': { borderBottomColor: alpha(theme.palette.background.default, 0.72) },
           },
           '.apexcharts-tooltip.apexcharts-theme-light': {
             ...background,
@@ -38,25 +38,25 @@ export function BaseOptionChartStyle() {
               textAlign: 'center',
               fontWeight: theme.typography.fontWeightBold,
               backgroundColor: theme.palette.grey[500_16],
-              color: theme.palette.text[theme.palette.mode === 'light' ? 'secondary' : 'primary']
-            }
+              color: theme.palette.text[theme.palette.mode === 'light' ? 'secondary' : 'primary'],
+            },
           },
           // Legend
           '.apexcharts-legend': {
-            padding: 0
+            padding: 0,
           },
           '.apexcharts-legend-series': {
             display: 'flex !important',
-            alignItems: 'center'
+            alignItems: 'center',
           },
           '.apexcharts-legend-marker': {
-            marginRight: 8
+            marginRight: 8,
           },
           '.apexcharts-legend-text': {
             lineHeight: '18px',
-            textTransform: 'capitalize'
-          }
-        }
+            textTransform: 'capitalize',
+          },
+        },
       }}
     />
   );
@@ -69,13 +69,13 @@ export default function BaseOptionChart() {
     show: true,
     label: 'Total',
     color: theme.palette.text.secondary,
-    ...theme.typography.subtitle2
+    ...theme.typography.subtitle2,
   };
 
   const LABEL_VALUE = {
     offsetY: 8,
     color: theme.palette.text.primary,
-    ...theme.typography.h3
+    ...theme.typography.h3,
   };
 
   return {
@@ -86,7 +86,7 @@ export default function BaseOptionChart() {
       theme.palette.chart.blue[0],
       theme.palette.chart.violet[0],
       theme.palette.chart.green[0],
-      theme.palette.chart.red[0]
+      theme.palette.chart.red[0],
     ],
 
     // Chart
@@ -95,7 +95,7 @@ export default function BaseOptionChart() {
       zoom: { enabled: false },
       // animations: { enabled: false },
       foreColor: theme.palette.text.disabled,
-      fontFamily: theme.typography.fontFamily
+      fontFamily: theme.typography.fontFamily,
     },
 
     // States
@@ -103,15 +103,15 @@ export default function BaseOptionChart() {
       hover: {
         filter: {
           type: 'lighten',
-          value: 0.04
-        }
+          value: 0.04,
+        },
       },
       active: {
         filter: {
           type: 'darken',
-          value: 0.88
-        }
-      }
+          value: 0.88,
+        },
+      },
     },
 
     // Fill
@@ -122,8 +122,8 @@ export default function BaseOptionChart() {
         shadeIntensity: 0,
         opacityFrom: 0.4,
         opacityTo: 0,
-        stops: [0, 100]
-      }
+        stops: [0, 100],
+      },
     },
 
     // Datalabels
@@ -133,32 +133,32 @@ export default function BaseOptionChart() {
     stroke: {
       width: 3,
       curve: 'smooth',
-      lineCap: 'round'
+      lineCap: 'round',
     },
 
     // Grid
     grid: {
       strokeDashArray: 3,
-      borderColor: theme.palette.divider
+      borderColor: theme.palette.divider,
     },
 
     // Xaxis
     xaxis: {
       axisBorder: { show: false },
-      axisTicks: { show: false }
+      axisTicks: { show: false },
     },
 
     // Markers
     markers: {
       size: 0,
-      strokeColors: theme.palette.background.paper
+      strokeColors: theme.palette.background.paper,
     },
 
     // Tooltip
     tooltip: {
       x: {
-        show: false
-      }
+        show: false,
+      },
     },
 
     // Legend
@@ -168,13 +168,13 @@ export default function BaseOptionChart() {
       position: 'top',
       horizontalAlign: 'right',
       markers: {
-        radius: 12
+        radius: 12,
       },
       fontWeight: 500,
       itemMargin: { horizontal: 12 },
       labels: {
-        colors: theme.palette.text.primary
-      }
+        colors: theme.palette.text.primary,
+      },
     },
 
     // plotOptions
@@ -182,7 +182,7 @@ export default function BaseOptionChart() {
       // Bar
       bar: {
         columnWidth: '28%',
-        borderRadius: 4
+        borderRadius: 4,
       },
       // Pie + Donut
       pie: {
@@ -190,38 +190,38 @@ export default function BaseOptionChart() {
           labels: {
             show: true,
             value: LABEL_VALUE,
-            total: LABEL_TOTAL
-          }
-        }
+            total: LABEL_TOTAL,
+          },
+        },
       },
       // Radialbar
       radialBar: {
         track: {
           strokeWidth: '100%',
-          background: theme.palette.grey[500_16]
+          background: theme.palette.grey[500_16],
         },
         dataLabels: {
           value: LABEL_VALUE,
-          total: LABEL_TOTAL
-        }
+          total: LABEL_TOTAL,
+        },
       },
       // Radar
       radar: {
         polygons: {
           fill: { colors: ['transparent'] },
           strokeColors: theme.palette.divider,
-          connectorColors: theme.palette.divider
-        }
+          connectorColors: theme.palette.divider,
+        },
       },
       // polarArea
       polarArea: {
         rings: {
-          strokeColor: theme.palette.divider
+          strokeColor: theme.palette.divider,
         },
         spokes: {
-          connectorColors: theme.palette.divider
-        }
-      }
+          connectorColors: theme.palette.divider,
+        },
+      },
     },
 
     // Responsive
@@ -230,16 +230,16 @@ export default function BaseOptionChart() {
         // sm
         breakpoint: theme.breakpoints.values.sm,
         options: {
-          plotOptions: { bar: { columnWidth: '40%' } }
-        }
+          plotOptions: { bar: { columnWidth: '40%' } },
+        },
       },
       {
         // md
         breakpoint: theme.breakpoints.values.md,
         options: {
-          plotOptions: { bar: { columnWidth: '32%' } }
-        }
-      }
-    ]
+          plotOptions: { bar: { columnWidth: '32%' } },
+        },
+      },
+    ],
   };
 }

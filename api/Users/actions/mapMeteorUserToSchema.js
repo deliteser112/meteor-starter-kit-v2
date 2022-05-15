@@ -3,21 +3,15 @@
 import { Roles } from 'meteor/alanning:roles';
 import normalizeMeteorUserData from './normalizeMeteorUserData';
 
-const getActiveRoles = (userName, userId) => {
+const getActiveRoles = (userId) => {
   try {
-    console.log({ 'USERNAME': userName, 'ROLE_STATUS': Roles.userIsInRole(userId, 'admin') });
     return (
       Roles.getAllRoles().map((role) => {
-        console.log(role.name, {
+        return {
           ...role,
           inRole: Roles.userIsInRole(userId, role.name),
-        });
-          return {
-            ...role,
-            inRole: Roles.userIsInRole(userId, role.name),
-          }
-        }
-      ) || []
+        };
+      }) || []
     );
     // return (
     //   Roles.getAllRoles().map((role) => ({
@@ -34,14 +28,22 @@ export default (options) => {
   try {
     const normalizedMeteorUserData = normalizeMeteorUserData(options);
 
-    // console.log('QQQ', getActiveRoles(normalizedMeteorUserData._id));
+    console.log('QQQ', normalizedMeteorUserData);
 
     return {
       _id: normalizedMeteorUserData._id,
-      name: normalizedMeteorUserData.profile ? normalizedMeteorUserData.profile.name : { first: normalizedMeteorUserData.username },
+      // name: { first: 'Hello', last: 'USER' },
+      // name: normalizedMeteorUserData.service === 'password' ? normalizedMeteorUserData.profile.name : { first: normalizedMeteorUserData.profile },
+      name:
+        normalizedMeteorUserData.service === 'password'
+          ? normalizedMeteorUserData.profile.name
+          : { first: normalizedMeteorUserData.username },
       emailAddress: normalizedMeteorUserData.emails[0].address,
-      emailVerified: normalizedMeteorUserData.emails[0].verified,
-      roles: getActiveRoles(normalizedMeteorUserData.profile.name, normalizedMeteorUserData._id),
+      emailVerified:
+        normalizedMeteorUserData.service === 'password'
+          ? normalizedMeteorUserData.emails[0].verified
+          : true,
+      roles: getActiveRoles(normalizedMeteorUserData._id),
       oAuthProvider:
         normalizedMeteorUserData.service !== 'password' ? normalizedMeteorUserData.service : null,
       settings: normalizedMeteorUserData.settings,

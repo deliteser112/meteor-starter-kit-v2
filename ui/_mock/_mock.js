@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { sub } from 'date-fns';
 //
 import { role } from './role';

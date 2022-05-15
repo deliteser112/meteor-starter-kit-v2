@@ -1,18 +1,22 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useSnackbar } from "notistack";
-import * as Yup from "yup";
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-shadow */
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/jsx-props-no-spreading */
+import React, { useEffect, useMemo, useState } from 'react';
+import { useSnackbar } from 'notistack';
+import * as Yup from 'yup';
 // form
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-import PropTypes from "prop-types";
-import { styled } from "@mui/material/styles";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
+import PropTypes from 'prop-types';
+import { styled } from '@mui/material/styles';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 import {
   Box,
@@ -23,59 +27,59 @@ import {
   FormControl,
   Select,
   TextField,
-} from "@mui/material";
+} from '@mui/material';
 
 // @mui
-import { LoadingButton } from "@mui/lab";
+import { LoadingButton } from '@mui/lab';
 
-import { FormProvider, RHFTextField } from "../../../components/hook-form";
+import { FormProvider, RHFTextField } from '../../../components/hook-form';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  "& .MuiPaper-root": {
-    width: "100%",
+  '& .MuiPaper-root': {
+    width: '100%',
   },
-  "& .MuiDialogContent-root": {
+  '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
   },
-  "& .MuiDialogActions-root": {
+  '& .MuiDialogActions-root': {
     padding: theme.spacing(1),
   },
 }));
 
 const Android12Switch = styled(Switch)(({ theme }) => ({
   padding: 8,
-  "& .MuiSwitch-track": {
+  '& .MuiSwitch-track': {
     borderRadius: 22 / 2,
-    "&:before, &:after": {
+    '&:before, &:after': {
       content: '""',
-      position: "absolute",
-      top: "50%",
-      transform: "translateY(-50%)",
+      position: 'absolute',
+      top: '50%',
+      transform: 'translateY(-50%)',
       width: 16,
       height: 16,
     },
-    "&:before": {
+    '&:before': {
       backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
-        theme.palette.getContrastText(theme.palette.primary.main)
+        theme.palette.getContrastText(theme.palette.primary.main),
       )}" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/></svg>')`,
       left: 12,
     },
-    "&:after": {
+    '&:after': {
       backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
-        theme.palette.getContrastText(theme.palette.primary.main)
+        theme.palette.getContrastText(theme.palette.primary.main),
       )}" d="M19,13H5V11H19V13Z" /></svg>')`,
       right: 12,
     },
   },
-  "& .MuiSwitch-thumb": {
-    boxShadow: "none",
+  '& .MuiSwitch-thumb': {
+    boxShadow: 'none',
     width: 16,
     height: 16,
     margin: 2,
   },
 }));
 
-const BootstrapDialogTitle = (props) => {
+function BootstrapDialogTitle(props) {
   const { children, onClose, ...other } = props;
 
   return (
@@ -86,7 +90,7 @@ const BootstrapDialogTitle = (props) => {
           aria-label="close"
           onClick={onClose}
           sx={{
-            position: "absolute",
+            position: 'absolute',
             right: 8,
             top: 8,
             color: (theme) => theme.palette.grey[500],
@@ -97,19 +101,11 @@ const BootstrapDialogTitle = (props) => {
       ) : null}
     </DialogTitle>
   );
-};
+}
 
 BootstrapDialogTitle.propTypes = {
   children: PropTypes.node,
   onClose: PropTypes.func.isRequired,
-};
-
-SettingDialog.propTypes = {
-  addUserSetting: PropTypes.func,
-  updateUserSetting: PropTypes.func,
-  isOpen: PropTypes.bool,
-  isEdit: PropTypes.bool,
-  currentSetting: PropTypes.object,
 };
 
 export default function SettingDialog({
@@ -121,8 +117,8 @@ export default function SettingDialog({
   onClose,
 }) {
   const [open, setOpen] = useState(false);
-  const [settingType, setSettingType] = useState("boolean");
-  const [defaultValue, setDefaultValue] = useState("true");
+  const [settingType, setSettingType] = useState('boolean');
+  const [defaultValue, setDefaultValue] = useState('true');
   const [isGDPR, setIsGDPR] = useState(false);
 
   const { enqueueSnackbar } = useSnackbar();
@@ -132,17 +128,16 @@ export default function SettingDialog({
   }, [isOpen]);
 
   const NewSettingSchema = Yup.object().shape({
-    key: Yup.string().required("Key Name is required"),
-    label: Yup.string().required("Label is required"),
+    key: Yup.string().required('Key Name is required'),
+    label: Yup.string().required('Label is required'),
   });
 
   const defaultValues = useMemo(
     () => ({
-      key: currentSetting?.key || "",
-      label: currentSetting?.label || "",
+      key: currentSetting?.key || '',
+      label: currentSetting?.label || '',
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [currentSetting]
+    [currentSetting],
   );
 
   const methods = useForm({
@@ -152,14 +147,9 @@ export default function SettingDialog({
 
   const {
     reset,
-    watch,
-    control,
-    setValue,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
-
-  const values = watch();
 
   useEffect(() => {
     if (isEdit && currentSetting) {
@@ -186,7 +176,7 @@ export default function SettingDialog({
     if (isEdit) {
       settingToAddOrUpdate._id = currentSetting._id;
       const confirmUpdate = confirm(
-        "Are you sure? This will overwrite this setting for all users immediately. If you're changing the Key Name or Type, double-check that your UI can support this to avoid rendering errors."
+        "Are you sure? This will overwrite this setting for all users immediately. If you're changing the Key Name or Type, double-check that your UI can support this to avoid rendering errors.",
       );
       if (!confirmUpdate) return;
     }
@@ -198,8 +188,8 @@ export default function SettingDialog({
     });
     reset();
     onClose(false);
-    enqueueSnackbar(isEdit ? "Update success" : "Add success", {
-      variant: "success",
+    enqueueSnackbar(isEdit ? 'Update success' : 'Add success', {
+      variant: 'success',
     });
   };
 
@@ -210,14 +200,14 @@ export default function SettingDialog({
   const handleChangeType = (event) => {
     const type = event.target.value;
     switch (type) {
-      case "boolean":
-        setDefaultValue("true");
+      case 'boolean':
+        setDefaultValue('true');
         break;
-      case "number":
+      case 'number':
         setDefaultValue(5);
         break;
-      case "string":
-        setDefaultValue("");
+      case 'string':
+        setDefaultValue('');
         break;
       default:
         break;
@@ -231,37 +221,27 @@ export default function SettingDialog({
 
   return (
     <div>
-      <BootstrapDialog
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}
-      >
-        <BootstrapDialogTitle
-          id="customized-dialog-title"
-          onClose={handleClose}
-        >
-          {isEdit ? "Edit User Setting" : "Add a User Setting"}
+      <BootstrapDialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
+          {isEdit ? 'Edit User Setting' : 'Add a User Setting'}
         </BootstrapDialogTitle>
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
           <DialogContent dividers>
             <Box
               sx={{
-                display: "grid",
+                display: 'grid',
                 columnGap: 2,
                 rowGap: 3,
                 gridTemplateColumns: {
-                  xs: "repeat(1, 1fr)",
-                  sm: "repeat(2, 1fr)",
+                  xs: 'repeat(1, 1fr)',
+                  sm: 'repeat(2, 1fr)',
                 },
               }}
             >
               <RHFTextField name="key" label="Key Name" />
               <FormControlLabel
                 control={
-                  <Android12Switch
-                    checked={isGDPR}
-                    onChange={(e) => setIsGDPR(e.target.checked)}
-                  />
+                  <Android12Switch checked={isGDPR} onChange={(e) => setIsGDPR(e.target.checked)} />
                 }
                 label="Is this a GDPR setting?"
               />
@@ -271,17 +251,17 @@ export default function SettingDialog({
               name="label"
               label="Label"
               helperText="Some important text"
-              sx={{ width: "100%" }}
+              sx={{ width: '100%' }}
             />
             <Box m={2} />
             <Box
               sx={{
-                display: "grid",
+                display: 'grid',
                 columnGap: 2,
                 rowGap: 3,
                 gridTemplateColumns: {
-                  xs: "repeat(1, 1fr)",
-                  sm: "repeat(2, 1fr)",
+                  xs: 'repeat(1, 1fr)',
+                  sm: 'repeat(2, 1fr)',
                 },
               }}
             >
@@ -299,11 +279,9 @@ export default function SettingDialog({
                   <MenuItem value="string">String</MenuItem>
                 </Select>
               </FormControl>
-              {settingType === "boolean" ? (
+              {settingType === 'boolean' ? (
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">
-                    Default Value
-                  </InputLabel>
+                  <InputLabel id="demo-simple-select-label">Default Value</InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
@@ -319,7 +297,7 @@ export default function SettingDialog({
                 <TextField
                   id="outlined-name"
                   label="Default Value"
-                  type={settingType === "number" ? "number" : "text"}
+                  type={settingType === 'number' ? 'number' : 'text'}
                   value={defaultValue}
                   onChange={handleChangeDefaultValue}
                 />
@@ -327,12 +305,8 @@ export default function SettingDialog({
             </Box>
           </DialogContent>
           <DialogActions>
-            <LoadingButton
-              type="submit"
-              variant="contained"
-              loading={isSubmitting}
-            >
-              {!isEdit ? "Create Settings" : "Save Changes"}
+            <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
+              {!isEdit ? 'Create Settings' : 'Save Changes'}
             </LoadingButton>
           </DialogActions>
         </FormProvider>
@@ -340,3 +314,12 @@ export default function SettingDialog({
     </div>
   );
 }
+
+SettingDialog.propTypes = {
+  addUserSetting: PropTypes.func,
+  updateUserSetting: PropTypes.func,
+  isOpen: PropTypes.bool,
+  isEdit: PropTypes.bool,
+  currentSetting: PropTypes.object,
+  onClose: PropTypes.func,
+};

@@ -1,3 +1,4 @@
+/* eslint-disable no-promise-executor-return */
 import { Accounts } from 'meteor/accounts-base';
 
 import React, { useState } from 'react';
@@ -43,7 +44,7 @@ export default function ResetPasswordForm() {
 
       sessionStorage.setItem('email-recovery', data.email);
 
-      const email = data.email;
+      const { email } = data;
 
       Accounts.forgotPassword({ email }, (error) => {
         if (error) {
@@ -55,7 +56,6 @@ export default function ResetPasswordForm() {
           navigate(PATH_AUTH.newPassword);
         }
       });
-
     } catch (error) {
       console.error(error);
     }
@@ -67,7 +67,13 @@ export default function ResetPasswordForm() {
         {isError && <Alert severity="error">{errorText}</Alert>}
         <RHFTextField name="email" label="Email address" />
 
-        <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
+        <LoadingButton
+          fullWidth
+          size="large"
+          type="submit"
+          variant="contained"
+          loading={isSubmitting}
+        >
           Send Request
         </LoadingButton>
       </Stack>

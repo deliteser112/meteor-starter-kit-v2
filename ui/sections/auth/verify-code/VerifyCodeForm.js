@@ -1,3 +1,7 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable no-promise-executor-return */
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-use-before-define */
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
@@ -62,8 +66,6 @@ export default function VerifyCodeForm() {
     return () => {
       target?.removeEventListener('paste', handlePaste);
     };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handlePaste = (event) => {
@@ -147,13 +149,25 @@ export default function VerifyCodeForm() {
           ))}
         </Stack>
 
-        {(!!errors.code1 || !!errors.code2 || !!errors.code3 || !!errors.code4 || !!errors.code5 || !!errors.code6) && (
+        {(!!errors.code1 ||
+          !!errors.code2 ||
+          !!errors.code3 ||
+          !!errors.code4 ||
+          !!errors.code5 ||
+          !!errors.code6) && (
           <FormHelperText error sx={{ px: 2 }}>
             Code is required
           </FormHelperText>
         )}
 
-        <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting} sx={{ mt: 3 }}>
+        <LoadingButton
+          fullWidth
+          size="large"
+          type="submit"
+          variant="contained"
+          loading={isSubmitting}
+          sx={{ mt: 3 }}
+        >
           Verify
         </LoadingButton>
       </Stack>

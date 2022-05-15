@@ -1,7 +1,8 @@
+/* eslint-disable import/prefer-default-export */
 // ----------------------------------------------------------------------
 
 export const varHover = (scale) => ({
   hover: {
-    scale: scale || 1.1
-  }
+    scale: scale || 1.1,
+  },
 });

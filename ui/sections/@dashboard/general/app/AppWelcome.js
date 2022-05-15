@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/require-default-props */
 import React from 'react';
 // @mui
 import PropTypes from 'prop-types';
@@ -20,13 +22,6 @@ const RootStyle = styled(Card)(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
-
-AppWelcome.propTypes = {
-  action: PropTypes.node,
-  description: PropTypes.string,
-  img: PropTypes.node,
-  title: PropTypes.string,
-};
 
 export default function AppWelcome({ title, description, action, img, ...other }) {
   return (
@@ -53,3 +48,10 @@ export default function AppWelcome({ title, description, action, img, ...other }
     </RootStyle>
   );
 }
+
+AppWelcome.propTypes = {
+  action: PropTypes.node,
+  description: PropTypes.string,
+  img: PropTypes.node,
+  title: PropTypes.string,
+};

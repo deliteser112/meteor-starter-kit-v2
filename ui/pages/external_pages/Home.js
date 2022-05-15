@@ -4,11 +4,7 @@ import { styled } from '@mui/material/styles';
 // components
 import Page from '../../components/Page';
 // sections
-import {
-  HomeHero,
-  HomeMinimal,
-  HomePricingPlans
-} from '../../sections/home';
+import { HomeHero, HomeMinimal, HomePricingPlans } from '../../sections/home';
 
 // ----------------------------------------------------------------------
 

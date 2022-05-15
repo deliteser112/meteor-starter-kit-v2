@@ -1,6 +1,9 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/no-unstable-nested-components */
+/* eslint-disable react/require-default-props */
 import PropTypes from 'prop-types';
-import React from "react";
-import { useSnackbar } from "notistack";
+import React from 'react';
+import { useSnackbar } from 'notistack';
 
 // @mui
 import {
@@ -13,59 +16,54 @@ import {
   Avatar,
   Card,
   CardContent,
-  FormControlLabel
-} from "@mui/material";
-import { styled } from "@mui/material/styles";
+  FormControlLabel,
+} from '@mui/material';
+import { styled } from '@mui/material/styles';
 
-import SettingsIcon from "@mui/icons-material/Settings";
+import SettingsIcon from '@mui/icons-material/Settings';
 
 // graphql & collections
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from '@apollo/react-hooks';
 
 // import mutations
-import { updateUser as updateUserMutation } from "../../../_mutations/Users.gql";
+import { updateUser as updateUserMutation } from '../../../_mutations/Users.gql';
 
 // components
-import EmptyContent from "../../../components/EmptyContent";
+import EmptyContent from '../../../components/EmptyContent';
 
 // ----------------------------------------------------------------------
 const Android12Switch = styled(Switch)(({ theme }) => ({
   padding: 8,
-  "& .MuiSwitch-track": {
+  '& .MuiSwitch-track': {
     borderRadius: 22 / 2,
-    "&:before, &:after": {
+    '&:before, &:after': {
       content: '""',
-      position: "absolute",
-      top: "50%",
-      transform: "translateY(-50%)",
+      position: 'absolute',
+      top: '50%',
+      transform: 'translateY(-50%)',
       width: 16,
       height: 16,
     },
-    "&:before": {
+    '&:before': {
       backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
-        theme.palette.getContrastText(theme.palette.primary.main)
+        theme.palette.getContrastText(theme.palette.primary.main),
       )}" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/></svg>')`,
       left: 12,
     },
-    "&:after": {
+    '&:after': {
       backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
-        theme.palette.getContrastText(theme.palette.primary.main)
+        theme.palette.getContrastText(theme.palette.primary.main),
       )}" d="M19,13H5V11H19V13Z" /></svg>')`,
       right: 12,
     },
   },
-  "& .MuiSwitch-thumb": {
-    boxShadow: "none",
+  '& .MuiSwitch-thumb': {
+    boxShadow: 'none',
     width: 16,
     height: 16,
     margin: 2,
   },
 }));
-
-ProfileSettings.propTypes = {
-  userId: PropTypes.string,
-  settings: PropTypes.array
-}
 
 export default function ProfileSettings({ userId, settings }) {
   const { enqueueSnackbar } = useSnackbar();
@@ -80,16 +78,16 @@ export default function ProfileSettings({ userId, settings }) {
     settingToUpdate.value = setting.value;
 
     if (!userId) settingToUpdate.lastUpdatedByUser = new Date().toISOString();
-    
+
     updateUser({
       variables: {
         user: {
           settings: settingsUpdate,
-        }
-      }
+        },
+      },
     });
-    enqueueSnackbar("Update success!", {
-      variant: "success",
+    enqueueSnackbar('Update success!', {
+      variant: 'success',
     });
   };
 
@@ -127,9 +125,7 @@ export default function ProfileSettings({ userId, settings }) {
 
   return (
     <Card>
-      <CardContent
-        sx={{ padding: { xs: 0, md: 2 }, paddingBottom: { xs: 0, md: 3 } }}
-      >
+      <CardContent sx={{ padding: { xs: 0, md: 2 }, paddingBottom: { xs: 0, md: 3 } }}>
         {settings.length > 0 ? (
           <List>
             {settings.map(({ _id, key, label, type, value }, index) => (
@@ -137,7 +133,9 @@ export default function ProfileSettings({ userId, settings }) {
                 key={index}
                 secondaryAction={
                   <div>
-                    {renderSettingValue(type, key, value, (update) => handleUpdateSetting({ ...update, _id}))}
+                    {renderSettingValue(type, key, value, (update) =>
+                      handleUpdateSetting({ ...update, _id }),
+                    )}
                   </div>
                 }
               >
@@ -154,7 +152,7 @@ export default function ProfileSettings({ userId, settings }) {
           <EmptyContent
             title="No Settings"
             sx={{
-              "& span.MuiBox-root": { height: 160 },
+              '& span.MuiBox-root': { height: 160 },
             }}
           />
         )}
@@ -162,3 +160,8 @@ export default function ProfileSettings({ userId, settings }) {
     </Card>
   );
 }
+
+ProfileSettings.propTypes = {
+  userId: PropTypes.string,
+  settings: PropTypes.array,
+};

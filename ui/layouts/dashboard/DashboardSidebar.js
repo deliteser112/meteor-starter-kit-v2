@@ -1,3 +1,5 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Roles } from 'meteor/alanning:roles';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
@@ -40,11 +42,6 @@ const AccountStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-DashboardSidebar.propTypes = {
-  isOpenSidebar: PropTypes.bool,
-  onCloseSidebar: PropTypes.func,
-};
-
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const { user } = useAuth();
   const { pathname } = useLocation();
@@ -59,14 +56,14 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const [displayName, setDisplayName] = useState('');
   const [role, setRole] = useState('');
   useEffect(() => {
-    if(user) {
+    if (user) {
       const { _id, profile, services } = user;
       const isOAuth = isOAuthUser(Object.keys(services));
       setRole(sentenceCase(Roles.getRolesForUser(_id)[0]));
       if (isOAuth) {
         setDisplayName(profile.name);
       } else {
-        setDisplayName(`${profile.name.first} ${profile.name.last}`)
+        setDisplayName(`${profile.name.first} ${profile.name.last}`);
       }
     }
   }, [user]);
@@ -80,7 +77,9 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
     >
       <Box sx={{ px: 2.5, py: 3, display: 'inline-flex', alignItems: 'center' }}>
         <Logo />
-        <Typography variant="h5" sx={{ marginLeft: 1 }}>Meteor Starter Kit</Typography>
+        <Typography variant="h5" sx={{ marginLeft: 1 }}>
+          Meteor Starter Kit
+        </Typography>
       </Box>
 
       <Box sx={{ mb: 5, mx: 2.5 }}>
@@ -104,11 +103,12 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
       <Box sx={{ flexGrow: 1 }} />
 
       <Box sx={{ px: 2.5, pb: 3, mt: 10 }}>
-        <Stack alignItems="center" spacing={3} sx={{ pt: 5, borderRadius: 2, position: 'relative' }}>
-          <Box
-            component="img"
-            src="/static/illustrations/menu-back.png"
-          />
+        <Stack
+          alignItems="center"
+          spacing={3}
+          sx={{ pt: 5, borderRadius: 2, position: 'relative' }}
+        >
+          <Box component="img" src="/static/illustrations/menu-back.png" />
         </Stack>
       </Box>
     </Scrollbar>
@@ -146,3 +146,8 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
     </RootStyle>
   );
 }
+
+DashboardSidebar.propTypes = {
+  isOpenSidebar: PropTypes.bool,
+  onCloseSidebar: PropTypes.func,
+};

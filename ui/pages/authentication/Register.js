@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
@@ -53,15 +54,13 @@ const ContentStyle = styled('div')(({ theme }) => ({
 export default function Register() {
   const smUp = useResponsive('up', 'sm');
 
-  const mdUp = useResponsive('up', 'md');
-
   return (
     <Page title="Register">
       <RootStyle>
         <HeaderStyle>
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
-              Already have an account? {''}
+              Already have an account?
               <Link variant="subtitle2" component={RouterLink} to={PATH_AUTH.login}>
                 Login
               </Link>
@@ -75,7 +74,9 @@ export default function Register() {
               Sign up to Meteor Starter Kit.
             </Typography>
 
-            <Typography sx={{ color: 'text.secondary', mb: 5 }}>Free forever. No credit card needed.</Typography>
+            <Typography sx={{ color: 'text.secondary', mb: 5 }}>
+              Free forever. No credit card needed.
+            </Typography>
 
             <AuthSocial />
 
@@ -86,7 +87,7 @@ export default function Register() {
               <Link underline="always" color="text.primary" href="#">
                 Terms of Service
               </Link>
-              {''}and{''}
+              and
               <Link underline="always" color="text.primary" href="#">
                 Privacy Policy
               </Link>

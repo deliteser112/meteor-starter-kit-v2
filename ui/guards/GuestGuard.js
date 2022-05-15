@@ -1,9 +1,8 @@
+/* eslint-disable react/jsx-no-useless-fragment */
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
-
-import { Meteor } from 'meteor/meteor';
-import { useTracker } from 'meteor/react-meteor-data';
 
 // routes
 import { PATH_DASHBOARD } from '../routes/paths';
@@ -12,10 +11,6 @@ import { PATH_DASHBOARD } from '../routes/paths';
 import useAuth from '../hooks/useAuth';
 
 // ----------------------------------------------------------------------
-
-GuestGuard.propTypes = {
-  children: PropTypes.node
-};
 
 export default function GuestGuard({ children }) {
   // const isAuthenticated = useTracker(() => Meteor.user());
@@ -26,3 +21,7 @@ export default function GuestGuard({ children }) {
 
   return <>{children}</>;
 }
+
+GuestGuard.propTypes = {
+  children: PropTypes.node,
+};

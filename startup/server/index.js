@@ -1,3 +1,5 @@
+import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
 
 import './accounts';
@@ -9,8 +11,8 @@ import './email';
 import './graphql';
 // import './ssr';
 
-const SEED_FIRSTNAME = "Meteor";
-const SEED_LASTNAME = "Admin";
+const SEED_FIRSTNAME = 'Meteor';
+const SEED_LASTNAME = 'Admin';
 
 const SEED_EMAIL = 'meteor@admin.com';
 const SEED_PASSWORD = 'root';
@@ -23,11 +25,11 @@ Meteor.startup(() => {
       email: SEED_EMAIL,
       password: SEED_PASSWORD,
       profile: {
-          name: {
-            first: SEED_FIRSTNAME,
-            last: SEED_LASTNAME
-          }
-      }
+        name: {
+          first: SEED_FIRSTNAME,
+          last: SEED_LASTNAME,
+        },
+      },
     });
   }
 });

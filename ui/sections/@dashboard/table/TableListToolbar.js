@@ -1,8 +1,16 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
 // material
 import { styled } from '@mui/material/styles';
-import { Toolbar, Tooltip, IconButton, Typography, OutlinedInput, InputAdornment } from '@mui/material';
+import {
+  Toolbar,
+  Tooltip,
+  IconButton,
+  Typography,
+  OutlinedInput,
+  InputAdornment,
+} from '@mui/material';
 // component
 import Iconify from '../../../components/Iconify';
 
@@ -30,15 +38,13 @@ const SearchStyle = styled(OutlinedInput)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-TableListToolbar.propTypes = {
-  numSelected: PropTypes.number,
-  filterName: PropTypes.string,
-  onFilterName: PropTypes.func,
-  selectedItems: PropTypes.array,
-  onDelete: PropTypes.func
-};
-
-export default function TableListToolbar({ numSelected, filterName, onFilterName, selectedItems, onDelete }) {
+export default function TableListToolbar({
+  numSelected,
+  filterName,
+  onFilterName,
+  selectedItems,
+  onDelete,
+}) {
   return (
     <RootStyle
       sx={{
@@ -59,7 +65,10 @@ export default function TableListToolbar({ numSelected, filterName, onFilterName
           placeholder="Search item..."
           startAdornment={
             <InputAdornment position="start">
-              <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled', width: 20, height: 20 }} />
+              <Iconify
+                icon="eva:search-fill"
+                sx={{ color: 'text.disabled', width: 20, height: 20 }}
+              />
             </InputAdornment>
           }
         />
@@ -81,3 +90,11 @@ export default function TableListToolbar({ numSelected, filterName, onFilterName
     </RootStyle>
   );
 }
+
+TableListToolbar.propTypes = {
+  numSelected: PropTypes.number,
+  filterName: PropTypes.string,
+  onFilterName: PropTypes.func,
+  selectedItems: PropTypes.array,
+  onDelete: PropTypes.func,
+};

@@ -1,3 +1,7 @@
+/* eslint-disable no-shadow */
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/jsx-no-constructed-context-values */
+import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import React, { createContext, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
@@ -10,7 +14,7 @@ import PropTypes from 'prop-types';
 const initialState = {
   isAuthenticated: false,
   isInitialized: false,
-  user: null
+  user: null,
 };
 
 const handlers = {
@@ -20,7 +24,7 @@ const handlers = {
       ...state,
       isAuthenticated,
       isInitialized: true,
-      user
+      user,
     };
   },
   LOGIN: (state, action) => {
@@ -29,13 +33,13 @@ const handlers = {
     return {
       ...state,
       isAuthenticated: true,
-      user
+      user,
     };
   },
   LOGOUT: (state) => ({
     ...state,
     isAuthenticated: false,
-    user: null
+    user: null,
   }),
   REGISTER: (state, action) => {
     const { user } = action.payload;
@@ -43,24 +47,21 @@ const handlers = {
     return {
       ...state,
       isAuthenticated: true,
-      user
+      user,
     };
-  }
+  },
 };
 
-const reducer = (state, action) => (handlers[action.type] ? handlers[action.type](state, action) : state);
+const reducer = (state, action) =>
+  handlers[action.type] ? handlers[action.type](state, action) : state;
 
 const AuthContext = createContext({
   ...initialState,
   method: 'jwt',
   login: () => Promise.resolve(),
   logout: () => Promise.resolve(),
-  register: () => Promise.resolve()
+  register: () => Promise.resolve(),
 });
-
-AuthProvider.propTypes = {
-  children: PropTypes.node
-};
 
 function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -68,7 +69,7 @@ function AuthProvider({ children }) {
     const handler = Meteor.subscribe('app');
 
     let user = {};
-    
+
     const userInfo = Meteor.user();
 
     const isUser = userInfo && userInfo.profile && userInfo.profile.name;
@@ -91,16 +92,16 @@ function AuthProvider({ children }) {
             type: 'INITIALIZE',
             payload: {
               isAuthenticated: true,
-              user
-            }
+              user,
+            },
           });
         } else {
           dispatch({
             type: 'INITIALIZE',
             payload: {
               isAuthenticated: false,
-              user: null
-            }
+              user: null,
+            },
           });
         }
       } catch (err) {
@@ -109,8 +110,8 @@ function AuthProvider({ children }) {
           type: 'INITIALIZE',
           payload: {
             isAuthenticated: false,
-            user: null
-          }
+            user: null,
+          },
         });
       }
     };
@@ -118,67 +119,26 @@ function AuthProvider({ children }) {
     initialize();
   }, [isLoading]);
 
-  const login = async (email, password) => {
-    // const response = await axios.post('/api/auth/login', {
-    //   email,
-    //   password
-    // });
-    const response = { user: 'success' };
-
-    const { user } = response.data;
-
-    // setSession(accessToken);
-    dispatch({
-      type: 'LOGIN',
-      payload: {
-        user
-      }
-    });
-  };
-
-  const register = async (email, password, firstname, lastname) => {
-    // const response = await axios.post('/api/auth/register', {
-    //   email,
-    //   password,
-    //   firstname,
-    //   lastname
-    // });
-    const response = { user: 'success' };
-
-    const { user } = response.data;
-
-    // window.localStorage.setItem('accessToken', accessToken);
-    // setSession(accessToken);
-    dispatch({
-      type: 'REGISTER',
-      payload: {
-        user
-      }
-    });
-  };
-
   const logout = async () => {
     // setSession(null);
     dispatch({ type: 'LOGOUT' });
   };
-
-  const resetPassword = () => {};
-
-  const updateProfile = () => {};
 
   return (
     <AuthContext.Provider
       value={{
         ...state,
         method: 'jwt',
-        login,
         logout,
-        register
       }}
     >
       {children}
     </AuthContext.Provider>
   );
 }
+
+AuthProvider.propTypes = {
+  children: PropTypes.node,
+};
 
 export { AuthContext, AuthProvider };

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { memo } from 'react';
 // @mui
 import { useTheme } from '@mui/material/styles';

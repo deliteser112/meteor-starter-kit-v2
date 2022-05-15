@@ -1,9 +1,9 @@
-import { Meteor } from "meteor/meteor";
-import { Accounts } from "meteor/accounts-base";
-import updateUser from "./actions/updateUser";
-import queryUser from "./actions/queryUser";
-import removeUser from "./actions/removeUser";
-import sendWelcomeEmail from "./actions/sendWelcomeEmail";
+import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
+import updateUser from './actions/updateUser';
+import queryUser from './actions/queryUser';
+import removeUser from './actions/removeUser';
+import sendWelcomeEmail from './actions/sendWelcomeEmail';
 
 export default {
   updateUser: async (parent, args, context) => {

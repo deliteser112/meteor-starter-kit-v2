@@ -1,9 +1,9 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable import/prefer-default-export */
 import React from 'react';
 import { PlanFreeIcon, PlanStarterIcon, PlanPremiumIcon } from '../assets';
 
 // ----------------------------------------------------------------------
-
-const LICENSES = ['Standard', 'Standard Plus', 'Extended'];
 
 export const _pricingPlans = [
   {

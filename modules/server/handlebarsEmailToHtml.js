@@ -7,12 +7,8 @@ export default (handlebarsMarkup, context, options) => {
   if (handlebarsMarkup && context) {
     const template = handlebars.compile(handlebarsMarkup);
     const content = template(context);
-    const {
-      productName,
-      twitterUsername,
-      facebookUsername,
-      productAddress,
-    } = Meteor.settings.public;
+    const { productName, twitterUsername, facebookUsername, productAddress } =
+      Meteor.settings.public;
 
     if (options && options.noBaseTemplate) {
       // Use juice to inline CSS <style></style> styles from <head> unless disabled.

@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactApexChart from 'react-apexcharts';
@@ -24,16 +26,15 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-AppWidgetSummary.propTypes = {
-  chartColor: PropTypes.string.isRequired,
-  chartData: PropTypes.arrayOf(PropTypes.number).isRequired,
-  percent: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
-  total: PropTypes.number.isRequired,
-  sx: PropTypes.object,
-};
-
-export default function AppWidgetSummary({ title, percent, total, chartColor, chartData, sx, ...other }) {
+export default function AppWidgetSummary({
+  title,
+  percent,
+  total,
+  chartColor,
+  chartData,
+  sx,
+  ...other
+}) {
   const theme = useTheme();
 
   const chartOptions = {
@@ -66,7 +67,11 @@ export default function AppWidgetSummary({ title, percent, total, chartColor, ch
               }),
             }}
           >
-            <Iconify width={16} height={16} icon={percent >= 0 ? 'eva:trending-up-fill' : 'eva:trending-down-fill'} />
+            <Iconify
+              width={16}
+              height={16}
+              icon={percent >= 0 ? 'eva:trending-up-fill' : 'eva:trending-down-fill'}
+            />
           </IconWrapperStyle>
           <Typography component="span" variant="subtitle2">
             {percent > 0 && '+'}
@@ -77,7 +82,22 @@ export default function AppWidgetSummary({ title, percent, total, chartColor, ch
         <Typography variant="h3">{fNumber(total)}</Typography>
       </Box>
 
-      <ReactApexChart type="bar" series={[{ data: chartData }]} options={chartOptions} width={60} height={36} />
+      <ReactApexChart
+        type="bar"
+        series={[{ data: chartData }]}
+        options={chartOptions}
+        width={60}
+        height={36}
+      />
     </Card>
   );
 }
+
+AppWidgetSummary.propTypes = {
+  chartColor: PropTypes.string.isRequired,
+  chartData: PropTypes.arrayOf(PropTypes.number).isRequired,
+  percent: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  total: PropTypes.number.isRequired,
+  sx: PropTypes.object,
+};

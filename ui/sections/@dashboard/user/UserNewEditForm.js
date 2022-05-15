@@ -1,3 +1,7 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable no-promise-executor-return */
+/* eslint-disable react/require-default-props */
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import React, { useCallback, useEffect, useMemo } from 'react';
@@ -17,14 +21,15 @@ import { PATH_DASHBOARD } from '../../../routes/paths';
 import { countries } from '../../../_mock';
 // components
 import Label from '../../../components/Label';
-import { FormProvider, RHFSelect, RHFSwitch, RHFTextField, RHFUploadAvatar } from '../../../components/hook-form';
+import {
+  FormProvider,
+  RHFSelect,
+  RHFSwitch,
+  RHFTextField,
+  RHFUploadAvatar,
+} from '../../../components/hook-form';
 
 // ----------------------------------------------------------------------
-
-UserNewEditForm.propTypes = {
-  isEdit: PropTypes.bool,
-  currentUser: PropTypes.object,
-};
 
 export default function UserNewEditForm({ isEdit, currentUser }) {
   const navigate = useNavigate();
@@ -60,8 +65,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
       company: currentUser?.company || '',
       role: currentUser?.role || '',
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [currentUser]
+    [currentUser],
   );
 
   const methods = useForm({
@@ -87,7 +91,6 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
     if (!isEdit) {
       reset(defaultValues);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEdit, currentUser]);
 
   const onSubmit = async () => {
@@ -110,11 +113,11 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
           'avatarUrl',
           Object.assign(file, {
             preview: URL.createObjectURL(file),
-          })
+          }),
         );
       }
     },
-    [setValue]
+    [setValue],
   );
 
   return (
@@ -166,7 +169,9 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
                       <Switch
                         {...field}
                         checked={field.value !== 'active'}
-                        onChange={(event) => field.onChange(event.target.checked ? 'banned' : 'active')}
+                        onChange={(event) =>
+                          field.onChange(event.target.checked ? 'banned' : 'active')
+                        }
                       />
                     )}
                   />
@@ -245,3 +250,8 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
     </FormProvider>
   );
 }
+
+UserNewEditForm.propTypes = {
+  isEdit: PropTypes.bool,
+  currentUser: PropTypes.object,
+};

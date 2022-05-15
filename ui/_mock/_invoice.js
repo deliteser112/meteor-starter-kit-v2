@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-shadow */
 import { add } from 'date-fns';
 import _mock from './_mock';
 import { randomInArray, randomNumberRange } from './funcs';

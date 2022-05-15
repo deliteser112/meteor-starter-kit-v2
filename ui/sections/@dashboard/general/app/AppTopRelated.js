@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/require-default-props */
 import React from 'react';
 // @mui
 import PropTypes from 'prop-types';
@@ -12,12 +14,6 @@ import Iconify from '../../../../components/Iconify';
 import Scrollbar from '../../../../components/Scrollbar';
 
 // ----------------------------------------------------------------------
-
-AppTopRelated.propTypes = {
-  title: PropTypes.string,
-  subheader: PropTypes.string,
-  list: PropTypes.array.isRequired,
-};
 
 export default function AppTopRelated({ title, subheader, list, ...other }) {
   return (
@@ -35,18 +31,13 @@ export default function AppTopRelated({ title, subheader, list, ...other }) {
   );
 }
 
-// ----------------------------------------------------------------------
-
-ApplicationItem.propTypes = {
-  app: PropTypes.shape({
-    name: PropTypes.string,
-    price: PropTypes.number,
-    rating: PropTypes.number,
-    review: PropTypes.number,
-    shortcut: PropTypes.string,
-    system: PropTypes.string,
-  }),
+AppTopRelated.propTypes = {
+  title: PropTypes.string,
+  subheader: PropTypes.string,
+  list: PropTypes.array.isRequired,
 };
+
+// ----------------------------------------------------------------------
 
 function ApplicationItem({ app }) {
   const theme = useTheme();
@@ -101,3 +92,14 @@ function ApplicationItem({ app }) {
     </Stack>
   );
 }
+
+ApplicationItem.propTypes = {
+  app: PropTypes.shape({
+    name: PropTypes.string,
+    price: PropTypes.number,
+    rating: PropTypes.number,
+    review: PropTypes.number,
+    shortcut: PropTypes.string,
+    system: PropTypes.string,
+  }),
+};

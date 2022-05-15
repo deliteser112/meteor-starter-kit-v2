@@ -38,8 +38,8 @@ export default function ResetPassword() {
           </Typography>
 
           <Typography sx={{ color: 'text.secondary', mb: 5 }}>
-            Please enter the email address associated with your account and We will email you a link to reset your
-            password.
+            Please enter the email address associated with your account and We will email you a link
+            to reset your password.
           </Typography>
 
           <ResetPasswordForm />

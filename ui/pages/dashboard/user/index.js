@@ -1,14 +1,15 @@
-import React, { useEffect } from 'react';
+/* eslint-disable array-callback-return */
+import React from 'react';
 import ReactLoading from 'react-loading';
 // @mui
-import { Container, Typography, Stack } from '@mui/material';
+import { Container } from '@mui/material';
 
 // graphql & collections
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
 // import queries & mutations
-import { users as usersQuery } from '../../../_queries/Users.gql'
-import { removeUser as removeUserMutation } from '../../../_mutations/Users.gql'
+import { users as usersQuery } from '../../../_queries/Users.gql';
+import { removeUser as removeUserMutation } from '../../../_mutations/Users.gql';
 
 // components
 import Page from '../../../components/Page';
@@ -22,41 +23,34 @@ import { PATH_DASHBOARD } from '../../../routes/paths';
 export default function Users() {
   const [removeUser] = useMutation(removeUserMutation);
 
-  const  { loading, data, refetch } = useQuery(usersQuery);
+  const { loading, data, refetch } = useQuery(usersQuery);
 
   refetch();
- 
-  const users = data && data.users && data.users.users || [];
 
-  useEffect(() => {
-    if (users) {
-      users.map((user) => {
-        console.log(user.roles);
-      })
-    }
-  }, [users]);
+  const users = (data && data.users && data.users.users) || [];
+
+  console.log('USERS:', users);
 
   const handleDeleteUser = (_id) => {
     removeUser({
       variables: {
-        _id
+        _id,
       },
     });
-  }
+  };
 
   return (
     <Page title="User">
       <Container maxWidth="xl">
         <HeaderBreadcrumbs
-          heading={`Users`}
-          links={[
-            { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'Users' }
-          ]}
+          heading="Users"
+          links={[{ name: 'Dashboard', href: PATH_DASHBOARD.root }, { name: 'Users' }]}
         />
-        {loading ? <ReactLoading className="loading-icons" type={'spin'} color={'grey'} height={30} width={30} /> : 
+        {loading ? (
+          <ReactLoading className="loading-icons" type="spin" color="grey" height={30} width={30} />
+        ) : (
           <UserList userList={users} onDelete={handleDeleteUser} />
-        }
+        )}
       </Container>
     </Page>
   );

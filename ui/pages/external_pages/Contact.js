@@ -2,8 +2,6 @@ import React from 'react';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Container } from '@mui/material';
-// _mock
-import { _mapContact } from '../../_mock/_others';
 // components
 import Page from '../../components/Page';
 import { ContactHero, ContactForm } from '../../sections/contact';

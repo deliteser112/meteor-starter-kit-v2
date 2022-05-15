@@ -1,12 +1,12 @@
+/* eslint-disable no-use-before-define */
+/* eslint-disable react/require-default-props */
 import PropTypes from 'prop-types';
-import { m } from 'framer-motion';
 import React, { useState, useEffect } from 'react';
 import { NavLink as RouterLink, useLocation } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Box, Link, Grid, List, Stack, Popover, ListItem, ListSubheader, CardActionArea } from '@mui/material';
+import { Box, Link, Stack } from '@mui/material';
 // components
-import Iconify from '../../components/Iconify';
 
 // ----------------------------------------------------------------------
 
@@ -23,24 +23,7 @@ const LinkStyle = styled(Link)(({ theme }) => ({
   },
 }));
 
-const ListItemStyle = styled(ListItem)(({ theme }) => ({
-  ...theme.typography.body2,
-  padding: 0,
-  marginTop: theme.spacing(3),
-  color: theme.palette.text.secondary,
-  transition: theme.transitions.create('color'),
-  '&:hover': {
-    color: theme.palette.text.primary,
-  },
-}));
-
 // ----------------------------------------------------------------------
-
-MenuDesktop.propTypes = {
-  isHome: PropTypes.bool,
-  isOffset: PropTypes.bool,
-  navConfig: PropTypes.array,
-};
 
 export default function MenuDesktop({ isOffset, isHome, navConfig }) {
   const { pathname } = useLocation();
@@ -50,7 +33,6 @@ export default function MenuDesktop({ isOffset, isHome, navConfig }) {
     if (open) {
       handleClose();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const handleOpen = () => {
@@ -77,6 +59,12 @@ export default function MenuDesktop({ isOffset, isHome, navConfig }) {
     </Stack>
   );
 }
+
+MenuDesktop.propTypes = {
+  isHome: PropTypes.bool,
+  isOffset: PropTypes.bool,
+  navConfig: PropTypes.array,
+};
 
 // ----------------------------------------------------------------------
 
@@ -107,9 +95,6 @@ function IconBullet({ type = 'item' }) {
 MenuDesktopItem.propTypes = {
   isHome: PropTypes.bool,
   isOffset: PropTypes.bool,
-  isOpen: PropTypes.bool,
-  onClose: PropTypes.func,
-  onOpen: PropTypes.func,
   item: PropTypes.shape({
     path: PropTypes.string,
     title: PropTypes.string,
@@ -117,8 +102,8 @@ MenuDesktopItem.propTypes = {
   }),
 };
 
-function MenuDesktopItem({ item, isHome, isOpen, isOffset, onOpen, onClose }) {
-  const { title, path, children } = item;
+function MenuDesktopItem({ item, isHome, isOffset }) {
+  const { title, path } = item;
 
   if (title === 'Documentation') {
     return (

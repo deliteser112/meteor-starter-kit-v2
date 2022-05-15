@@ -1,32 +1,28 @@
+/* eslint-disable react/jsx-props-no-spreading */
 // meteors
-import { Meteor } from 'meteor/meteor';
-
+import { Accounts } from 'meteor/accounts-base';
 import * as Yup from 'yup';
 import React, { useState } from 'react';
 import { useFormik, Form, FormikProvider } from 'formik';
-import { useNavigate } from 'react-router-dom';
 // material
 import { Stack, TextField, IconButton, InputAdornment, Alert, Box } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
-// routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
 // component
 import Iconify from '../../../components/Iconify';
 
 // ----------------------------------------------------------------------
 
-const ROLE = 'member';
-
 export default function RegisterForm() {
-  const navigate = useNavigate();
-
   const [showPassword, setShowPassword] = useState(false);
   const [isError, setError] = useState(false);
   const [errorText, setErrorText] = useState('');
 
   const RegisterSchema = Yup.object().shape({
-    firstName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('First name required'),
+    firstName: Yup.string()
+      .min(2, 'Too Short!')
+      .max(50, 'Too Long!')
+      .required('First name required'),
     lastName: Yup.string().min(2, 'Too Short!').max(50, 'Too Long!').required('Last name required'),
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
     password: Yup.string().required('Password is required'),
@@ -42,23 +38,25 @@ export default function RegisterForm() {
     validationSchema: RegisterSchema,
     onSubmit: (values, { setSubmitting }) => {
       const { firstName, lastName, email, password } = values;
-      Accounts.createUser({
-        email,
-        password,
-        profile: {
-          name: {
-            first: firstName,
-            last: lastName
-          }
-        }
-      },
-      error => {
-        if(!error) return;
-        const { reason } = error;
-        setError(true);
-        setErrorText(reason);
-        setSubmitting(false);
-      });
+      Accounts.createUser(
+        {
+          email,
+          password,
+          profile: {
+            name: {
+              first: firstName,
+              last: lastName,
+            },
+          },
+        },
+        (error) => {
+          if (!error) return;
+          const { reason } = error;
+          setError(true);
+          setErrorText(reason);
+          setSubmitting(false);
+        },
+      );
     },
   });
 
@@ -117,7 +115,13 @@ export default function RegisterForm() {
             helperText={touched.password && errors.password}
           />
 
-          <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
+          <LoadingButton
+            fullWidth
+            size="large"
+            type="submit"
+            variant="contained"
+            loading={isSubmitting}
+          >
             Register
           </LoadingButton>
         </Stack>

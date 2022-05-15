@@ -20,10 +20,10 @@ const client = new ApolloClient({
   link: ApolloLink.from([
     new MeteorAccountsLink(),
     new HttpLink({
-      uri: '/graphql'
-    })
+      uri: '/graphql',
+    }),
   ]),
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
 
 Meteor.startup(() => {
@@ -31,6 +31,6 @@ Meteor.startup(() => {
     <ApolloProvider client={client}>
       <App />
     </ApolloProvider>,
-    document.getElementById('meteor-root')
+    document.getElementById('meteor-root'),
   );
 });

@@ -25,5 +25,5 @@ export default function VerifyEmail() {
       }
     });
   }, []);
-  return (<LoadingScreen />);
+  return <LoadingScreen />;
 }

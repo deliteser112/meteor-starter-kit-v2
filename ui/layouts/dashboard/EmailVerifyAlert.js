@@ -1,14 +1,12 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import PropTypes from 'prop-types';
 import ReactLoading from 'react-loading';
-import { useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import React, { useState } from 'react';
 // material
 import { alpha, styled } from '@mui/material/styles';
 import { Stack, Typography, Slide, Link, IconButton } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
-// routes
-import { PATH_AUTH } from '../../routes/paths';
 // ----------------------------------------------------------------------
 
 const APPBAR_MOBILE = 90;
@@ -31,19 +29,13 @@ const AlertbarStyle = styled('div')(({ theme }) => ({
   backgroundColor: `${alpha(theme.palette.error.lighter, 0.72)}`,
   [theme.breakpoints.up('md')]: {
     height: APPBAR_DESKTOP,
-    padding: theme.spacing(0, 5)
-  }
+    padding: theme.spacing(0, 5),
+  },
 }));
 
 // ----------------------------------------------------------------------
 
-EmailVerifyAlert.propTypes = {
-  email: PropTypes.string,
-  verifyEmail: PropTypes.func
-};
-
 export default function EmailVerifyAlert({ email, verifyEmail }) {
-  const navigate = useNavigate();
   const [isOpen, setOpen] = useState(true);
   const [isLoading, setLoading] = useState(false);
   const [isSent, setSent] = useState(false);
@@ -61,14 +53,19 @@ export default function EmailVerifyAlert({ email, verifyEmail }) {
       setTimeout(() => {
         setLoading(false);
         setSent(true);
-      }, 1000)
+      }, 1000);
     }
   };
 
   return (
     <Slide direction="down" in={isOpen} mountOnEnter unmountOnExit>
       <AlertbarStyle>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ width: '100%' }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          sx={{ width: '100%' }}
+        >
           <Stack direction={{ xs: 'column', sm: 'row' }} alignItems="center">
             <Typography variant="body2" sx={{ color: 'text.secondary', textAlign: 'center' }}>
               Hey friend! Can you
@@ -85,11 +82,9 @@ export default function EmailVerifyAlert({ email, verifyEmail }) {
               </Typography>
             </Typography>
             <Link
-              // to={PATH_AUTH.verify}
               color="primary"
               variant="body2"
               onClick={handleVerifyEmail}
-              // component={RouterLink}
               sx={{ display: 'block', marginRight: 1, '&:hover': { cursor: 'pointer' } }}
             >
               Send verification email
@@ -98,19 +93,20 @@ export default function EmailVerifyAlert({ email, verifyEmail }) {
             {isSent && <CheckIcon color="success" sx={{ width: 20, heigth: 20 }} />}
           </Stack>
           <IconButton size="small" onClick={handleClose}>
-            <Icon icon={'eva:close-fill'} />
+            <Icon icon="eva:close-fill" />
           </IconButton>
         </Stack>
       </AlertbarStyle>
     </Slide>
   );
 }
-// blank
-// balls
-// bars
-// bubbles
-// cubes
-// cylon
-// spin
-// spinningBubbles
-// spokes
+
+EmailVerifyAlert.defaultProps = {
+  email: '',
+  verifyEmail: null,
+};
+
+EmailVerifyAlert.propTypes = {
+  email: PropTypes.string,
+  verifyEmail: PropTypes.func,
+};

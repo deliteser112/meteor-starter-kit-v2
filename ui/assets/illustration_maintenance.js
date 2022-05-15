@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 // material
 import { useTheme } from '@mui/material/styles';
@@ -38,7 +39,13 @@ export default function MaintenanceIllustration({ ...other }) {
             <stop offset="59%" stopColor="#F8924F" />
             <stop offset="100%" stopColor="#F36F56" />
           </linearGradient>
-          <linearGradient id="linearGradient-5" x1="51.677%" x2="47.989%" y1="-28.72%" y2="127.533%">
+          <linearGradient
+            id="linearGradient-5"
+            x1="51.677%"
+            x2="47.989%"
+            y1="-28.72%"
+            y2="127.533%"
+          >
             <stop offset="0%" stopColor="#FFC444" />
             <stop offset="100%" stopColor="#F36F56" />
           </linearGradient>

@@ -1,4 +1,5 @@
-import { useMutation } from "@apollo/react-hooks";
+/* eslint-disable react/require-default-props */
+import { useMutation } from '@apollo/react-hooks';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 // material
@@ -41,10 +42,6 @@ const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-DashboardNavbar.propTypes = {
-  onOpenSidebar: PropTypes.func
-};
-
 export default function DashboardNavbar({ onOpenSidebar }) {
   const { user } = useAuth();
   const [sendVerificationEmail] = useMutation(sendVerificationEmailMutation);
@@ -53,7 +50,7 @@ export default function DashboardNavbar({ onOpenSidebar }) {
 
   useEffect(() => {
     if (user && user.emails) {
-      const { emails, profile } = user;
+      const { emails } = user;
       setEmail(emails[0].address);
       setEmailVerified(emails[0].verified);
     }
@@ -62,12 +59,15 @@ export default function DashboardNavbar({ onOpenSidebar }) {
   const handleSendVerifyEmail = async () => {
     sendVerificationEmail();
     return { data: 'success' };
-  }
+  };
   return (
     <RootStyle>
       {!emailVerified && <EmailVerifyAlert email={email} verifyEmail={handleSendVerifyEmail} />}
       <ToolbarStyle>
-        <IconButton onClick={onOpenSidebar} sx={{ mr: 1, color: 'text.primary', display: { lg: 'none' } }}>
+        <IconButton
+          onClick={onOpenSidebar}
+          sx={{ mr: 1, color: 'text.primary', display: { lg: 'none' } }}
+        >
           <Iconify icon="eva:menu-2-fill" />
         </IconButton>
         <Box sx={{ flexGrow: 1 }} />
@@ -78,3 +78,7 @@ export default function DashboardNavbar({ onOpenSidebar }) {
     </RootStyle>
   );
 }
+
+DashboardNavbar.propTypes = {
+  onOpenSidebar: PropTypes.func,
+};

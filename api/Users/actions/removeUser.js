@@ -1,5 +1,3 @@
-/* eslint-disable consistent-return */
-
 import { Meteor } from 'meteor/meteor';
 import Documents from '../../Documents/Documents';
 import checkIfAuthorized, { isAdmin } from './checkIfAuthorized';

@@ -1,3 +1,6 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { m } from 'framer-motion';
@@ -8,12 +11,6 @@ import { varFade } from './variants';
 
 // ----------------------------------------------------------------------
 
-TextAnimate.propTypes = {
-  text: PropTypes.string.isRequired,
-  variants: PropTypes.object,
-  sx: PropTypes.object
-};
-
 export default function TextAnimate({ text, variants, sx, ...other }) {
   return (
     <Box
@@ -22,7 +19,7 @@ export default function TextAnimate({ text, variants, sx, ...other }) {
         typography: 'h1',
         overflow: 'hidden',
         display: 'inline-flex',
-        ...sx
+        ...sx,
       }}
       {...other}
     >
@@ -34,3 +31,9 @@ export default function TextAnimate({ text, variants, sx, ...other }) {
     </Box>
   );
 }
+
+TextAnimate.propTypes = {
+  text: PropTypes.string.isRequired,
+  variants: PropTypes.object,
+  sx: PropTypes.object,
+};

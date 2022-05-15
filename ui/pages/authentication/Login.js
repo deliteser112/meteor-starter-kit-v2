@@ -2,7 +2,7 @@ import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Card, Link, Container, Typography } from '@mui/material';
+import { Link, Container, Typography } from '@mui/material';
 // hooks
 import useResponsive from '../../hooks/useResponsive';
 // routes
@@ -59,7 +59,7 @@ export default function Login() {
         <HeaderStyle>
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
-              Don’t have an account? {''}
+              Don’t have an account?
               <Link variant="subtitle2" component={RouterLink} to={PATH_AUTH.register}>
                 Get started
               </Link>
@@ -73,7 +73,9 @@ export default function Login() {
               Sign in to Meteor Starter Kit
             </Typography>
 
-            <Typography sx={{ color: 'text.secondary', mb: 5 }}>Enter your details below.</Typography>
+            <Typography sx={{ color: 'text.secondary', mb: 5 }}>
+              Enter your details below.
+            </Typography>
 
             <AuthSocial />
 

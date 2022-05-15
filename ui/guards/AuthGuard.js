@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-useless-fragment */
+/* eslint-disable react/require-default-props */
 import React, { useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -9,10 +11,6 @@ import Login from '../pages/authentication/Login';
 import useAuth from '../hooks/useAuth';
 
 // ----------------------------------------------------------------------
-
-AuthGuard.propTypes = {
-  children: PropTypes.node
-};
 
 export default function AuthGuard({ children }) {
   const { isAuthenticated } = useAuth();
@@ -33,3 +31,7 @@ export default function AuthGuard({ children }) {
 
   return <>{children}</>;
 }
+
+AuthGuard.propTypes = {
+  children: PropTypes.node,
+};

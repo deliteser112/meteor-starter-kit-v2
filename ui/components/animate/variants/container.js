@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 // ----------------------------------------------------------------------
 
 export const varContainer = (props) => {
@@ -9,14 +10,14 @@ export const varContainer = (props) => {
     animate: {
       transition: {
         staggerChildren: staggerIn,
-        delayChildren: delayIn
-      }
+        delayChildren: delayIn,
+      },
     },
     exit: {
       transition: {
         staggerChildren: staggerOut,
-        staggerDirection: -1
-      }
-    }
+        staggerDirection: -1,
+      },
+    },
   };
 };

@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-
+/* eslint-disable react/jsx-no-useless-fragment */
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 // @mui
@@ -82,24 +81,30 @@ export default function MainHeader() {
         >
           <Logo />
 
-          <Typography variant="subtitle1" sx={{ ml: 1, ...(isOffset && { color: 'common.black' }), ...(!isHome && { color: 'common.black' }) }}>Meteor Starter Kit</Typography>
+          <Typography
+            variant="subtitle1"
+            sx={{
+              ml: 1,
+              ...(isOffset && { color: 'common.black' }),
+              ...(!isHome && { color: 'common.black' }),
+            }}
+          >
+            Meteor Starter Kit
+          </Typography>
           <Box sx={{ flexGrow: 1 }} />
 
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
           {isDesktop && (
-              <>
-                {user ? <AccountPopover />: (
-                  <Button
-                    variant="contained"
-                    rel="noopener"
-                    href={PATH_AUTH.login}
-                  >
-                    Login
-                  </Button>
-                )}
-              </>
-            )
-          }
+            <>
+              {user ? (
+                <AccountPopover />
+              ) : (
+                <Button variant="contained" rel="noopener" href={PATH_AUTH.login}>
+                  Login
+                </Button>
+              )}
+            </>
+          )}
           {!isDesktop && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
         </Container>
       </ToolbarStyle>

@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
 // @mui
@@ -26,12 +28,6 @@ const ItemIconStyle = styled(Iconify)(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-AppTopInstalledCountries.propTypes = {
-  title: PropTypes.string,
-  subheader: PropTypes.string,
-  list: PropTypes.array.isRequired,
-};
-
 export default function AppTopInstalledCountries({ title, subheader, list, ...other }) {
   return (
     <Card {...other}>
@@ -48,16 +44,13 @@ export default function AppTopInstalledCountries({ title, subheader, list, ...ot
   );
 }
 
-// ----------------------------------------------------------------------
-
-CountryItem.propTypes = {
-  country: PropTypes.shape({
-    android: PropTypes.number,
-    flag: PropTypes.string,
-    name: PropTypes.string,
-    windows: PropTypes.number,
-  }),
+AppTopInstalledCountries.propTypes = {
+  title: PropTypes.string,
+  subheader: PropTypes.string,
+  list: PropTypes.array.isRequired,
 };
+
+// ----------------------------------------------------------------------
 
 function CountryItem({ country }) {
   return (
@@ -68,19 +61,28 @@ function CountryItem({ country }) {
       </ItemBlockStyle>
 
       <ItemBlockStyle>
-        <ItemIconStyle icon={'ant-design:android-filled'} />
+        <ItemIconStyle icon="ant-design:android-filled" />
         <Typography variant="body2">{fShortenNumber(country.android)}</Typography>
       </ItemBlockStyle>
 
       <ItemBlockStyle>
-        <ItemIconStyle icon={'ant-design:windows-filled'} />
+        <ItemIconStyle icon="ant-design:windows-filled" />
         <Typography variant="body2">{fShortenNumber(country.windows)}</Typography>
       </ItemBlockStyle>
 
       <ItemBlockStyle sx={{ minWidth: 88 }}>
-        <ItemIconStyle icon={'ant-design:apple-filled'} />
+        <ItemIconStyle icon="ant-design:apple-filled" />
         <Typography variant="body2">{fShortenNumber(country.windows)}</Typography>
       </ItemBlockStyle>
     </Stack>
   );
 }
+
+CountryItem.propTypes = {
+  country: PropTypes.shape({
+    android: PropTypes.number,
+    flag: PropTypes.string,
+    name: PropTypes.string,
+    windows: PropTypes.number,
+  }),
+};

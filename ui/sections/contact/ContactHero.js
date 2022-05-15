@@ -34,8 +34,7 @@ const CONTACTS = [
 const RootStyle = styled('div')(({ theme }) => ({
   backgroundSize: 'cover',
   backgroundPosition: 'center',
-  backgroundImage:
-    'url(/static/home/overlay.svg), url(/static/contact/contact-hero.jpg)',
+  backgroundImage: 'url(/static/home/overlay.svg), url(/static/contact/contact-hero.jpg)',
   padding: theme.spacing(10, 0),
   [theme.breakpoints.up('md')]: {
     height: 560,

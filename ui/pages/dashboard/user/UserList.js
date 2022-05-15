@@ -1,7 +1,11 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable no-shadow */
+/* eslint-disable react/require-default-props */
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
-import { Link as RouterLink } from 'react-router-dom';
 // material
 import {
   Card,
@@ -63,7 +67,10 @@ function applySortFilter(array, comparator, query) {
     return a[1] - b[1];
   });
   if (query) {
-    return filter(array, (_user) => _user.emailAddress.toLowerCase().indexOf(query.toLowerCase()) !== -1);
+    return filter(
+      array,
+      (_user) => _user.emailAddress.toLowerCase().indexOf(query.toLowerCase()) !== -1,
+    );
   }
   return stabilizedThis.map((el) => el[0]);
 }
@@ -106,7 +113,10 @@ export default function UserList({ userList, onDelete }) {
     } else if (selectedIndex === selected.length - 1) {
       newSelected = newSelected.concat(selected.slice(0, -1));
     } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1),
+      );
     }
     setSelected(newSelected);
   };
@@ -132,7 +142,11 @@ export default function UserList({ userList, onDelete }) {
 
   return (
     <Card>
-      <TableListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
+      <TableListToolbar
+        numSelected={selected.length}
+        filterName={filterName}
+        onFilterName={handleFilterByName}
+      />
 
       <Scrollbar>
         <TableContainer sx={{ minWidth: 800 }}>
@@ -147,72 +161,90 @@ export default function UserList({ userList, onDelete }) {
               onSelectAllClick={handleSelectAllClick}
             />
             <TableBody>
-              {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
-                const { _id, name, emailAddress, emailVerified, oAuthProvider, roles } = row;
-                const isItemSelected = selected.indexOf(emailAddress) !== -1;
+              {filteredUsers
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row) => {
+                  const { _id, name, emailAddress, emailVerified, oAuthProvider, roles } = row;
+                  const isItemSelected = selected.indexOf(emailAddress) !== -1;
 
-                return (
-                  <TableRow
-                    hover
-                    key={_id}
-                    tabIndex={-1}
-                    role="checkbox"
-                    selected={isItemSelected}
-                    aria-checked={isItemSelected}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox checked={isItemSelected} onChange={(event) => handleClick(event, emailAddress)} />
-                    </TableCell>
-                    <TableCell component="th" scope="row" padding="none">
-                      <Stack direction="row" alignItems="center" spacing={2}>
-                        <Avatar {...stringAvatar(`${name.first} ${name.last}`)} style={{ marginRight: 8 }} />
-                        <Typography variant="subtitle2" noWrap>
-                          {`${name.first} ${name.last ? name.last : ''}`}
-                        </Typography>
-                      </Stack>
-                    </TableCell>
-                    <TableCell align="left">{emailAddress}</TableCell>
-                    <TableCell align="left">
-                      {roles.map(({ name, inRole }, index) => (
-                        inRole && (
-                          <Label key={index} variant="ghost" color={name === 'admin' ? 'success' : 'primary'}>
-                            {sentenceCase(name)}
-                          </Label>
-                        )
-                      ))}
-                      
-                    </TableCell>
-                    <TableCell align="center">
-                      <Iconify
-                        icon={oAuthProvider ? `bi:${oAuthProvider}` : 'fluent:password-16-regular'}
-                        sx={{
-                          width: 20,
-                          height: 20
-                        }}
-                        color={
-                          (oAuthProvider === 'github' && 'black.main') ||
-                          (oAuthProvider === 'facebook' && 'info.main') ||
-                          (oAuthProvider === 'google' && 'error.main')
-                        }
-                      />
-                    </TableCell>
-                    <TableCell align="center">
-                      <Iconify
-                        icon={emailVerified ? 'eva:checkmark-circle-fill' : 'eva:clock-outline'}
-                        sx={{
-                          width: 20,
-                          height: 20,
-                          color: 'success.main',
-                          ...(!emailVerified && { color: 'warning.main' }),
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell align="right">
-                      <TableMoreMenu onDelete={onDelete} _id={_id} editLink={`${PATH_DASHBOARD.users}/${_id}/edit`} />
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+                  return (
+                    <TableRow
+                      hover
+                      key={_id}
+                      tabIndex={-1}
+                      role="checkbox"
+                      selected={isItemSelected}
+                      aria-checked={isItemSelected}
+                    >
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          checked={isItemSelected}
+                          onChange={(event) => handleClick(event, emailAddress)}
+                        />
+                      </TableCell>
+                      <TableCell component="th" scope="row" padding="none">
+                        <Stack direction="row" alignItems="center" spacing={2}>
+                          <Avatar
+                            {...stringAvatar(`${name.first} ${name.last}`)}
+                            style={{ marginRight: 8 }}
+                          />
+                          <Typography variant="subtitle2" noWrap>
+                            {`${name.first} ${name.last ? name.last : ''}`}
+                          </Typography>
+                        </Stack>
+                      </TableCell>
+                      <TableCell align="left">{emailAddress}</TableCell>
+                      <TableCell align="left">
+                        {roles.map(
+                          ({ name, inRole }, index) =>
+                            inRole && (
+                              <Label
+                                key={index}
+                                variant="ghost"
+                                color={name === 'admin' ? 'success' : 'primary'}
+                              >
+                                {sentenceCase(name)}
+                              </Label>
+                            ),
+                        )}
+                      </TableCell>
+                      <TableCell align="center">
+                        <Iconify
+                          icon={
+                            oAuthProvider ? `bi:${oAuthProvider}` : 'fluent:password-16-regular'
+                          }
+                          sx={{
+                            width: 20,
+                            height: 20,
+                          }}
+                          color={
+                            (oAuthProvider === 'github' && 'black.main') ||
+                            (oAuthProvider === 'facebook' && 'info.main') ||
+                            (oAuthProvider === 'google' && 'error.main')
+                          }
+                        />
+                      </TableCell>
+                      <TableCell align="center">
+                        <Iconify
+                          icon={emailVerified ? 'eva:checkmark-circle-fill' : 'eva:clock-outline'}
+                          sx={{
+                            width: 20,
+                            height: 20,
+                            color: 'success.main',
+                            ...(!emailVerified && { color: 'warning.main' }),
+                          }}
+                        />
+                      </TableCell>
+                      <TableCell align="right">
+                        <TableMoreMenu
+                          onDelete={onDelete}
+                          _id={_id}
+                          editLink={`${PATH_DASHBOARD.users}/${_id}/edit`}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 53 * emptyRows }}>
                   <TableCell colSpan={6} />
@@ -245,3 +277,8 @@ export default function UserList({ userList, onDelete }) {
     </Card>
   );
 }
+
+UserList.propTypes = {
+  userList: PropTypes.array,
+  onDelete: PropTypes.func,
+};
