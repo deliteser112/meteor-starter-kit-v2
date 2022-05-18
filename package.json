@@ -1,10 +1,10 @@
 {
-  "name": "meteor-react-starter-kit",
+  "name": "meteor-react-starter-kit@react-material",
   "private": true,
   "scripts": {
     "dev": "meteor --settings settings-development.json",
-    "staging": "meteor deploy pup-staging.cleverbeagle.com --settings settings-staging.json",
-    "production": "meteor deploy pup.cleverbeagle.com --settings settings-production.json",
+    "staging": "meteor deploy --settings settings-staging.json",
+    "production": "meteor deploy --settings settings-production.json",
     "lint": "eslint .",
     "lint:all": "eslint --fix .",
     "lint:file": "eslint --fix",
@@ -65,6 +65,7 @@
     "graphql-tag": "^2.11.0",
     "graphql-tools": "^7.0.4",
     "handlebars": "^4.7.7",
+    "highlight.js": "^11.5.1",
     "history": "^5.0.0",
     "jquery": "^3.6.0",
     "jszip": "^3.9.1",

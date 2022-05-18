@@ -1,5 +1,9 @@
 import React from 'react';
 
+// highlight
+import './utils/highlight';
+// editor
+import 'react-quill/dist/quill.snow.css';
 // scroll bar
 import 'simplebar/src/simplebar.css';
 

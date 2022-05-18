@@ -22,7 +22,7 @@ yarn install
 ## 2.Start
 
 ```sh
-npm run start
+npm run dev
 ```
 #### Test Users
 

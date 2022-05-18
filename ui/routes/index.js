@@ -22,7 +22,7 @@ import NotFound from '../pages/other/Page404';
 
 // documents
 import Documents from '../pages/dashboard/document';
-// import DocumentCreate from "../pages/dashboard/document/DocumentCreate";
+import DocumentCreate from '../pages/dashboard/document/DocumentCreate';
 
 // users
 import User from '../pages/dashboard/user';
@@ -59,8 +59,8 @@ export default function Router() {
 
         // documents
         { path: 'documents', element: <Documents /> },
-        // { path: "documents/create", element: <DocumentCreate /> },
-        // { path: "documents/:id/edit", element: <DocumentCreate /> },
+        { path: 'documents/create', element: <DocumentCreate /> },
+        { path: 'documents/:documentId/edit', element: <DocumentCreate /> },
 
         // Admin/users
         {

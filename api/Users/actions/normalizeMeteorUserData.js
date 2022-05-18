@@ -90,7 +90,7 @@ export default (options) => {
     validateOptions(options);
 
     const isOAuthUser = checkIfOAuthUser(options.user.services);
-    console.log('HHHHHHHHHHHHHHHHHHHHHHHHH', isOAuthUser);
+    // console.log('HHHHHHHHHHHHHHHHHHHHHHHHH', isOAuthUser);
     const normalizedMeteorUserData = getNormalizedMeteorUserData(isOAuthUser, options.user);
 
     return normalizedMeteorUserData;

@@ -28,7 +28,7 @@ export default (options) => {
   try {
     const normalizedMeteorUserData = normalizeMeteorUserData(options);
 
-    console.log('QQQ', normalizedMeteorUserData);
+    // console.log('QQQ', normalizedMeteorUserData);
 
     return {
       _id: normalizedMeteorUserData._id,
