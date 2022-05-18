@@ -20,8 +20,12 @@ import {
 // components
 import Label from '../../../components/Label';
 import Scrollbar from '../../../components/Scrollbar';
-import SearchNotFound from '../../../components/SearchNotFound';
-import { TableListHead, TableListToolbar, TableMoreMenu } from '../../../sections/@dashboard/table';
+import {
+  TableListHead,
+  TableListToolbar,
+  TableMoreMenu,
+  TableNoData,
+} from '../../../sections/@dashboard/table';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 
@@ -200,11 +204,7 @@ export default function DocumentList({ documentList, onDelete }) {
 
             {isUserNotFound && (
               <TableBody>
-                <TableRow>
-                  <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                    <SearchNotFound searchQuery={filterName} />
-                  </TableCell>
-                </TableRow>
+                <TableNoData isNotFound />
               </TableBody>
             )}
           </Table>

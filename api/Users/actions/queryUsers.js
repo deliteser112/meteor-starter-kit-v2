@@ -41,8 +41,6 @@ const queryUsers = (options) => {
     validateOptions(options);
     checkIfAuthorized({ as: ['admin'], userId: options.currentUser._id });
 
-    console.log('AAA:', getUsers(options));
-
     action.resolve({
       total: getTotalUserCount(options.currentUser._id),
       users: getUsers(options),

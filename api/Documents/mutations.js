@@ -5,7 +5,6 @@ export default {
   addDocument: async (root, args, context) => {
     if (!context.user) throw new Error('Sorry, you must be logged in to add a new document.');
     const date = new Date().toISOString();
-    console.log('DATE:', args);
     const documentId = Documents.insert({
       isPublic: args.isPublic || false,
       title:
