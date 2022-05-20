@@ -1,6 +1,3 @@
-/* eslint-disable no-promise-executor-return */
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-use-before-define */
 import { Accounts } from 'meteor/accounts-base';
 
 import * as Yup from 'yup';

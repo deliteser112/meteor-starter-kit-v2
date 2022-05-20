@@ -1,11 +1,6 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable no-shadow */
-/* eslint-disable react/require-default-props */
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { filter } from 'lodash';
-import { sentenceCase } from 'change-case';
 // material
 import {
   Card,
@@ -21,7 +16,6 @@ import {
   TablePagination,
 } from '@mui/material';
 // components
-import Label from '../../../components/Label';
 import Scrollbar from '../../../components/Scrollbar';
 import Iconify from '../../../components/Iconify';
 import SearchNotFound from '../../../components/SearchNotFound';
@@ -35,7 +29,6 @@ import stringAvatar from '../../../utils/stringAvatar';
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', alignRight: false },
   { id: 'emailAddress', label: 'Email', alignRight: false },
-  { id: 'role', label: 'Role', alignRight: false },
   { id: 'loggedWith', label: 'Logged With', alignRight: false },
   { id: 'verified', label: 'Email Verified', alignRight: false },
   { id: '' },
@@ -164,7 +157,7 @@ export default function UserList({ userList, onDelete }) {
               {filteredUsers
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row) => {
-                  const { _id, name, emailAddress, emailVerified, oAuthProvider, roles } = row;
+                  const { _id, name, emailAddress, emailVerified, oAuthProvider } = row;
                   const isItemSelected = selected.indexOf(emailAddress) !== -1;
 
                   return (
@@ -194,20 +187,6 @@ export default function UserList({ userList, onDelete }) {
                         </Stack>
                       </TableCell>
                       <TableCell align="left">{emailAddress}</TableCell>
-                      <TableCell align="left">
-                        {roles.map(
-                          ({ name, inRole }, index) =>
-                            inRole && (
-                              <Label
-                                key={index}
-                                variant="ghost"
-                                color={name === 'admin' ? 'success' : 'primary'}
-                              >
-                                {sentenceCase(name)}
-                              </Label>
-                            ),
-                        )}
-                      </TableCell>
                       <TableCell align="center">
                         <Iconify
                           icon={

@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 // meteors
 import { Meteor } from 'meteor/meteor';
 

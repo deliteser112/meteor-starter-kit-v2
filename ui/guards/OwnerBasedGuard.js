@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-no-useless-fragment */
-/* eslint-disable react/require-default-props */
 // meteors
 import { Meteor } from 'meteor/meteor';
 import { useQuery } from '@apollo/react-hooks';

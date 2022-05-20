@@ -1,7 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable no-shadow */
-/* eslint-disable react/require-default-props */
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { filter } from 'lodash';

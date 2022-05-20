@@ -1,5 +1,4 @@
-/* eslint-disable array-callback-return */
-import React, { useEffect } from 'react';
+import React from 'react';
 import ReactLoading from 'react-loading';
 // @mui
 import { Container } from '@mui/material';
@@ -23,20 +22,11 @@ import { PATH_DASHBOARD } from '../../../routes/paths';
 export default function Users() {
   const [removeUser] = useMutation(removeUserMutation);
 
-  const { loading, data, refetch } = useQuery(usersQuery);
-
-  refetch();
+  const { loading, data } = useQuery(usersQuery);
 
   const users = (data && data.users && data.users.users) || [];
 
-  useEffect(() => {
-    if (users) {
-      console.log(data);
-      users.map((item) => {
-        console.log(item.roles);
-      });
-    }
-  });
+  console.log('USERS:', users);
 
   const handleDeleteUser = (_id) => {
     removeUser({

@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 // meteors
 import { Accounts } from 'meteor/accounts-base';
 import * as Yup from 'yup';

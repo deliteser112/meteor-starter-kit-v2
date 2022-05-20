@@ -1,7 +1,3 @@
-/* eslint-disable jsx-a11y/control-has-associated-label */
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable no-promise-executor-return */
-/* eslint-disable react/require-default-props */
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import React, { useCallback, useEffect, useMemo } from 'react';

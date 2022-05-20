@@ -1,4 +1,3 @@
-/* eslint-disable react/react-in-jsx-scope */
 import React from 'react';
 import ReactLoading from 'react-loading';
 import { Link as RouterLink } from 'react-router-dom';

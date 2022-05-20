@@ -1,6 +1,3 @@
-/* eslint-disable no-shadow */
-/* eslint-disable react/require-default-props */
-/* eslint-disable react/jsx-no-constructed-context-values */
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import React, { createContext, useEffect, useReducer } from 'react';

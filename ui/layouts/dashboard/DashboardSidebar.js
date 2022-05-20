@@ -1,5 +1,3 @@
-/* eslint-disable react/require-default-props */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Roles } from 'meteor/alanning:roles';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';

@@ -1,7 +1,3 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable no-shadow */
-/* eslint-disable react/require-default-props */
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useMemo, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import * as Yup from 'yup';
@@ -33,6 +29,9 @@ import {
 import { LoadingButton } from '@mui/lab';
 
 import { FormProvider, RHFTextField } from '../../../components/hook-form';
+
+// import queries
+import userSettingsQuery from '../../../_queries/UserSettings.gql';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiPaper-root': {
@@ -185,6 +184,7 @@ export default function SettingDialog({
       variables: {
         setting: settingToAddOrUpdate,
       },
+      refetchQueries: [{ query: userSettingsQuery }]
     });
     reset();
     onClose(false);

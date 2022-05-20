@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/require-default-props */
 import React from 'react';
 // @mui
 import PropTypes from 'prop-types';

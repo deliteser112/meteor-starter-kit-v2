@@ -1,10 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/jsx-no-useless-fragment */
-/* eslint-disable array-callback-return */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable no-shadow */
-/* eslint-disable no-use-before-define */
-/* eslint-disable react/require-default-props */
 import { useMutation } from '@apollo/react-hooks';
 
 import PropTypes from 'prop-types';
@@ -28,7 +21,7 @@ import {
   FormControlLabel,
   Autocomplete,
   Checkbox,
-  TextField,
+  TextField
 } from '@mui/material';
 
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
@@ -53,7 +46,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 UserNewEditForm.propTypes = {
   isEdit: PropTypes.bool,
-  currentUser: PropTypes.object,
+  currentUser: PropTypes.object
 };
 
 export default function UserNewEditForm({ isEdit, currentUser }) {
@@ -69,7 +62,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
     firstName: Yup.string().required('First name is required'),
     // lastName: Yup.string().required("Last name is required"),
     email: Yup.string().required('Email is required').email(),
-    confirmNewPassword: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Passwords must match'),
+    confirmNewPassword: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
     // avatarUrl: Yup.mixed().test(
     //   "required",
     //   "Avatar is required",
@@ -90,14 +83,14 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
       roles: currentUser?.roles || [],
       oldPassword: '',
       newPassword: '',
-      confirmNewPassword: '',
+      confirmNewPassword: ''
     }),
-    [currentUser],
+    [currentUser]
   );
 
   const methods = useForm({
     resolver: yupResolver(NewUserSchema),
-    defaultValues,
+    defaultValues
   });
 
   const {
@@ -106,7 +99,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
     control,
     setValue,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting }
   } = methods;
 
   const values = watch();
@@ -148,16 +141,16 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
         profile: {
           name: {
             first: firstName,
-            last: lastName,
-          },
+            last: lastName
+          }
         },
-        roles,
+        roles
       };
     }
 
     if (!isPasswordUser) {
       userUpdate = {
-        roles,
+        roles
       };
     }
 
@@ -165,7 +158,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
     updateUser({ variables: { user: userUpdate } });
     reset();
     enqueueSnackbar('Update success!', {
-      variant: 'success',
+      variant: 'success'
     });
     navigate(PATH_DASHBOARD.users);
   };
@@ -178,12 +171,12 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
         setValue(
           'avatarUrl',
           Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          }),
+            preview: URL.createObjectURL(file)
+          })
         );
       }
     },
-    [setValue],
+    [setValue]
   );
 
   const handleChangeRoles = (roles) => {
@@ -204,7 +197,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
                       textTransform: 'uppercase',
                       position: 'absolute',
                       top: 24,
-                      right: 24,
+                      right: 24
                     }}
                   >
                     {values.emailVerified ? 'Verified' : 'Unverfied'}
@@ -221,7 +214,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
                       icon={oAuthIcon ? `bi:${oAuthIcon}` : 'fluent:password-16-regular'}
                       sx={{
                         width: 20,
-                        height: 20,
+                        height: 20
                       }}
                       color={
                         (oAuthIcon === 'github' && 'black.main') ||
@@ -248,7 +241,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
                       mx: 'auto',
                       display: 'block',
                       textAlign: 'center',
-                      color: 'text.secondary',
+                      color: 'text.secondary'
                     }}
                   >
                     Allowed *.jpeg, *.jpg, *.png, *.gif
@@ -268,9 +261,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
                     <Switch
                       {...field}
                       checked={field.value !== 'active'}
-                      onChange={(event) =>
-                        field.onChange(event.target.checked ? 'banned' : 'active')
-                      }
+                      onChange={(event) => field.onChange(event.target.checked ? 'banned' : 'active')}
                     />
                   )}
                 />
@@ -310,8 +301,8 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
                 rowGap: 3,
                 gridTemplateColumns: {
                   xs: 'repeat(1, 1fr)',
-                  sm: 'repeat(2, 1fr)',
-                },
+                  sm: 'repeat(2, 1fr)'
+                }
               }}
             >
               <RHFTextField name="firstName" label="First Name" disabled={userType === 'oauth'} />
@@ -331,19 +322,12 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
               isOptionEqualToValue={(option, value) => option._id === value._id}
               renderOption={(props, option, { selected }) => (
                 <li {...props}>
-                  <Checkbox
-                    icon={icon}
-                    checkedIcon={checkedIcon}
-                    style={{ marginRight: 8 }}
-                    checked={selected}
-                  />
+                  <Checkbox icon={icon} checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
                   {sentenceCase(option.name)}
                 </li>
               )}
               style={{ width: 500 }}
-              renderInput={(params) => (
-                <TextField {...params} label="Roles" placeholder="Set roles" />
-              )}
+              renderInput={(params) => <TextField {...params} label="Roles" placeholder="Set roles" />}
             />
             {/* )} */}
             <Box m={2} />
@@ -351,11 +335,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
               <Stack direction="column" spacing={2}>
                 <RHFTextField name="oldPassword" type="password" label="Old Password" />
                 <RHFTextField name="newPassword" type="password" label="New Password" />
-                <RHFTextField
-                  name="confirmNewPassword"
-                  type="password"
-                  label="Confirm New Password"
-                />
+                <RHFTextField name="confirmNewPassword" type="password" label="Confirm New Password" />
               </Stack>
             )}
 

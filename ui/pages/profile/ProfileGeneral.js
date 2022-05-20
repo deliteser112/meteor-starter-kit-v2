@@ -1,9 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/jsx-no-useless-fragment */
-/* eslint-disable no-promise-executor-return */
-/* eslint-disable no-shadow */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable react/require-default-props */
 import { Accounts } from 'meteor/accounts-base';
 import { useMutation } from '@apollo/react-hooks';
 
@@ -18,16 +12,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import {
-  Box,
-  Card,
-  Grid,
-  Stack,
-  Switch,
-  Typography,
-  FormControlLabel,
-  Button,
-} from '@mui/material';
+import { Box, Card, Grid, Stack, Switch, Typography, FormControlLabel, Button } from '@mui/material';
 
 // utils
 import { fData } from '../../utils/formatNumber';
@@ -57,7 +42,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
     firstName: Yup.string().required('First name is required'),
     lastName: Yup.string().required('Last name is required'),
     email: Yup.string().required('Email is required').email(),
-    confirmNewPassword: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Passwords must match'),
+    confirmNewPassword: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
     // avatarUrl: Yup.mixed().test(
     //   "required",
     //   "Avatar is required",
@@ -77,14 +62,14 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
       status: currentUser?.status,
       oldPassword: '',
       newPassword: '',
-      confirmNewPassword: '',
+      confirmNewPassword: ''
     }),
-    [currentUser],
+    [currentUser]
   );
 
   const methods = useForm({
     resolver: yupResolver(NewUserSchema),
-    defaultValues,
+    defaultValues
   });
 
   const {
@@ -93,7 +78,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
     control,
     setValue,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting }
   } = methods;
 
   const values = watch();
@@ -103,7 +88,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
       const { oAuthProvider } = currentUser;
       setUserType(oAuthProvider ? 'oauth' : 'password');
       setOAuthIcon(oAuthProvider);
-      defaultValues;
+      defaultValues();
     }
     if (!isEdit) {
       reset(defaultValues);
@@ -120,11 +105,11 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
           profile: {
             name: {
               first: firstName,
-              last: lastName,
-            },
-          },
-        },
-      },
+              last: lastName
+            }
+          }
+        }
+      }
     });
 
     if (newPassword) {
@@ -136,7 +121,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
           await new Promise((resolve) => setTimeout(resolve, 500));
           reset();
           enqueueSnackbar('Update success!', {
-            variant: 'success',
+            variant: 'success'
           });
           navigate(PATH_DASHBOARD.root);
         }
@@ -145,7 +130,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
       await new Promise((resolve) => setTimeout(resolve, 500));
       reset();
       enqueueSnackbar('Update success!', {
-        variant: 'success',
+        variant: 'success'
       });
       navigate(PATH_DASHBOARD.root);
     }
@@ -159,12 +144,12 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
         setValue(
           'avatarUrl',
           Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          }),
+            preview: URL.createObjectURL(file)
+          })
         );
       }
     },
-    [setValue],
+    [setValue]
   );
 
   return (
@@ -181,7 +166,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
                       textTransform: 'uppercase',
                       position: 'absolute',
                       top: 24,
-                      right: 24,
+                      right: 24
                     }}
                   >
                     {values.emailVerified ? 'Verified' : 'Unverfied'}
@@ -198,7 +183,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
                       icon={oAuthIcon ? `bi:${oAuthIcon}` : 'fluent:password-16-regular'}
                       sx={{
                         width: 20,
-                        height: 20,
+                        height: 20
                       }}
                       color={
                         (oAuthIcon === 'github' && 'black.main') ||
@@ -225,7 +210,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
                       mx: 'auto',
                       display: 'block',
                       textAlign: 'center',
-                      color: 'text.secondary',
+                      color: 'text.secondary'
                     }}
                   >
                     Allowed *.jpeg, *.jpg, *.png, *.gif
@@ -245,9 +230,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
                     <Switch
                       {...field}
                       checked={field.value !== 'active'}
-                      onChange={(event) =>
-                        field.onChange(event.target.checked ? 'banned' : 'active')
-                      }
+                      onChange={(event) => field.onChange(event.target.checked ? 'banned' : 'active')}
                     />
                   )}
                 />
@@ -277,8 +260,8 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
                   rowGap: 3,
                   gridTemplateColumns: {
                     xs: 'repeat(1, 1fr)',
-                    sm: 'repeat(2, 1fr)',
-                  },
+                    sm: 'repeat(2, 1fr)'
+                  }
                 }}
               >
                 <RHFTextField name="firstName" label="First Name" />
@@ -286,11 +269,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
                 <RHFTextField name="email" label="Email Address" />
                 <RHFTextField name="oldPassword" type="password" label="Old Password" />
                 <RHFTextField name="newPassword" type="password" label="New Password" />
-                <RHFTextField
-                  name="confirmNewPassword"
-                  type="password"
-                  label="Confirm New Password"
-                />
+                <RHFTextField name="confirmNewPassword" type="password" label="Confirm New Password" />
               </Box>
 
               <Stack alignItems="flex-end" sx={{ mt: 3 }}>
@@ -315,7 +294,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
                     {
                       facebook: 'https://www.facebook.com/settings',
                       google: 'https://myaccount.google.com/privacy#personalinfo',
-                      github: 'https://github.com/settings/profile',
+                      github: 'https://github.com/settings/profile'
                     }[oAuthIcon]
                   }
                   variant="contained"
@@ -334,5 +313,5 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
 
 UserNewEditForm.propTypes = {
   isEdit: PropTypes.bool,
-  currentUser: PropTypes.object,
+  currentUser: PropTypes.object
 };

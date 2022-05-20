@@ -1,7 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable no-promise-executor-return */
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-use-before-define */
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';

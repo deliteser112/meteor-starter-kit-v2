@@ -1,5 +1,3 @@
-/* eslint-disable react/require-default-props */
-/* eslint-disable react/jsx-no-useless-fragment */
 // meteors
 import { Roles } from 'meteor/alanning:roles';
 

@@ -1,4 +1,3 @@
-/* eslint-disable react/require-default-props */
 import { useMutation } from '@apollo/react-hooks';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';

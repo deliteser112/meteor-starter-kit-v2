@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/require-default-props */
 import PropTypes from 'prop-types';
 import merge from 'lodash/merge';
 import React, { useState } from 'react';

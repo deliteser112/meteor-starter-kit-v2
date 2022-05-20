@@ -1,6 +1,4 @@
-/* eslint-disable react/require-default-props */
 import React from 'react';
-import { sentenceCase } from 'change-case';
 
 import PropTypes from 'prop-types';
 // material
@@ -21,8 +19,8 @@ const RootStyle = styled('div')(({ theme }) => ({
     position: 'absolute',
     backdropFilter: 'blur(3px)',
     WebkitBackdropFilter: 'blur(3px)', // Fix on Mobile
-    backgroundColor: alpha(theme.palette.primary.darker, 0.72),
-  },
+    backgroundColor: alpha(theme.palette.primary.darker, 0.72)
+  }
 }));
 
 const InfoStyle = styled('div')(({ theme }) => ({
@@ -36,8 +34,8 @@ const InfoStyle = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     left: theme.spacing(2),
-    bottom: theme.spacing(4),
-  },
+    bottom: theme.spacing(4)
+  }
 }));
 
 const CoverImgStyle = styled('img')({
@@ -45,13 +43,13 @@ const CoverImgStyle = styled('img')({
   width: '100%',
   height: '100%',
   objectFit: 'cover',
-  position: 'absolute',
+  position: 'absolute'
 });
 
 // ----------------------------------------------------------------------
 
 export default function ProfileCover({ myProfile }) {
-  const { position, coverURL, displayName } = myProfile;
+  const { email, coverURL, displayName } = myProfile;
 
   return (
     <RootStyle>
@@ -63,7 +61,7 @@ export default function ProfileCover({ myProfile }) {
             borderStyle: 'solid',
             borderColor: 'common.white',
             width: { xs: 80, md: 90 },
-            height: { xs: 80, md: 90 },
+            height: { xs: 80, md: 90 }
           }}
         />
         <Box
@@ -71,11 +69,11 @@ export default function ProfileCover({ myProfile }) {
             ml: { md: 3 },
             mt: { xs: 1, md: 0 },
             color: 'common.white',
-            textAlign: { xs: 'center', md: 'left' },
+            textAlign: { xs: 'center', md: 'left' }
           }}
         >
           <Typography variant="h4">{displayName}</Typography>
-          <Typography sx={{ opacity: 0.72 }}>{sentenceCase(position)}</Typography>
+          <Typography sx={{ opacity: 0.72 }}>{email}</Typography>
           {/* <Typography sx={{ opacity: 0.9 }}>{email}</Typography> */}
         </Box>
       </InfoStyle>
@@ -85,5 +83,5 @@ export default function ProfileCover({ myProfile }) {
 }
 
 ProfileCover.propTypes = {
-  myProfile: PropTypes.object,
+  myProfile: PropTypes.object
 };

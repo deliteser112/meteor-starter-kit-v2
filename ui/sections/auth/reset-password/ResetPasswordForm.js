@@ -1,4 +1,3 @@
-/* eslint-disable no-promise-executor-return */
 import { Accounts } from 'meteor/accounts-base';
 
 import React, { useState } from 'react';

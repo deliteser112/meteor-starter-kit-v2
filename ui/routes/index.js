@@ -66,7 +66,7 @@ export default function Router() {
             <RoleBasedGuard>
               <User />
             </RoleBasedGuard>
-          ),
+          )
         },
         {
           path: 'users/:userId/edit',
@@ -74,7 +74,7 @@ export default function Router() {
             <RoleBasedGuard>
               <UserProfile />
             </RoleBasedGuard>
-          ),
+          )
         },
 
         // Admin/user-settings
@@ -84,9 +84,9 @@ export default function Router() {
             <RoleBasedGuard>
               <UserSettings />
             </RoleBasedGuard>
-          ),
-        },
-      ],
+          )
+        }
+      ]
     },
     {
       path: 'auth',
@@ -99,7 +99,7 @@ export default function Router() {
             <GuestGuard>
               <Login />
             </GuestGuard>
-          ),
+          )
         },
         {
           path: 'register',
@@ -107,12 +107,12 @@ export default function Router() {
             <GuestGuard>
               <Register />
             </GuestGuard>
-          ),
+          )
         },
         { path: 'login-unprotected', element: <Login /> },
         { path: 'register-unprotected', element: <Register /> },
-        { path: 'reset-password', element: <ResetPassword /> },
-      ],
+        { path: 'reset-password', element: <ResetPassword /> }
+      ]
     },
     { path: '/verify-email/:token', element: <VerifyEmail /> },
     { path: '/reset-password/:token', element: <NewPassword /> },
@@ -123,17 +123,17 @@ export default function Router() {
       element: <LogoOnlyLayout />,
       children: [
         { path: '404', element: <Page404 /> },
-        { path: '*', element: <Navigate to="/404" replace /> },
-      ],
+        { path: '*', element: <Navigate to="/404" replace /> }
+      ]
     },
     {
       path: '/',
       element: <MainLayout />,
       children: [
         { element: <HomePage />, index: true },
-        { path: 'contact-us', element: <ContactPage /> },
-      ],
+        { path: 'contact-us', element: <ContactPage /> }
+      ]
     },
-    { path: '*', element: <Navigate to="/404" replace /> },
+    { path: '*', element: <Navigate to="/404" replace /> }
   ]);
 }

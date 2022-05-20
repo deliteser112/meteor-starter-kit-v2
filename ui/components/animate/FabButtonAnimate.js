@@ -1,6 +1,3 @@
-/* eslint-disable react/require-default-props */
-/* eslint-disable react/display-name */
-/* eslint-disable react/jsx-props-no-spreading */
 import PropTypes from 'prop-types';
 import { m } from 'framer-motion';
 import React, { forwardRef } from 'react';

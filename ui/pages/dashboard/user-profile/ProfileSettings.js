@@ -1,6 +1,3 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/no-unstable-nested-components */
-/* eslint-disable react/require-default-props */
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useSnackbar } from 'notistack';

@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import PropTypes from 'prop-types';
 import ReactLoading from 'react-loading';
 import { Icon } from '@iconify/react';

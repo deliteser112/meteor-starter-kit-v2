@@ -17,7 +17,7 @@ export const PATH_AUTH = {
   registerUnprotected: path(ROOTS_AUTH, '/register-unprotected'),
   verify: path(ROOTS_AUTH, '/verify'),
   resetPassword: path(ROOTS_AUTH, '/reset-password'),
-  newPassword: path(ROOTS_AUTH, '/new-password'),
+  newPassword: path(ROOTS_AUTH, '/new-password')
 };
 
 export const PATH_PAGE = {
@@ -31,7 +31,7 @@ export const PATH_PAGE = {
   page403: '/403',
   page404: '/404',
   page500: '/500',
-  components: '/components',
+  components: '/components'
 };
 
 export const PATH_DASHBOARD = {
@@ -49,5 +49,5 @@ export const PATH_DASHBOARD = {
   // userSettings
   userSettings: path(ROOTS_DASHBOARD, '/user-settings'),
 
-  permissionDenied: path(ROOTS_DASHBOARD, '/permission-denied'),
+  permissionDenied: path(ROOTS_DASHBOARD, '/permission-denied')
 };

@@ -1,4 +1,3 @@
-/* eslint-disable react/react-in-jsx-scope */
 import React from 'react';
 import { Link as RouterLink, useParams, useLocation } from 'react-router-dom';
 

@@ -1,4 +1,3 @@
-/* eslint-disable array-callback-return */
 import { Roles } from 'meteor/alanning:roles';
 
 import { Meteor } from 'meteor/meteor';

@@ -16,8 +16,6 @@ const getTotalUserCount = (currentUserId) => {
 
 const getUsers = (options) => {
   try {
-    // const query = getQuery(options);
-    // const projection = getProjection(options);
     return Meteor.users
       .find({ _id: { $ne: options.currentUser._id } })
       .fetch()
