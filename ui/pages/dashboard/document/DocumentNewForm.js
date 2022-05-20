@@ -84,7 +84,6 @@ export default function DocumentNewEditForm({ isEdit, currentDocument }) {
   const onSubmit = async (values) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
-      console.log(values);
       const { body, isPublic, title } = values;
       const mutation = isEdit ? updateDocument : addDocument;
       const documentToAddOrUpdate = {

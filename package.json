@@ -1,5 +1,5 @@
 {
-  "name": "meteor-react-starter-kit@react-material",
+  "name": "meteor-react-starter-kit",
   "private": true,
   "scripts": {
     "dev": "meteor --settings settings-development.json",

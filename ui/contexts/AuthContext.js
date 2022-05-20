@@ -5,9 +5,6 @@ import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import React, { createContext, useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
-// utils
-// import axios from '../utils/axios';
-// import { isValidToken, setSession } from '../utils/jwt';
 
 // ----------------------------------------------------------------------
 
@@ -27,29 +24,6 @@ const handlers = {
       user,
     };
   },
-  LOGIN: (state, action) => {
-    const { user } = action.payload;
-
-    return {
-      ...state,
-      isAuthenticated: true,
-      user,
-    };
-  },
-  LOGOUT: (state) => ({
-    ...state,
-    isAuthenticated: false,
-    user: null,
-  }),
-  REGISTER: (state, action) => {
-    const { user } = action.payload;
-
-    return {
-      ...state,
-      isAuthenticated: true,
-      user,
-    };
-  },
 };
 
 const reducer = (state, action) =>
@@ -57,10 +31,6 @@ const reducer = (state, action) =>
 
 const AuthContext = createContext({
   ...initialState,
-  method: 'jwt',
-  login: () => Promise.resolve(),
-  logout: () => Promise.resolve(),
-  register: () => Promise.resolve(),
 });
 
 function AuthProvider({ children }) {
@@ -119,17 +89,11 @@ function AuthProvider({ children }) {
     initialize();
   }, [isLoading]);
 
-  const logout = async () => {
-    // setSession(null);
-    dispatch({ type: 'LOGOUT' });
-  };
-
   return (
     <AuthContext.Provider
       value={{
         ...state,
         method: 'jwt',
-        logout,
       }}
     >
       {children}

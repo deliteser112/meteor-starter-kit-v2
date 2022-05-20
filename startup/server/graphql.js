@@ -3,6 +3,8 @@ import { WebApp } from 'meteor/webapp';
 import { getUser } from 'meteor/apollo';
 import schema from './api';
 
+// -----------------
+
 const server = new ApolloServer({
   schema,
   context: async ({ req }) => ({
@@ -10,13 +12,6 @@ const server = new ApolloServer({
   }),
   uploads: false,
 });
-
-// server.applyMiddleware({
-//   app: WebApp.connectHandlers,
-//   path: '/graphql',
-// });
-
-// -----------------
 
 const app = WebApp.connectHandlers;
 

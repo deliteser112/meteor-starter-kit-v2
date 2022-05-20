@@ -3,7 +3,6 @@ import { Navigate, useRoutes } from 'react-router-dom';
 // guards
 import GuestGuard from '../guards/GuestGuard';
 import AuthGuard from '../guards/AuthGuard';
-// import OwnerBasedGuard from "../guards/OwnerBasedGuard";
 import RoleBasedGuard from '../guards/RoleBasedGuard';
 
 // layouts
@@ -17,8 +16,7 @@ import ContactPage from '../pages/external_pages/Contact';
 
 // others
 import GeneralApp from '../pages/dashboard/GeneralApp';
-import NotFound from '../pages/other/Page404';
-// import Maintenance from "./pages/other/Maintenance";
+import Page404 from '../pages/other/Page404';
 
 // documents
 import Documents from '../pages/dashboard/document';
@@ -27,7 +25,6 @@ import DocumentCreate from '../pages/dashboard/document/DocumentCreate';
 // users
 import User from '../pages/dashboard/user';
 import UserProfile from '../pages/dashboard/user-profile';
-// import UserCreate from "../pages/dashboard/user/UserCreate";
 
 // user settings
 import UserSettings from '../pages/dashboard/userSettings';
@@ -71,14 +68,6 @@ export default function Router() {
             </RoleBasedGuard>
           ),
         },
-        // {
-        //   path: "users/create",
-        //   element: (
-        //     <RoleBasedGuard>
-        //       <UserCreate />
-        //     </RoleBasedGuard>
-        //   )
-        // },
         {
           path: 'users/:userId/edit',
           element: (
@@ -127,12 +116,13 @@ export default function Router() {
     },
     { path: '/verify-email/:token', element: <VerifyEmail /> },
     { path: '/reset-password/:token', element: <NewPassword /> },
+
     // Main RoutesResetPassword
     {
       path: '*',
       element: <LogoOnlyLayout />,
       children: [
-        { path: '404', element: <NotFound /> },
+        { path: '404', element: <Page404 /> },
         { path: '*', element: <Navigate to="/404" replace /> },
       ],
     },

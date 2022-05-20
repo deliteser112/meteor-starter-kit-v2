@@ -57,8 +57,7 @@ export default function UserSettings() {
   const [currentSetting, setCurrentSetting] = useState({});
 
   // queries
-  const { loading, data, refetch } = useQuery(userSettingsQuery);
-  refetch();
+  const { loading, data } = useQuery(userSettingsQuery);
   const userSettings = (data && data.userSettings) || [];
 
   const handleAddSetting = () => {
@@ -83,6 +82,7 @@ export default function UserSettings() {
         variables: {
           _id: settingId,
         },
+        refetchQueries: [{ query: userSettingsQuery }],
       });
     }
   };

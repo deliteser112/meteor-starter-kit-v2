@@ -4,7 +4,7 @@ import React from 'react';
 // material
 import { Divider, Typography } from '@mui/material';
 //
-import OAuthLoginButton from './OAuthLoginButton';
+import OAuthLoginButton from './OAuthLoginButtons';
 
 // import { oAuthServicesQuery } from '../../pages/queries';
 import oAuthServicesQuery from '../../_queries/OAuth.gql';
