@@ -5,7 +5,12 @@ import exportUserData from './actions/exportUserData';
 
 export default {
   users: async (parent, args, context) => {
-    return queryUsers({ currentUser: context.user });
+    const users = await queryUsers({ currentUser: context.user });
+    console.log(users);
+    users.users.map(({ emailAddress, roles }) => {
+      console.log(emailAddress, roles);
+    });
+    return users;
   },
   user: async (parent, args, context) => {
     const userIdFromParentQuery = parent && parent.userId;

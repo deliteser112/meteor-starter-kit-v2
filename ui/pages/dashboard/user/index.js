@@ -1,5 +1,5 @@
 /* eslint-disable array-callback-return */
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactLoading from 'react-loading';
 // @mui
 import { Container } from '@mui/material';
@@ -29,7 +29,14 @@ export default function Users() {
 
   const users = (data && data.users && data.users.users) || [];
 
-  console.log('USERS:', users);
+  useEffect(() => {
+    if (users) {
+      console.log(data);
+      users.map((item) => {
+        console.log(item.roles);
+      });
+    }
+  });
 
   const handleDeleteUser = (_id) => {
     removeUser({

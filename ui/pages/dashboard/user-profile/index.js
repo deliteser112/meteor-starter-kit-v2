@@ -4,6 +4,7 @@ import { capitalCase } from 'change-case';
 
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import ReactLoading from 'react-loading';
 
 // material
 import { styled } from '@mui/material/styles';
@@ -11,7 +12,7 @@ import { Tabs, Tab, Card, Container, Box } from '@mui/material';
 
 // components
 import Page from '../../../components/Page';
-import LoadingScreen from '../../../components/LoadingScreen';
+// import LoadingScreen from '../../../components/LoadingScreen';
 import Iconify from '../../../components/Iconify';
 
 //
@@ -43,13 +44,14 @@ const TabsWrapperStyle = styled('div')(({ theme }) => ({
 
 export default function UserProfile() {
   const { userId } = useParams();
-  const { data, refetch } = useQuery(userQuery, { variables: { _id: userId } });
-  refetch();
+  const { data, loading } = useQuery(userQuery, { variables: { _id: userId } });
   const [currentTab, onChangeTab] = useState('profile');
 
   const user = data && data.user;
-  const isUser = user && user.name;
-  if (!isUser) return <LoadingScreen />;
+  if (loading)
+    return (
+      <ReactLoading className="loading-icons" type="spin" color="grey" height={40} width={40} />
+    );
   const { _id, name, emailAddress } = user;
   const { coverURL } = account;
 
