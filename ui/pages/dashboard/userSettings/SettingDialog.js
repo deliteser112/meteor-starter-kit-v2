@@ -146,13 +146,17 @@ export default function SettingDialog({
 
   const {
     reset,
+    setValue,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
 
   useEffect(() => {
     if (isEdit && currentSetting) {
-      const { isGDPR } = currentSetting;
+      const { isGDPR, label, key } = currentSetting;
+      console.log(currentSetting);
+      setValue('label', label);
+      setValue('key', key);
       setIsGDPR(isGDPR);
       defaultValues;
     }

@@ -24,10 +24,13 @@ import { useMutation } from '@apollo/react-hooks';
 
 // import mutations
 import { updateUser as updateUserMutation } from '../../../_mutations/Users.gql';
+import { userSettings as userSettingsQuery } from '../../../_queries/Users.gql';
 
 // components
 import EmptyContent from '../../../components/EmptyContent';
 
+// modules
+import unfreezeApolloCacheValue from '../../../../modules/unfreezeApolloCacheValue';
 // ----------------------------------------------------------------------
 const Android12Switch = styled(Switch)(({ theme }) => ({
   padding: 8,
@@ -79,9 +82,14 @@ export default function ProfileSettings({ userId, settings }) {
     updateUser({
       variables: {
         user: {
-          settings: settingsUpdate,
-        },
-      },
+          _id: userId,
+          settings: unfreezeApolloCacheValue(settingsUpdate).map((setting) => {
+            const settingToUpdate = setting;
+            settingToUpdate.lastUpdatedByUser = new Date().toISOString();
+            return settingToUpdate;
+          })
+        }
+      }
     });
     enqueueSnackbar('Update success!', {
       variant: 'success',

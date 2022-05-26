@@ -17,7 +17,7 @@ import { updateUser as updateUserMutation } from '../_mutations/Users.gql';
 import unfreezeApolloCacheValue from '../../modules/unfreezeApolloCacheValue';
 
 // components
-import UserSettings from '../pages/profile/ProfileSettings';
+import UserSettings from './UserSettings';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -83,8 +83,6 @@ export default function GDPRConsentModal() {
   return (
     <div>
       <BootstrapDialog
-        // TransitionComponent={Transition}
-        // onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
       >
@@ -104,7 +102,7 @@ export default function GDPRConsentModal() {
           <UserSettings settings={userSettings} userId={Meteor.userId()} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleSaveSettings}>Save changes</Button>
+          <Button variant="contained" onClick={handleSaveSettings}>Save changes</Button>
         </DialogActions>
       </BootstrapDialog>
     </div>

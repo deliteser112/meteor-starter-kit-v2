@@ -23,14 +23,14 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { useMutation } from '@apollo/react-hooks';
 
 // import mutations
-import { updateUser as updateUserMutation } from '../../_mutations/Users.gql';
-import { userSettings as userSettingsQuery } from '../../_queries/Users.gql';
+import { updateUser as updateUserMutation } from '../_mutations/Users.gql';
+import { userSettings as userSettingsQuery } from '../_queries/Users.gql';
 
 // components
-import EmptyContent from '../../components/EmptyContent';
+import EmptyContent from './EmptyContent';
 
 // modules
-import unfreezeApolloCacheValue from '../../../modules/unfreezeApolloCacheValue';
+import unfreezeApolloCacheValue from '../../modules/unfreezeApolloCacheValue';
 
 // ----------------------------------------------------------------------
 const Android12Switch = styled(Switch)(({ theme }) => ({
@@ -90,12 +90,7 @@ export default function ProfileSettings({ userId, settings }) {
             return settingToUpdate;
           })
         }
-      },
-      refetchQueries: [{ query: userSettingsQuery }]
-    });
-
-    enqueueSnackbar('Update success!', {
-      variant: 'success'
+      }
     });
   };
 

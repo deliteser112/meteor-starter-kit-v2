@@ -32,19 +32,20 @@ const TabsWrapperStyle = styled('div')(({ theme }) => ({
   position: 'absolute',
   backgroundColor: theme.palette.background.paper,
   [theme.breakpoints.up('sm')]: {
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   [theme.breakpoints.up('md')]: {
     justifyContent: 'flex-end',
-    paddingRight: theme.spacing(3),
-  },
+    paddingRight: theme.spacing(3)
+  }
 }));
 
 export default function UserProfile() {
   const [currentTab, onChangeTab] = useState('profile');
-  const { data } = useQuery(userQuery);
+  const { data } = useQuery(userQuery, { variables: { _id: Meteor.userId() } });
   const user = data && data.user;
   const isUser = user && user.name;
+  console.log(data, isUser, Meteor.userId());
   if (!isUser) return <LoadingScreen />;
   const { _id, name, emailAddress } = user;
   const { coverURL } = account;
@@ -54,20 +55,20 @@ export default function UserProfile() {
     position: 'Admin',
     email: emailAddress,
     displayName: `${name.first} ${name.last ? name.last : ''}`,
-    coverURL,
+    coverURL
   };
 
   const PROFILE_TABS = [
     {
       value: 'profile',
       icon: <Iconify icon="ic:round-account-box" width={20} height={20} />,
-      component: <ProfileGeneral currentUser={user} isEdit />,
+      component: <ProfileGeneral currentUser={user} isEdit />
     },
     {
       value: 'settings',
       icon: <Iconify icon="eva:heart-fill" width={20} height={20} />,
-      component: <ProfileSettings settings={user.settings} userId={user._id} />,
-    },
+      component: <ProfileSettings settings={user.settings} userId={user._id} />
+    }
   ];
   return (
     <Page title="Profile">
@@ -76,7 +77,7 @@ export default function UserProfile() {
           sx={{
             mb: 3,
             height: 220,
-            position: 'relative',
+            position: 'relative'
           }}
         >
           <ProfileCover myProfile={myProfile} />
@@ -89,12 +90,7 @@ export default function UserProfile() {
               onChange={(event, newValue) => onChangeTab(newValue)}
             >
               {PROFILE_TABS.map((tab) => (
-                <Tab
-                  disableRipple
-                  key={tab.value}
-                  value={tab.value}
-                  label={capitalCase(tab.value)}
-                />
+                <Tab disableRipple key={tab.value} value={tab.value} label={capitalCase(tab.value)} />
               ))}
             </Tabs>
           </TabsWrapperStyle>

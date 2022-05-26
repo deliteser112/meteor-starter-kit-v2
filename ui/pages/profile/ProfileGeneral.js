@@ -88,7 +88,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
       const { oAuthProvider } = currentUser;
       setUserType(oAuthProvider ? 'oauth' : 'password');
       setOAuthIcon(oAuthProvider);
-      defaultValues();
+      defaultValues;
     }
     if (!isEdit) {
       reset(defaultValues);

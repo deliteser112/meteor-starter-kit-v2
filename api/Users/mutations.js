@@ -9,28 +9,30 @@ export default {
   updateUser: async (parent, args, context) => {
     await updateUser({
       currentUser: context.user,
-      user: args.user,
+      user: args.user
     });
+
+    console.log({ parent, args, context });
 
     return queryUser({ userIdToQuery: args.user._id || context.user._id });
   },
   removeUser: async (parent, args, { user }) =>
     removeUser({
       currentUser: user,
-      user: args,
+      user: args
     }),
   sendVerificationEmail: async (parent, args, context) => {
     Accounts.sendVerificationEmail(context.user._id);
 
     return {
-      _id: context.user._id,
+      _id: context.user._id
     };
   },
   sendWelcomeEmail: async (parent, args, context) => {
     await sendWelcomeEmail({ user: Meteor.users.findOne(context.user._id) });
 
     return {
-      _id: context.user._id,
+      _id: context.user._id
     };
-  },
+  }
 };

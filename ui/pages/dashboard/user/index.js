@@ -33,6 +33,7 @@ export default function Users() {
       variables: {
         _id,
       },
+      refetchQueries: [{ query: usersQuery }]
     });
   };
 

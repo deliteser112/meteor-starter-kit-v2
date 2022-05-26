@@ -48,6 +48,8 @@ export default function UserProfile() {
   const [currentTab, onChangeTab] = useState('profile');
 
   const user = data && data.user;
+
+  console.log(user);
   if (loading)
     return (
       <ReactLoading className="loading-icons" type="spin" color="grey" height={40} width={40} />
