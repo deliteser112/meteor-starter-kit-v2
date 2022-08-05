@@ -94,7 +94,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
       await new Promise((resolve) => setTimeout(resolve, 500));
       reset();
       enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
-      navigate(PATH_DASHBOARD.users);
+      navigate(PATH_DASHBOARD.user.root);
     } catch (error) {
       console.error(error);
     }

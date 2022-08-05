@@ -21,7 +21,7 @@ import { FormProvider, RHFSwitch, RHFEditor, RHFTextField } from '../../../compo
 // mutations
 import {
   addDocument as addDocumentMutation,
-  updateDocument as updateDocumentMutation,
+  updateDocument as updateDocumentMutation
 } from '../../../_mutations/Documents.gql';
 import { documents as documentsQuery } from '../../../_queries/Documents.gql';
 
@@ -30,14 +30,14 @@ import { documents as documentsQuery } from '../../../_queries/Documents.gql';
 const LabelStyle = styled(Typography)(({ theme }) => ({
   ...theme.typography.subtitle2,
   color: theme.palette.text.secondary,
-  marginBottom: theme.spacing(1),
+  marginBottom: theme.spacing(1)
 }));
 
 // ----------------------------------------------------------------------
 
 DocumentNewEditForm.propTypes = {
   isEdit: PropTypes.bool,
-  currentDocument: PropTypes.object,
+  currentDocument: PropTypes.object
 };
 
 export default function DocumentNewEditForm({ isEdit, currentDocument }) {
@@ -49,27 +49,27 @@ export default function DocumentNewEditForm({ isEdit, currentDocument }) {
 
   const NewDocumentSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
-    body: Yup.string().required('Description is required'),
+    body: Yup.string().required('Description is required')
   });
 
   const defaultValues = useMemo(
     () => ({
       title: currentDocument?.title || '',
       body: currentDocument?.body || '',
-      isPublic: currentDocument?.isPublic || false,
+      isPublic: currentDocument?.isPublic || false
     }),
-    [currentDocument],
+    [currentDocument]
   );
 
   const methods = useForm({
     resolver: yupResolver(NewDocumentSchema),
-    defaultValues,
+    defaultValues
   });
 
   const {
     reset,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting }
   } = methods;
 
   useEffect(() => {
@@ -88,7 +88,7 @@ export default function DocumentNewEditForm({ isEdit, currentDocument }) {
       const mutation = isEdit ? updateDocument : addDocument;
       const documentToAddOrUpdate = {
         title,
-        body,
+        body
       };
 
       if (isEdit) {
@@ -98,13 +98,13 @@ export default function DocumentNewEditForm({ isEdit, currentDocument }) {
 
       mutation({
         variables: {
-          ...documentToAddOrUpdate,
+          ...documentToAddOrUpdate
         },
-        refetchQueries: [{ query: documentsQuery }],
+        refetchQueries: [{ query: documentsQuery }]
       });
       reset();
-      enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!');
-      navigate(PATH_DASHBOARD.documents);
+      enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!', { variant: 'success', autoHideDuration: 1500 });
+      navigate(PATH_DASHBOARD.document.root);
     } catch (error) {
       console.error(error);
     }

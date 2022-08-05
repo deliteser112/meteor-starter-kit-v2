@@ -26,6 +26,7 @@ export default function Document() {
   const isEdit = !!pathname.includes('edit');
 
   const { data } = useQuery(editDocumentQuery, { variables: { _id: documentId } });
+  console.log('data:', data);
   const currentDocument = (isEdit && data && data.document) || {};
   console.log(currentDocument);
   return (
@@ -35,17 +36,17 @@ export default function Document() {
           heading="Documents"
           links={[
             { name: 'Dashboard', href: PATH_DASHBOARD.root },
-            { name: 'Documents', href: PATH_DASHBOARD.documents },
+            { name: 'Documents', href: PATH_DASHBOARD.document.root },
             { name: isEdit ? 'Edit Documet' : 'New Document' },
           ]}
           action={
             <Button
               variant="contained"
               component={RouterLink}
-              to={PATH_DASHBOARD.documents}
+              to={PATH_DASHBOARD.document.root}
               startIcon={<ArrowBackIosNewIcon />}
             >
-              Back to List
+              Back
             </Button>
           }
         />

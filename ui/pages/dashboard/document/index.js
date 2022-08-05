@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactLoading from 'react-loading';
 import { Link as RouterLink } from 'react-router-dom';
 
 // import queries
@@ -26,6 +25,7 @@ import { removeDocument as removeDocumentMutation } from '../../../_mutations/Do
 export default function Document() {
   const [removeDocument] = useMutation(removeDocumentMutation);
   const { loading, data } = useQuery(documentsQuery);
+  
   const documents = (data && data.documents) || [];
 
   const deleteDocument = (_id) => {
@@ -47,18 +47,14 @@ export default function Document() {
             <Button
               variant="contained"
               component={RouterLink}
-              to={PATH_DASHBOARD.documentCreate}
+              to={PATH_DASHBOARD.document.create}
               startIcon={<Iconify icon="eva:plus-fill" />}
             >
               New Document
             </Button>
           }
         />
-        {loading ? (
-          <ReactLoading className="loading-icons" type="spin" color="grey" height={15} width={15} />
-        ) : (
-          <DocumentList documentList={documents} onDelete={(id) => deleteDocument(id)} />
-        )}
+        <DocumentList isLoading={loading} documentList={documents} onDelete={(id) => deleteDocument(id)} />
       </Container>
     </Page>
   );

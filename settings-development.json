@@ -11,18 +11,18 @@
     "productAddress": "13 Forester Way Pakenham VIC 3810, Australia"
   },
   "private": {
-    "MAIL_URL": "smtps://postmaster@sandboxaa5701a2d43e4976be4fe4e4b297acfa.mailgun.org:475808d7590ab44bc720617019ffbd6e-100b5c8d-5fe751e1@smtp.mailgun.org:587",
+    "MAIL_URL": "smtps://4165cf816743c426a58ec2e5d1577682:741164e84c9232a7d59ddfe5d536bc93@in-v3.mailjet.com:465",
     "OAuth": {
       "facebook": {
         "enabled": true,
-        "appId": "",
-        "secret": "",
+        "appId": "659338544563358",
+        "secret": "0ae03b99e776077445546fad57a15742",
         "loginStyle": "popup"
       },
       "google": {
         "enabled": true,
-        "clientId": "204760194276-q6iunplenq0b69s7m9d66u7bk8ugbv3c.apps.googleusercontent.com",
-        "secret": "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",
+        "clientId": "955722000602-0hl38i48qqhias14f28ppk56t6n29ir0.apps.googleusercontent.com",
+        "secret": "vpUonZKIP2DEYcWBa7Mm0iH2",
         "loginStyle": "popup"
       },
       "github": {

@@ -40,11 +40,17 @@ export const PATH_DASHBOARD = {
   profile: path(ROOTS_DASHBOARD, '/profile'),
 
   // documents
-  documents: path(ROOTS_DASHBOARD, '/documents'),
-  documentCreate: path(ROOTS_DASHBOARD, '/documents/create'),
+  document: {
+    root: path(ROOTS_DASHBOARD, '/documents'),
+    create: path(ROOTS_DASHBOARD, '/documents/create'),
+    edit: (name) => path(ROOTS_DASHBOARD, `/documents/${name}/edit`),
+  },
 
   // users
-  users: path(ROOTS_DASHBOARD, '/users'),
+  user: {
+    root: path(ROOTS_DASHBOARD, '/users'),
+    edit: (name) => path(ROOTS_DASHBOARD, `/users/${name}/edit`),
+  },
 
   // userSettings
   userSettings: path(ROOTS_DASHBOARD, '/user-settings'),

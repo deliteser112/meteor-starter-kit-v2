@@ -19,7 +19,7 @@ const navConfig = [
       },
       {
         title: 'documents',
-        path: `${PATH_DASHBOARD.documents}`,
+        path: `${PATH_DASHBOARD.document.root}`,
         icon: getIcon('gala:file-doc'),
       },
     ],
@@ -29,7 +29,7 @@ const navConfig = [
     items: [
       {
         title: 'user',
-        path: `${PATH_DASHBOARD.users}`,
+        path: `${PATH_DASHBOARD.user.root}`,
         icon: getIcon('gis:globe-users'),
       },
       {

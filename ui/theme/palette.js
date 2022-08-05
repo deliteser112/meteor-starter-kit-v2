@@ -28,14 +28,23 @@ const GREY = {
   500_80: alpha('#919EAB', 0.8),
 };
 
+// SETUP COLORS
 const PRIMARY = {
-  lighter: '#D1E9FC',
-  light: '#76B0F1',
-  main: '#2065D1',
-  dark: '#103996',
-  darker: '#061B64',
-  contrastText: '#fff',
+  lighter: '#C8FACD',
+  light: '#5BE584',
+  main: '#00AB55',
+  dark: '#007B55',
+  darker: '#005249',
 };
+
+// const PRIMARY = {
+//   lighter: '#D1E9FC',
+//   light: '#76B0F1',
+//   main: '#2065D1',
+//   dark: '#103996',
+//   darker: '#061B64',
+//   contrastText: '#fff',
+// };
 
 const SECONDARY = {
   lighter: '#D6E4FF',
@@ -98,7 +107,7 @@ const CHART_COLORS = {
   red: ['#FF6C40', '#FF8F6D', '#FFBD98', '#FFF2D4'],
 };
 
-const palette = {
+const COMMON = {
   common: { black: '#000', white: '#fff' },
   primary: { ...PRIMARY },
   secondary: { ...SECONDARY },
@@ -121,6 +130,23 @@ const palette = {
     focus: GREY[500_24],
     hoverOpacity: 0.08,
     disabledOpacity: 0.48,
+  },
+};
+
+const palette = {
+  light: {
+    ...COMMON,
+    mode: 'light',
+    text: { primary: GREY[800], secondary: GREY[600], disabled: GREY[500] },
+    background: { paper: '#fff', default: '#fff', neutral: GREY[200] },
+    action: { active: GREY[600], ...COMMON.action },
+  },
+  dark: {
+    ...COMMON,
+    mode: 'dark',
+    text: { primary: '#fff', secondary: GREY[500], disabled: GREY[600] },
+    background: { paper: GREY[800], default: GREY[900], neutral: GREY[500_16] },
+    action: { active: GREY[500], ...COMMON.action },
   },
 };
 

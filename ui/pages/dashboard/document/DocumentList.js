@@ -1,226 +1,225 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
-import { filter } from 'lodash';
-import { sentenceCase } from 'change-case';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 // material
 import {
   Card,
   Table,
-  Checkbox,
-  TableRow,
   TableBody,
-  TableCell,
   TableContainer,
   TablePagination,
+  Switch,
+  Box,
+  FormControlLabel,
+  Tooltip,
+  IconButton
 } from '@mui/material';
+// hooks
+import useTable, { getComparator, emptyRows } from '../../../hooks/useTable';
 // components
-import Label from '../../../components/Label';
 import Scrollbar from '../../../components/Scrollbar';
+import Iconify from '../../../components/Iconify';
+
 import {
-  TableListHead,
-  TableListToolbar,
-  TableMoreMenu,
   TableNoData,
-} from '../../../sections/@dashboard/table';
+  TableSkeleton,
+  TableEmptyRows,
+  TableHeadCustom,
+  TableSelectedActions
+} from '../../../components/table';
+
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 
-// utils
-import { fDate } from '../../../utils/formatTime';
+// sections
+import { DocumentTableRow, DocumentTableToolbar } from '../../../sections/@dashboard/document-list';
+
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
   { id: 'title', label: 'Title', alignRight: false },
   { id: 'isPublic', label: 'Document Type', alignRight: false },
   { id: 'createdAt', label: 'Created At', alignRight: false },
-  { id: '' },
+  { id: '' }
 ];
 
 // ----------------------------------------------------------------------
-
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function applySortFilter(array, comparator, query) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
+export default function DocumentList({ documentList, isLoading, onDelete }) {
+  const {
+    dense,
+    page,
+    order,
+    orderBy,
+    rowsPerPage,
+    setPage,
+    //
+    selected,
+    setSelected,
+    onSelectRow,
+    onSelectAllRows,
+    //
+    onSort,
+    onChangeDense,
+    onChangePage,
+    onChangeRowsPerPage
+  } = useTable({
+    defaultOrderBy: 'title'
   });
-  if (query) {
-    return filter(array, (_user) => _user.title.toLowerCase().indexOf(query.toLowerCase()) !== -1);
-  }
-  return stabilizedThis.map((el) => el[0]);
-}
 
-export default function DocumentList({ documentList, onDelete }) {
-  const [page, setPage] = useState(0);
+  const navigate = useNavigate();
 
-  const [order, setOrder] = useState('asc');
-
-  const [selected, setSelected] = useState([]);
-
-  const [orderBy, setOrderBy] = useState('title');
-
+  const [tableData, setTableData] = useState([]);
   const [filterName, setFilterName] = useState('');
 
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
-
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = documentList.map((n) => n.title);
-      setSelected(newSelecteds);
-      return;
+  useEffect(() => {
+    if (documentList.length) {
+      setTableData(documentList);
     }
-    setSelected([]);
-  };
+  }, [documentList]);
 
-  const handleClick = (event, title) => {
-    const selectedIndex = selected.indexOf(title);
-    let newSelected = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, title);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
-    setSelected(newSelected);
-  };
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+  const handleFilterName = (filterName) => {
+    setFilterName(filterName);
     setPage(0);
   };
 
-  const handleFilterByName = (event) => {
-    setFilterName(event.target.value);
+  const handleDeleteRow = (id) => {
+    const deleteRow = tableData.filter((row) => row._id !== id);
+    setSelected([]);
+    setTableData(deleteRow);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - documentList.length) : 0;
+  const handleDeleteRows = (selected) => {
+    const deleteRows = tableData.filter((row) => !selected.includes(row._id));
+    setSelected([]);
+    setTableData(deleteRows);
+  };
 
-  const filteredUsers = applySortFilter(documentList, getComparator(order, orderBy), filterName);
+  const handleEditRow = (id) => {
+    navigate(PATH_DASHBOARD.document.edit(id));
+  };
 
-  const isUserNotFound = filteredUsers.length === 0;
+  const dataFiltered = applySortFilter({
+    tableData,
+    comparator: getComparator(order, orderBy),
+    filterName
+  });
+
+  const denseHeight = dense ? 60 : 80;
+
+  const isNotFound = (!dataFiltered.length && !!filterName) || (!isLoading && !dataFiltered.length);
 
   return (
     <Card>
-      <TableListToolbar
-        numSelected={selected.length}
-        filterName={filterName}
-        onFilterName={handleFilterByName}
-      />
+      <DocumentTableToolbar filterName={filterName} onFilterName={handleFilterName} />
 
       <Scrollbar>
-        <TableContainer sx={{ minWidth: 800 }}>
-          <Table>
-            <TableListHead
+        <TableContainer sx={{ minWidth: 960, position: 'relative' }}>
+          {selected.length > 0 && (
+            <TableSelectedActions
+              dense={dense}
+              numSelected={selected.length}
+              rowCount={tableData.length}
+              onSelectAllRows={(checked) =>
+                onSelectAllRows(
+                  checked,
+                  tableData.map((row) => row._id)
+                )
+              }
+              actions={
+                <Tooltip title="Delete">
+                  <IconButton color="primary" onClick={() => handleDeleteRows(selected)}>
+                    <Iconify icon={'eva:trash-2-outline'} />
+                  </IconButton>
+                </Tooltip>
+              }
+            />
+          )}
+
+          <Table size={dense ? 'small' : 'medium'}>
+            <TableHeadCustom
               order={order}
               orderBy={orderBy}
               headLabel={TABLE_HEAD}
-              rowCount={documentList.length}
+              rowCount={tableData.length}
               numSelected={selected.length}
-              onRequestSort={handleRequestSort}
-              onSelectAllClick={handleSelectAllClick}
+              onSort={onSort}
+              onSelectAllRows={(checked) =>
+                onSelectAllRows(
+                  checked,
+                  tableData.map((row) => row._id)
+                )
+              }
             />
+
             <TableBody>
-              {filteredUsers
+              {(isLoading ? [...Array(rowsPerPage)] : dataFiltered)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
-                  const { _id, title, isPublic, createdAt } = row;
-                  const isItemSelected = selected.indexOf(title) !== -1;
+                .map((row, index) =>
+                  row ? (
+                    <DocumentTableRow
+                      key={index}
+                      row={row}
+                      selected={selected.includes(row._id)}
+                      onSelectRow={() => onSelectRow(row._id)}
+                      onDeleteRow={() => handleDeleteRow(row._id)}
+                      onEditRow={() => handleEditRow(row._id)}
+                    />
+                  ) : (
+                    !isNotFound && <TableSkeleton key={index} sx={{ height: denseHeight }} />
+                  )
+                )}
 
-                  return (
-                    <TableRow
-                      hover
-                      key={_id}
-                      tabIndex={-1}
-                      role="checkbox"
-                      selected={isItemSelected}
-                      aria-checked={isItemSelected}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={isItemSelected}
-                          onChange={(event) => handleClick(event, title)}
-                        />
-                      </TableCell>
-                      <TableCell align="left">{title}</TableCell>
-                      <TableCell align="left">
-                        <Label variant="ghost" color={isPublic ? 'success' : 'primary'}>
-                          {sentenceCase(isPublic ? 'Public' : 'Private')}
-                        </Label>
-                      </TableCell>
-                      <TableCell align="left">{fDate(new Date(createdAt))}</TableCell>
-                      <TableCell align="right">
-                        <TableMoreMenu
-                          onDelete={onDelete}
-                          _id={_id}
-                          editLink={`${PATH_DASHBOARD.documents}/${_id}/edit`}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 53 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
+              <TableEmptyRows height={denseHeight} emptyRows={emptyRows(page, rowsPerPage, tableData.length)} />
+
+              <TableNoData isNotFound={isNotFound} />
             </TableBody>
-
-            {isUserNotFound && (
-              <TableBody>
-                <TableNoData isNotFound />
-              </TableBody>
-            )}
           </Table>
         </TableContainer>
       </Scrollbar>
 
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={documentList.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
+      <Box sx={{ position: 'relative' }}>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={dataFiltered.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={onChangePage}
+          onRowsPerPageChange={onChangeRowsPerPage}
+        />
+
+        <FormControlLabel
+          control={<Switch checked={dense} onChange={onChangeDense} />}
+          label="Dense"
+          sx={{ px: 3, py: 1.5, top: 0, position: { md: 'absolute' } }}
+        />
+      </Box>
     </Card>
   );
 }
 
 DocumentList.propTypes = {
+  isLoading: PropTypes.bool,
   documentList: PropTypes.array,
-  onDelete: PropTypes.func,
+  onDelete: PropTypes.func
 };
+
+// ----------------------------------------------------------------------
+
+function applySortFilter({ tableData, comparator, filterName }) {
+  const stabilizedThis = tableData.map((el, index) => [el, index]);
+
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
+
+  tableData = stabilizedThis.map((el) => el[0]);
+
+  if (filterName) {
+    tableData = tableData.filter((item) => item.title.toLowerCase().indexOf(filterName.toLowerCase()) !== -1);
+  }
+
+  return tableData;
+}
