@@ -84,8 +84,8 @@ export default function MainHeader() {
             variant="subtitle1"
             sx={{
               ml: 1,
-              ...(isOffset && { color: 'common.black' }),
-              ...(!isHome && { color: 'common.black' }),
+              ...(isOffset && { color: 'text.primary' }),
+              ...(!isHome && { color: 'text.primary' }),
             }}
           >
             Meteor Starter Kit

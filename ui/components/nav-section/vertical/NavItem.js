@@ -15,16 +15,16 @@ import { isExternalLink } from '..';
 
 // HANDLE SHOW ITEM BY ROLE
 const ListItem = forwardRef((props, ref) => (
-  <RoleBasedGuard roles={props.roles}>
-    <ListItemStyle {...props} ref={ref}>
-      {props.children}
-    </ListItemStyle>
-  </RoleBasedGuard>
+  // <RoleBasedGuard roles={props.roles}>
+  <ListItemStyle {...props} ref={ref}>
+    {props.children}
+  </ListItemStyle>
+  // </RoleBasedGuard>
 ));
 
 ListItem.propTypes = {
   children: PropTypes.node,
-  roles: PropTypes.arrayOf(PropTypes.string),
+  roles: PropTypes.arrayOf(PropTypes.string)
 };
 
 NavItemRoot.propTypes = {
@@ -40,8 +40,8 @@ NavItemRoot.propTypes = {
     title: PropTypes.string,
     disabled: PropTypes.bool,
     caption: PropTypes.string,
-    roles: PropTypes.arrayOf(PropTypes.string),
-  }),
+    roles: PropTypes.arrayOf(PropTypes.string)
+  })
 };
 
 export function NavItemRoot({ item, isCollapse, open = false, active, onOpen }) {
@@ -54,7 +54,7 @@ export function NavItemRoot({ item, isCollapse, open = false, active, onOpen }) 
       {icon && <ListItemIconStyle>{icon}</ListItemIconStyle>}
       <ListItemTextStyle
         disableTypography
-        primary="{translate(title)}"
+        primary={title}
         secondary={
           <Tooltip title={'translate(caption)' || ''} arrow>
             <Typography
@@ -63,7 +63,7 @@ export function NavItemRoot({ item, isCollapse, open = false, active, onOpen }) 
               component="div"
               sx={{ textTransform: 'initial', color: 'text.secondary' }}
             >
-              {'translate(caption)'}
+              {caption}
             </Typography>
           </Tooltip>
         }
@@ -110,8 +110,8 @@ NavItemSub.propTypes = {
     title: PropTypes.string,
     disabled: PropTypes.bool,
     caption: PropTypes.bool,
-    roles: PropTypes.arrayOf(PropTypes.string),
-  }),
+    roles: PropTypes.arrayOf(PropTypes.string)
+  })
 };
 
 export function NavItemSub({ item, open = false, active = false, onOpen }) {
@@ -124,7 +124,7 @@ export function NavItemSub({ item, open = false, active = false, onOpen }) {
       <DotIcon active={active} />
       <ListItemText
         disableTypography
-        primary={'translate(title)'}
+        primary={title}
         secondary={
           <Tooltip title={'translate(caption)' || ''} arrow>
             <Typography
@@ -133,7 +133,7 @@ export function NavItemSub({ item, open = false, active = false, onOpen }) {
               component="div"
               sx={{ textTransform: 'initial', color: 'text.secondary' }}
             >
-              {'translate(caption)'}
+              {caption}
             </Typography>
           </Tooltip>
         }
@@ -165,7 +165,7 @@ export function NavItemSub({ item, open = false, active = false, onOpen }) {
 // ----------------------------------------------------------------------
 
 DotIcon.propTypes = {
-  active: PropTypes.bool,
+  active: PropTypes.bool
 };
 
 export function DotIcon({ active }) {
@@ -180,12 +180,12 @@ export function DotIcon({ active }) {
           bgcolor: 'text.disabled',
           transition: (theme) =>
             theme.transitions.create('transform', {
-              duration: theme.transitions.duration.shorter,
+              duration: theme.transitions.duration.shorter
             }),
           ...(active && {
             transform: 'scale(2)',
-            bgcolor: 'primary.main',
-          }),
+            bgcolor: 'primary.main'
+          })
         }}
       />
     </ListItemIconStyle>
@@ -195,7 +195,7 @@ export function DotIcon({ active }) {
 // ----------------------------------------------------------------------
 
 ArrowIcon.propTypes = {
-  open: PropTypes.bool,
+  open: PropTypes.bool
 };
 
 export function ArrowIcon({ open }) {

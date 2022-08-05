@@ -21,23 +21,26 @@ import NotistackProvider from './components/NotistackProvider';
 
 // auth
 import { AuthProvider } from './contexts/AuthContext';
+import { CollapseDrawerProvider } from './contexts/CollapseDrawerContext';
 
 // ----------------------------------------------------------------------
 
 export default function App() {
   return (
     <HelmetProvider>
-      <BrowserRouter>
-        <AuthProvider>
-          <ThemeProvider>
-            <NotistackProvider>
-              <ScrollToTop />
-              <BaseOptionChartStyle />
-              <Router />
-            </NotistackProvider>
-          </ThemeProvider>
-        </AuthProvider>
-      </BrowserRouter>
+      <CollapseDrawerProvider>
+        <BrowserRouter>
+          <AuthProvider>
+            <ThemeProvider>
+              <NotistackProvider>
+                <ScrollToTop />
+                <BaseOptionChartStyle />
+                <Router />
+              </NotistackProvider>
+            </ThemeProvider>
+          </AuthProvider>
+        </BrowserRouter>
+      </CollapseDrawerProvider>
     </HelmetProvider>
   );
 }

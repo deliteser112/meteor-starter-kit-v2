@@ -1,13 +1,14 @@
-import React from 'react';
+import { Roles } from 'meteor/alanning:roles';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 // @mui
 import { styled } from '@mui/material/styles';
 import { List, Box, ListSubheader } from '@mui/material';
-// hooks
-// import useLocales from '../../../hooks/useLocales';
 //
 import { NavListRoot } from './NavList';
 
+// hooks
+import useAuth from '../../../hooks/useAuth';
 // ----------------------------------------------------------------------
 
 export const ListSubheaderStyle = styled((props) => <ListSubheader disableSticky disableGutters {...props} />)(
@@ -18,8 +19,8 @@ export const ListSubheaderStyle = styled((props) => <ListSubheader disableSticky
     paddingBottom: theme.spacing(1),
     color: theme.palette.text.primary,
     transition: theme.transitions.create('opacity', {
-      duration: theme.transitions.duration.shorter,
-    }),
+      duration: theme.transitions.duration.shorter
+    })
   })
 );
 
@@ -27,31 +28,62 @@ export const ListSubheaderStyle = styled((props) => <ListSubheader disableSticky
 
 NavSectionVertical.propTypes = {
   isCollapse: PropTypes.bool,
-  navConfig: PropTypes.array,
+  navConfig: PropTypes.array
 };
 
 export default function NavSectionVertical({ navConfig, isCollapse = false, ...other }) {
-  // const { translate } = useLocales();
+  const { user } = useAuth();
+  const [isAdmin, setAdmin] = useState(false);
+
+  useEffect(() => {
+    if (user && Roles.userIsInRole(user._id, 'admin')) {
+      setAdmin(true);
+    }
+  }, [user]);
 
   return (
     <Box {...other}>
-      {navConfig.map((group) => (
-        <List key={group.subheader} disablePadding sx={{ px: 2 }}>
-          <ListSubheaderStyle
-            sx={{
-              ...(isCollapse && {
-                opacity: 0,
-              }),
-            }}
-          >
-            {'translate(group.subheader)'}
-          </ListSubheaderStyle>
+      {navConfig.map((group) => {
+        const { items, subheader } = group;
 
-          {group.items.map((list) => (
-            <NavListRoot key={list.title + list.path} list={list} isCollapse={isCollapse} />
-          ))}
-        </List>
-      ))}
+        if (subheader === 'Admin') {
+          if (isAdmin) {
+            return (
+              <List key={subheader} disablePadding sx={{ px: 2 }}>
+                <ListSubheaderStyle
+                  sx={{
+                    ...(isCollapse && {
+                      opacity: 0
+                    })
+                  }}
+                >
+                  {subheader}
+                </ListSubheaderStyle>
+                {items.map((list) => (
+                  <NavListRoot key={list.title + list.path} list={list} isCollapse={isCollapse} />
+                ))}
+              </List>
+            );
+          } else return;
+        } else {
+          return (
+            <List key={subheader} disablePadding sx={{ px: 2 }}>
+              <ListSubheaderStyle
+                sx={{
+                  ...(isCollapse && {
+                    opacity: 0
+                  })
+                }}
+              >
+                {subheader}
+              </ListSubheaderStyle>
+              {items.map((list) => (
+                <NavListRoot key={list.title + list.path} list={list} isCollapse={isCollapse} />
+              ))}
+            </List>
+          );
+        }
+      })}
     </Box>
   );
 }
