@@ -23,6 +23,12 @@ const normalizeGithubData = (service) => {
       service: 'github',
       emails: [{ address: service.email }],
       username: service.username,
+      profile: {
+        name: {
+          first: service.name || service.username,
+          last: ''
+        }
+      }
     };
   } catch (exception) {
     throw new Error(`[normalizeMeteorUserData.normalizeGithubData] ${exception.message}`);
@@ -90,7 +96,6 @@ export default (options) => {
     validateOptions(options);
 
     const isOAuthUser = checkIfOAuthUser(options.user.services);
-    // console.log('HHHHHHHHHHHHHHHHHHHHHHHHH', isOAuthUser);
     const normalizedMeteorUserData = getNormalizedMeteorUserData(isOAuthUser, options.user);
 
     return normalizedMeteorUserData;

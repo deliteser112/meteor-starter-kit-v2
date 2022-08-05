@@ -51,7 +51,7 @@ export default function ResetPasswordForm() {
           setError(true);
           setErrorText(reason);
         } else {
-          console.log(`Check ${email} for a reset link!`, 'success');
+          (`Check ${email} for a reset link!`, 'success');
           navigate(PATH_AUTH.newPassword);
         }
       });

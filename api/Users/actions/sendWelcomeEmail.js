@@ -4,12 +4,14 @@ import sendEmail from '../../../modules/server/sendEmail';
 
 const getEmailOptions = (user) => {
   try {
-    const firstName = 'user.profile.name.first';
+    const firstName = user.profile.name && user.profile.name.first ? user.profile.name.first : user.profile.name || '';
+    const supportEmail = 'care@gamesnight.fun';
     const { productName } = Meteor.settings.public;
 
     return {
       to: user.emails[0].address,
-      from: Meteor.settings.private.supportEmail,
+      from: supportEmail,
+      // from: Meteor.settings.private.supportEmail,
       subject: `[${Meteor.settings.public.productName}] Welcome, ${firstName}!`,
       template: 'welcome',
       templateVars: {
@@ -17,7 +19,7 @@ const getEmailOptions = (user) => {
         subtitle: `Here's how to get started with ${productName}.`,
         productName,
         firstName,
-        welcomeUrl: Meteor.absoluteUrl('documents'), // e.g., returns http://localhost:3000/documents
+        welcomeUrl: Meteor.absoluteUrl('dashboard/analytics'), // e.g., returns http://localhost:3000/documents
       },
     };
   } catch (exception) {

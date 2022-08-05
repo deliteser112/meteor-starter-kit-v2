@@ -115,7 +115,6 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
     if (newPassword) {
       Accounts.changePassword(oldPassword, newPassword, async (error) => {
         if (error) {
-          console.log(error);
           enqueueSnackbar(error.reason, { variant: 'error' });
         } else {
           await new Promise((resolve) => setTimeout(resolve, 500));

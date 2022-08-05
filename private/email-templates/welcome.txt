@@ -1,4 +1,4 @@
-Hey, {{firstName}}!
+Hi, {{firstName}}!
 
 Welcome to {{productName}}. We're excited to have you on board.
 

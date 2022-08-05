@@ -1,0 +1,9 @@
+Hi there!
+
+You have been invited by {{inviterName}} to join the organization:  {{productName}}.  You can have access to this organization, once you accept the invite.
+We hope you enjoy {{productName}}!
+
+[Accept Invitation]({{welcomeUrl}})
+
+Cheers,
+{{productName}} Team

@@ -12,8 +12,6 @@ export default {
       user: args.user
     });
 
-    console.log({ parent, args, context });
-
     return queryUser({ userIdToQuery: args.user._id || context.user._id });
   },
   removeUser: async (parent, args, { user }) =>

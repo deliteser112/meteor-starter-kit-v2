@@ -42,10 +42,9 @@ const TabsWrapperStyle = styled('div')(({ theme }) => ({
 
 export default function UserProfile() {
   const [currentTab, onChangeTab] = useState('profile');
-  const { data } = useQuery(userQuery, { variables: { _id: Meteor.userId() } });
+  const { data } = useQuery(userQuery);
   const user = data && data.user;
   const isUser = user && user.name;
-  console.log(data, isUser, Meteor.userId());
   if (!isUser) return <LoadingScreen />;
   const { _id, name, emailAddress } = user;
   const { coverURL } = account;

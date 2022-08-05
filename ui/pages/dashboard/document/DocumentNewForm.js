@@ -12,11 +12,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { styled } from '@mui/material/styles';
 import { LoadingButton } from '@mui/lab';
-import { Card, Grid, Stack, Typography, Box } from '@mui/material';
+import { Card, Grid, Stack, Typography, Box, IconButton } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
 import { FormProvider, RHFSwitch, RHFEditor, RHFTextField } from '../../../components/hook-form';
+import Iconify from '../../../components/Iconify';
 
 // mutations
 import {
@@ -45,7 +46,7 @@ export default function DocumentNewEditForm({ isEdit, currentDocument }) {
   const [updateDocument] = useMutation(updateDocumentMutation);
   const navigate = useNavigate();
 
-  const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const NewDocumentSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
@@ -103,7 +104,15 @@ export default function DocumentNewEditForm({ isEdit, currentDocument }) {
         refetchQueries: [{ query: documentsQuery }]
       });
       reset();
-      enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!', { variant: 'success', autoHideDuration: 1500 });
+      enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!', {
+        variant: 'success',
+        autoHideDuration: 2500,
+        action: (key) => (
+          <IconButton size="small" onClick={() => closeSnackbar(key)}>
+            <Iconify icon="eva:close-outline" />
+          </IconButton>
+        )
+      });
       navigate(PATH_DASHBOARD.document.root);
     } catch (error) {
       console.error(error);

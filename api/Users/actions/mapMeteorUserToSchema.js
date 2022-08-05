@@ -27,12 +27,10 @@ const getActiveRoles = (userId) => {
 export default (options) => {
   try {
     const normalizedMeteorUserData = normalizeMeteorUserData(options);
+
     return {
       _id: normalizedMeteorUserData._id,
-      name:
-        normalizedMeteorUserData.service === 'password'
-          ? normalizedMeteorUserData.profile.name
-          : { first: normalizedMeteorUserData.username },
+      name: normalizedMeteorUserData.profile.name || '',
       emailAddress: normalizedMeteorUserData.emails[0].address,
       emailVerified:
         normalizedMeteorUserData.service === 'password'

@@ -1,4 +1,4 @@
-Hey, {{firstName}}!
+Hi, {{firstName}}!
 
 Can you do us a favor and verify your email address?
 

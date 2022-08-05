@@ -1,12 +1,35 @@
-<p style="margin-top:0px;">Hey, {{firstName}}!</p>
+<p style="margin-top: 0px">Hi, {{firstName}}!</p>
 
 <p>Welcome to {{productName}}. We're excited to have you on board.</p>
 
 <p>Ready to get started?</p>
 
-<p><a href="{{welcomeUrl}}" class="btn-primary" itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler">View Your Documents</a></p>
+<p style="text-align: center">
+  <a
+    href="{{welcomeUrl}}"
+    target="_blank"
+    data-saferedirecturl="https://www.google.com/url?q={{welcomeUrl}}"
+    style="
+      border: 1px solid #18a749;
+      text-decoration: none;
+      color: #fff;
+      font-size: 14px;
+      padding: 10px 20px;
+      background: #18a749;
+      border-radius: 3px;
+      display: block;
+      margin: 30px auto;
+      max-width: 255px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: bold;
+    "
+  >
+    Join to GamesNight
+  </a>
+</p>
 
-<p style="margin-bottom:0px;">
-Cheers, <br />
-{{productName}} Team
+<p style="margin-bottom: 0px">
+  Cheers, <br />
+  {{productName}} Team
 </p>
