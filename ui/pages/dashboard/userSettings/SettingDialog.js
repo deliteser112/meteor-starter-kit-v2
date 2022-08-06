@@ -29,6 +29,7 @@ import {
 import { LoadingButton } from '@mui/lab';
 
 import { FormProvider, RHFTextField } from '../../../components/hook-form';
+import Iconify from '../../../components/Iconify';
 
 // import queries
 import userSettingsQuery from '../../../_queries/UserSettings.gql';
@@ -120,7 +121,7 @@ export default function SettingDialog({
   const [defaultValue, setDefaultValue] = useState('true');
   const [isGDPR, setIsGDPR] = useState(false);
 
-  const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   useEffect(() => {
     setOpen(isOpen);
@@ -192,8 +193,15 @@ export default function SettingDialog({
     });
     reset();
     onClose(false);
+
     enqueueSnackbar(isEdit ? 'Update success' : 'Add success', {
       variant: 'success',
+      autoHideDuration: 2500,
+      action: (key) => (
+        <IconButton size="small" onClick={() => closeSnackbar(key)}>
+          <Iconify icon="eva:close-outline" />
+        </IconButton>
+      )
     });
   };
 

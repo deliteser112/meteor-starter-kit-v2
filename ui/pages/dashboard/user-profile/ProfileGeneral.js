@@ -21,7 +21,8 @@ import {
   FormControlLabel,
   Autocomplete,
   Checkbox,
-  TextField
+  TextField,
+  IconButton
 } from '@mui/material';
 
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
@@ -56,7 +57,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
   const [oAuthIcon, setOAuthIcon] = useState('github');
   const navigate = useNavigate();
 
-  const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const NewUserSchema = Yup.object().shape({
     firstName: Yup.string().required('First name is required'),
@@ -157,10 +158,17 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
     if (existingUser) userUpdate._id = existingUser._id;
     updateUser({ variables: { user: userUpdate } });
     reset();
-    enqueueSnackbar('Update success!', {
-      variant: 'success'
+
+    enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!', {
+      variant: 'success',
+      autoHideDuration: 2500,
+      action: (key) => (
+        <IconButton size="small" onClick={() => closeSnackbar(key)}>
+          <Iconify icon="eva:close-outline" />
+        </IconButton>
+      )
     });
-    navigate(PATH_DASHBOARD.users);
+    
   };
 
   const handleDrop = useCallback(

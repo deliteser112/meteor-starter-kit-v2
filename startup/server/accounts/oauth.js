@@ -9,6 +9,6 @@ if (Meteor.settings.private && Meteor.settings.private.OAuth) {
   });
 } else {
   console.warn(
-    'Woof! OAuth settings are not configured. OAuth login will not function. See the documentation for configuration instructions.',
+    'OAuth settings are not configured. OAuth login will not function. See the documentation for configuration instructions.',
   );
 }

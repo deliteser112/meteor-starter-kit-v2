@@ -13,7 +13,8 @@ import {
   Avatar,
   Card,
   CardContent,
-  FormControlLabel
+  FormControlLabel,
+  IconButton
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
@@ -28,6 +29,7 @@ import { userSettings as userSettingsQuery } from '../../_queries/Users.gql';
 
 // components
 import EmptyContent from '../../components/EmptyContent';
+import Iconify from '../../components/Iconify';
 
 // modules
 import unfreezeApolloCacheValue from '../../../modules/unfreezeApolloCacheValue';
@@ -67,7 +69,7 @@ const Android12Switch = styled(Switch)(({ theme }) => ({
 }));
 
 export default function ProfileSettings({ userId, settings }) {
-  const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   // mutation define
   const [updateUser] = useMutation(updateUserMutation);
@@ -95,7 +97,13 @@ export default function ProfileSettings({ userId, settings }) {
     });
 
     enqueueSnackbar('Update success!', {
-      variant: 'success'
+      variant: 'success',
+      autoHideDuration: 2500,
+      action: (key) => (
+        <IconButton size="small" onClick={() => closeSnackbar(key)}>
+          <Iconify icon="eva:close-outline" />
+        </IconButton>
+      )
     });
   };
 

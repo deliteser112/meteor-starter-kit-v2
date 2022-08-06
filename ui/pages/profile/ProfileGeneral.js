@@ -12,7 +12,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, Stack, Switch, Typography, FormControlLabel, Button } from '@mui/material';
+import { Box, Card, Grid, Stack, Switch, Typography, FormControlLabel, Button, IconButton } from '@mui/material';
 
 // utils
 import { fData } from '../../utils/formatNumber';
@@ -36,7 +36,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
   const [oAuthIcon, setOAuthIcon] = useState('github');
   const navigate = useNavigate();
 
-  const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const NewUserSchema = Yup.object().shape({
     firstName: Yup.string().required('First name is required'),
@@ -115,12 +115,26 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
     if (newPassword) {
       Accounts.changePassword(oldPassword, newPassword, async (error) => {
         if (error) {
-          enqueueSnackbar(error.reason, { variant: 'error' });
+          enqueueSnackbar(error.reason, {
+            variant: 'error',
+            autoHideDuration: 2500,
+            action: (key) => (
+              <IconButton size="small" onClick={() => closeSnackbar(key)}>
+                <Iconify icon="eva:close-outline" />
+              </IconButton>
+            )
+          });
         } else {
           await new Promise((resolve) => setTimeout(resolve, 500));
           reset();
-          enqueueSnackbar('Update success!', {
-            variant: 'success'
+          enqueueSnackbar('Update success', {
+            variant: 'success',
+            autoHideDuration: 2500,
+            action: (key) => (
+              <IconButton size="small" onClick={() => closeSnackbar(key)}>
+                <Iconify icon="eva:close-outline" />
+              </IconButton>
+            )
           });
           navigate(PATH_DASHBOARD.root);
         }
@@ -128,8 +142,15 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
     } else {
       await new Promise((resolve) => setTimeout(resolve, 500));
       reset();
-      enqueueSnackbar('Update success!', {
-        variant: 'success'
+
+      enqueueSnackbar('Update success', {
+        variant: 'success',
+        autoHideDuration: 2500,
+        action: (key) => (
+          <IconButton size="small" onClick={() => closeSnackbar(key)}>
+            <Iconify icon="eva:close-outline" />
+          </IconButton>
+        )
       });
       navigate(PATH_DASHBOARD.root);
     }
