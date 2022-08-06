@@ -8,23 +8,23 @@ const handleLogin = (service, callback) => {
   const options = {
     facebook: {
       requestPermissions: ['email'],
-      loginStyle: 'popup',
+      loginStyle: 'popup'
     },
     github: {
       requestPermissions: ['user:email'],
-      loginStyle: 'redirect',
+      loginStyle: 'redirect'
     },
     google: {
       requestPermissions: ['email', 'profile'],
       requestOfflineToken: true,
-      loginStyle: 'popup',
-    },
+      loginStyle: 'popup'
+    }
   }[service];
 
   return {
     facebook: Meteor.loginWithFacebook,
     github: Meteor.loginWithGithub,
-    google: Meteor.loginWithGoogle,
+    google: Meteor.loginWithGoogle
   }[service](options, callback);
 };
 
@@ -52,7 +52,7 @@ const serviceLabel = {
       </Box>
       Sign in with Google
     </>
-  ),
+  )
 };
 
 function OAuthLoginButton({ service, callback }) {
@@ -67,12 +67,12 @@ function OAuthLoginButton({ service, callback }) {
       variant="contained"
       sx={{
         marginBottom: 2,
-        color: 'grey.700',
-        backgroundColor: theme.palette.grey[50],
-        borderColor: theme.palette.grey[100],
+        ...(service === 'github' && { backgroundColor: theme.palette.warning.dark }),
+        ...(service === 'google' && { background: theme.palette.error.dark }),
         '&:hover': {
-          backgroundColor: alpha(theme.palette.grey[800], 0.1),
-        },
+          ...(service === 'github' && { backgroundColor: theme.palette.warning.main }),
+          ...(service === 'google' && { background: theme.palette.error.main })
+        }
       }}
     >
       {serviceLabel[service]}
@@ -83,12 +83,12 @@ function OAuthLoginButton({ service, callback }) {
 OAuthLoginButton.defaultProps = {
   callback: (error) => {
     if (error) console.log('Here is error');
-  },
+  }
 };
 
 OAuthLoginButton.propTypes = {
   service: PropTypes.string.isRequired,
-  callback: PropTypes.func,
+  callback: PropTypes.func
 };
 
 export default OAuthLoginButton;

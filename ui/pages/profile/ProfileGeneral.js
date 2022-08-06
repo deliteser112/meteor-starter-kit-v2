@@ -42,12 +42,8 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
     firstName: Yup.string().required('First name is required'),
     lastName: Yup.string().required('Last name is required'),
     email: Yup.string().required('Email is required').email(),
-    confirmNewPassword: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
-    // avatarUrl: Yup.mixed().test(
-    //   "required",
-    //   "Avatar is required",
-    //   (value) => value !== ""
-    // ),
+    confirmNewPassword: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Passwords must match'),
+    avatarUrl: Yup.mixed().test('required', 'Avatar is required', (value) => value !== '')
   });
 
   const defaultValues = useMemo(
