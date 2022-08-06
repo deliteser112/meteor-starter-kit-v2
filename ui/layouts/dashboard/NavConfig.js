@@ -28,7 +28,7 @@ const navConfig = [
     subheader: 'Admin',
     items: [
       {
-        title: 'user',
+        title: 'users',
         path: `${PATH_DASHBOARD.user.root}`,
         icon: getIcon('gis:globe-users'),
       },
