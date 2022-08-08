@@ -24,6 +24,9 @@ import '../../api/webhooks';
 
 import '../../api/App/server/publications';
 
+import '../../api/Users/methods';
+
+
 const schema = {
   typeDefs: gql`
     ${UserTypes}

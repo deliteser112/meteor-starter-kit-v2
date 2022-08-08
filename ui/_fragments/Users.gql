@@ -4,6 +4,7 @@ fragment UserAttributes on User {
     first
     last
   }
+  avatarUrl
   username
   emailAddress
   emailVerified

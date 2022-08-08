@@ -5,6 +5,16 @@ import checkIfAuthorized, { isAdmin } from './checkIfAuthorized';
 
 let action;
 
+const updateUserAvatarUrl = ({ _id, avatarUrl }) => {
+  try {
+    return Meteor.users.update(_id, {
+      $set: { avatarUrl },
+    });
+  } catch (exception) {
+    throw new Error(`[updateUser.updateUserAvatarUrl] ${exception.message}`);
+  }
+};
+
 const updateUserSettings = ({ _id, settings }) => {
   try {
     return Meteor.users.update(_id, {
@@ -84,8 +94,9 @@ const updateUser = (options) => {
     if (userToUpdate.roles && isAdmin(options.currentUser._id)) updateUserRoles(userToUpdate);
     if (userToUpdate.email) updateUserEmail(userToUpdate);
     if (userToUpdate.profile) updateUserProfile(userToUpdate);
+    if (userToUpdate.avatarUrl) updateUserAvatarUrl(userToUpdate);
     if (userToUpdate.settings) updateUserSettings(userToUpdate);
-
+    
     action.resolve();
   } catch (exception) {
     action.reject(`[updateUser] ${exception.message}`);

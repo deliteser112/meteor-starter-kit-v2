@@ -38,8 +38,9 @@ import Iconify from '../../../components/Iconify';
 
 import { FormProvider, RHFTextField, RHFUploadAvatar } from '../../../components/hook-form';
 
-// graphql
+// mutations & queries
 import { updateUser as updateUserMutation } from '../../../_mutations/Users.gql';
+import { users as usersQuery } from '../../../_queries/Users.gql';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -156,8 +157,11 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
     }
 
     if (existingUser) userUpdate._id = existingUser._id;
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
     updateUser({ variables: { user: userUpdate } });
     reset();
+    navigate(PATH_DASHBOARD.user.root)
 
     enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!', {
       variant: 'success',
@@ -168,7 +172,6 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
         </IconButton>
       )
     });
-    
   };
 
   const handleDrop = useCallback(
@@ -182,6 +185,23 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
             preview: URL.createObjectURL(file)
           })
         );
+
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+        fileReader.onload = (e) => {
+          const avatarUrl = fileReader.result;
+          updateUser({
+            variables: {
+              user: {
+                _id: currentUser._id,
+                avatarUrl
+              }
+            },
+            refetchQueries: [{ query: usersQuery }]
+          });
+        };
+
+        fileReader.readAsArrayBuffer(file);
       }
     },
     [setValue]

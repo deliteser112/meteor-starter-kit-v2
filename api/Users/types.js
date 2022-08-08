@@ -21,6 +21,7 @@ export default `
   
   input UserInput {
     _id: String,
+    avatarUrl: String
     email: String,
     password: String,
     profile: ProfileInput,
@@ -30,6 +31,7 @@ export default `
 
   type User {
     _id: String
+    avatarUrl: String
     name: Name
     username: String
     emailAddress: String

@@ -4,18 +4,17 @@ import React from 'react';
 import MAvatar from './MAvatar';
 import createAvatar from '../utils/createAvatar';
 
-import account from '../_mock/account';
 // ----------------------------------------------------------------------
 
-export default function MyAvatar({ ...other }) {
+export default function MyAvatar({ avatarUrl, displayName, ...other }) {
   return (
     <MAvatar
-      src={account.photoURL}
-      alt={account.displayName}
-      color={account.photoURL ? 'default' : createAvatar(account.displayName).color}
+      src={avatarUrl}
+      alt={displayName}
+      color={avatarUrl ? 'default' : createAvatar(displayName).color}
       {...other}
     >
-      {createAvatar(account.displayName).name}
+      {createAvatar(displayName).name}
     </MAvatar>
   );
 }

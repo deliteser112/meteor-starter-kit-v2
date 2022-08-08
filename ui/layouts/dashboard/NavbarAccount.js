@@ -24,27 +24,29 @@ const RootStyle = styled('div')(({ theme }) => ({
   borderRadius: Number(theme.shape.borderRadius) * 1.5,
   backgroundColor: theme.palette.grey[500_12],
   transition: theme.transitions.create('opacity', {
-    duration: theme.transitions.duration.shorter,
-  }),
+    duration: theme.transitions.duration.shorter
+  })
 }));
 
 // ----------------------------------------------------------------------
 
 NavbarAccount.propTypes = {
-  isCollapse: PropTypes.bool,
+  isCollapse: PropTypes.bool
 };
 
 export default function NavbarAccount({ isCollapse }) {
   const { user } = useAuth();
   const [displayName, setDisplayName] = useState('');
+  const [avatarUrl, setAvatarUrl] = useState('');
   const [role, setRole] = useState('');
   const [userId, setUserId] = useState('');
   useEffect(() => {
     if (user) {
-      const { _id, profile, services } = user;
+      const { _id, profile, services, avatarUrl } = user;
       const isOAuth = isOAuthUser(Object.keys(services));
       setRole(sentenceCase(Roles.getRolesForUser(_id)[0]));
       setUserId(_id);
+      setAvatarUrl(avatarUrl);
       if (isOAuth) {
         setDisplayName(profile.name);
       } else {
@@ -57,23 +59,23 @@ export default function NavbarAccount({ isCollapse }) {
       <RootStyle
         sx={{
           ...(isCollapse && {
-            bgcolor: 'transparent',
-          }),
+            bgcolor: 'transparent'
+          })
         }}
       >
-        <MyAvatar />
+        <MyAvatar avatarUrl={avatarUrl} displayName={displayName} />
 
         <Box
           sx={{
             ml: 2,
             transition: (theme) =>
               theme.transitions.create('width', {
-                duration: theme.transitions.duration.shorter,
+                duration: theme.transitions.duration.shorter
               }),
             ...(isCollapse && {
               ml: 0,
-              width: 0,
-            }),
+              width: 0
+            })
           }}
         >
           <Typography variant="subtitle2" noWrap>

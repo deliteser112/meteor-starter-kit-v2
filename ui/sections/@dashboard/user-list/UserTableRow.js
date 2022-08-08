@@ -19,7 +19,7 @@ UserTableRow.propTypes = {
 };
 
 export default function UserTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow }) {
-  const { _id, name, emailAddress, emailVerified, oAuthProvider } = row;
+  const { _id, name, emailAddress, emailVerified, oAuthProvider, avatarUrl } = row;
 
   const [openMenu, setOpenMenuActions] = useState(null);
 
@@ -49,7 +49,7 @@ export default function UserTableRow({ row, selected, onEditRow, onSelectRow, on
       </TableCell>
       <TableCell component="th" scope="row" padding="none">
         <Stack direction="row" alignItems="center" spacing={2}>
-          <Avatar {...stringAvatar(`${name.first} ${name.last}`)} style={{ marginRight: 8, color: 'white' }} />
+          <Avatar src={avatarUrl} style={{ marginRight: 8, color: 'white' }} />
           <Typography variant="subtitle2" noWrap>
             {`${name.first} ${name.last ? name.last : ''}`}
           </Typography>

@@ -53,7 +53,7 @@ export default function UserProfile() {
     return (
       <ReactLoading className="loading-icons" type="spin" color="grey" height={40} width={40} />
     );
-  const { _id, name, emailAddress } = user;
+  const { _id, name, emailAddress, avatarUrl } = user;
   const { coverURL } = account;
 
   const myProfile = {
@@ -62,6 +62,7 @@ export default function UserProfile() {
     email: emailAddress,
     displayName: `${name.first} ${name.last ? name.last : ''}`,
     coverURL,
+    avatarUrl
   };
 
   const PROFILE_TABS = [

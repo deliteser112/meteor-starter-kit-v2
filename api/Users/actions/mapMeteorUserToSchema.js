@@ -36,6 +36,7 @@ export default (options) => {
         normalizedMeteorUserData.service === 'password'
           ? normalizedMeteorUserData.emails[0].verified
           : true,
+      avatarUrl: normalizedMeteorUserData.avatarUrl,
       roles: getActiveRoles(normalizedMeteorUserData._id),
       oAuthProvider:
         normalizedMeteorUserData.service !== 'password' ? normalizedMeteorUserData.service : null,

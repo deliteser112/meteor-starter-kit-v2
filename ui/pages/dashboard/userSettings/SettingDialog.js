@@ -155,7 +155,6 @@ export default function SettingDialog({
   useEffect(() => {
     if (isEdit && currentSetting) {
       const { isGDPR, label, key } = currentSetting;
-      console.log(currentSetting);
       setValue('label', label);
       setValue('key', key);
       setIsGDPR(isGDPR);

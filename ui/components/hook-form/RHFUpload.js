@@ -10,7 +10,7 @@ import { UploadAvatar, UploadMultiFile, UploadSingleFile } from '../upload';
 // ----------------------------------------------------------------------
 
 RHFUploadAvatar.propTypes = {
-  name: PropTypes.string,
+  name: PropTypes.string
 };
 
 export function RHFUploadAvatar({ name, ...other }) {
@@ -41,7 +41,7 @@ export function RHFUploadAvatar({ name, ...other }) {
 // ----------------------------------------------------------------------
 
 RHFUploadSingleFile.propTypes = {
-  name: PropTypes.string,
+  name: PropTypes.string
 };
 
 export function RHFUploadSingleFile({ name, ...other }) {
@@ -77,7 +77,7 @@ export function RHFUploadSingleFile({ name, ...other }) {
 // ----------------------------------------------------------------------
 
 RHFUploadMultiFile.propTypes = {
-  name: PropTypes.string,
+  name: PropTypes.string
 };
 
 export function RHFUploadMultiFile({ name, ...other }) {

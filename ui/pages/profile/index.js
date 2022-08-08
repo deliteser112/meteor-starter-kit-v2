@@ -46,7 +46,7 @@ export default function UserProfile() {
   const user = data && data.user;
   const isUser = user && user.name;
   if (!isUser) return <LoadingScreen />;
-  const { _id, name, emailAddress } = user;
+  const { _id, name, emailAddress, avatarUrl } = user;
   const { coverURL } = account;
 
   const myProfile = {
@@ -54,7 +54,8 @@ export default function UserProfile() {
     position: 'Admin',
     email: emailAddress,
     displayName: `${name.first} ${name.last ? name.last : ''}`,
-    coverURL
+    coverURL,
+    avatarUrl
   };
 
   const PROFILE_TABS = [

@@ -49,12 +49,14 @@ const CoverImgStyle = styled('img')({
 // ----------------------------------------------------------------------
 
 export default function ProfileCover({ myProfile }) {
-  const { email, coverURL, displayName } = myProfile;
+  const { email, coverURL, displayName, avatarUrl } = myProfile;
 
   return (
     <RootStyle>
       <InfoStyle>
         <MyAvatar
+          avatarUrl={avatarUrl}
+          displayName={displayName}
           sx={{
             mx: 'auto',
             borderWidth: 2,

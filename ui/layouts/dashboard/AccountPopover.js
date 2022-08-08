@@ -12,8 +12,7 @@ import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton } from '@
 import { PATH_AUTH, PATH_DASHBOARD } from '../../routes/paths';
 // components
 import MenuPopover from '../../components/MenuPopover';
-// mocks_
-import account from '../../_mock/account';
+
 // hooks
 import useAuth from '../../hooks/useAuth';
 // utils
@@ -49,12 +48,15 @@ export default function AccountPopover() {
 
   const [menuOptions, setMenuOptions] = useState(MENU_OPTIONS);
   const [displayName, setDisplayName] = useState('');
+  const [avatarUrl, setAvatarUrl] = useState('');
   const [role, setRole] = useState('');
+
   useEffect(() => {
     if (user) {
-      const { _id, profile, services } = user;
+      const { _id, profile, services, avatarUrl } = user;
       const isOAuth = isOAuthUser(Object.keys(services));
       setRole(sentenceCase(Roles.getRolesForUser(_id)[0]));
+      setAvatarUrl(avatarUrl)
       if (isOAuth) {
         setDisplayName(profile.name);
       } else {
@@ -106,7 +108,7 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <Avatar src={account.photoURL} alt="photoURL" />
+        <Avatar src={avatarUrl} alt="photoURL" />
       </IconButton>
 
       <MenuPopover

@@ -66,7 +66,7 @@ const normalizeOAuthUserData = (services) => {
 const getNormalizedMeteorUserData = (isOAuthUser, user) => {
   try {
     return isOAuthUser
-      ? { _id: user._id, ...normalizeOAuthUserData(user.services), settings: user.settings }
+      ? { _id: user._id, ...normalizeOAuthUserData(user.services), avatarUrl: user.avatarUrl, settings: user.settings }
       : { service: 'password', ...user };
   } catch (exception) {
     throw new Error(`[normalizeMeteorUserData.getNormalizedMeteorUserData] ${exception.message}`);

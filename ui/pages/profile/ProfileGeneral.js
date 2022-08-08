@@ -24,8 +24,9 @@ import Iconify from '../../components/Iconify';
 
 import { FormProvider, RHFTextField, RHFUploadAvatar } from '../../components/hook-form';
 
-// graphql
+// mutations & queries
 import { updateUser as updateUserMutation } from '../../_mutations/Users.gql';
+import { user as userQuery } from '../../_queries/Users.gql';
 
 // ----------------------------------------------------------------------
 
@@ -42,7 +43,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
     firstName: Yup.string().required('First name is required'),
     lastName: Yup.string().required('Last name is required'),
     email: Yup.string().required('Email is required').email(),
-    confirmNewPassword: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Passwords must match'),
+    confirmNewPassword: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
     // avatarUrl: Yup.mixed().test('required', 'Avatar is required', (value) => value !== '')
   });
 
@@ -163,6 +164,23 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
             preview: URL.createObjectURL(file)
           })
         );
+
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+        fileReader.onload = (e) => {
+          const avatarUrl = fileReader.result;
+          updateUser({
+            variables: {
+              user: {
+                avatarUrl
+              }
+            },
+            refetchQueries: [{ query: userQuery }]
+          });
+          // Meteor.call('saveFile', buffer);
+        };
+
+        fileReader.readAsArrayBuffer(file);
       }
     },
     [setValue]
@@ -216,7 +234,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
               <RHFUploadAvatar
                 name="avatarUrl"
                 accept="image/*"
-                maxSize={3145728}
+                maxSize={1048576}
                 onDrop={handleDrop}
                 helperText={
                   <Typography
@@ -230,7 +248,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
                     }}
                   >
                     Allowed *.jpeg, *.jpg, *.png, *.gif
-                    <br /> max size of {fData(3145728)}
+                    <br /> max size of {fData(1048576)}
                   </Typography>
                 }
               />
