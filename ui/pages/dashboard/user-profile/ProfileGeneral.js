@@ -46,12 +46,12 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 // ----------------------------------------------------------------------
 
-UserNewEditForm.propTypes = {
+ProfileGeneral.propTypes = {
   isEdit: PropTypes.bool,
   currentUser: PropTypes.object
 };
 
-export default function UserNewEditForm({ isEdit, currentUser }) {
+export default function ProfileGeneral({ isEdit, currentUser }) {
   const [updateUser] = useMutation(updateUserMutation);
   const [defaultRoles, setDefaultRoles] = useState([]);
   const [userType, setUserType] = useState('password');

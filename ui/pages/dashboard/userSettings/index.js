@@ -13,6 +13,8 @@ import {
   CardContent,
   Stack,
   Button,
+  Box,
+  Divider
 } from '@mui/material';
 
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -29,7 +31,7 @@ import userSettingsQuery from '../../../_queries/UserSettings.gql';
 import {
   addUserSetting as addUserSettingMutation,
   updateUserSetting as updateUserSettingMutation,
-  removeUserSetting as removeUserSettingMutation,
+  removeUserSetting as removeUserSettingMutation
 } from '../../../_mutations/UserSettings.gql';
 
 // components
@@ -72,15 +74,13 @@ export default function UserSettings() {
 
   const handleDeleteSetting = (settingId) => {
     if (
-      confirm(
-        "Are you sure? Before deleting this setting make sure that it's no longer in use in your application!",
-      )
+      confirm("Are you sure? Before deleting this setting make sure that it's no longer in use in your application!")
     ) {
       removeUserSetting({
         variables: {
-          _id: settingId,
+          _id: settingId
         },
-        refetchQueries: [{ query: userSettingsQuery }],
+        refetchQueries: [{ query: userSettingsQuery }]
       });
     }
   };
@@ -100,11 +100,7 @@ export default function UserSettings() {
           heading="User Settings"
           links={[{ name: 'Dashboard', href: PATH_DASHBOARD.root }, { name: 'User Settings' }]}
           action={
-            <Button
-              variant="contained"
-              startIcon={<Iconify icon="eva:plus-fill" />}
-              onClick={handleAddSetting}
-            >
+            <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />} onClick={handleAddSetting}>
               Add Setting
             </Button>
           }
@@ -112,53 +108,49 @@ export default function UserSettings() {
         <Card>
           <CardContent sx={{ padding: { xs: 0, md: 2 }, paddingBottom: { xs: 0, md: 3 } }}>
             {loading ? (
-              <ReactLoading
-                className="loading-icons"
-                type="spin"
-                color="grey"
-                height={30}
-                width={30}
-              />
+              <ReactLoading className="loading-icons" type="spin" color="grey" height={30} width={30} />
             ) : userSettings.length > 0 ? (
               <List>
                 {userSettings.map((item, index) => (
-                  <ListItem
-                    key={index}
-                    secondaryAction={
-                      <Stack direction="row" alignItems="center" spacing={2}>
-                        <IconButton
-                          edge="end"
-                          aria-label="edit"
-                          color="primary"
-                          onClick={() => handleEditSetting(item)}
-                        >
-                          <EditIcon />
-                        </IconButton>
-                        <IconButton
-                          edge="end"
-                          aria-label="delete"
-                          color="error"
-                          onClick={() => handleDeleteSetting(item._id)}
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </Stack>
-                    }
-                  >
-                    <ListItemAvatar>
-                      <Avatar>
-                        <SettingsIcon />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary={item.key} secondary={item.label} />
-                  </ListItem>
+                  <Box key={index}>
+                    <ListItem
+                      secondaryAction={
+                        <Stack direction="row" alignItems="center" spacing={2}>
+                          <IconButton
+                            edge="end"
+                            aria-label="edit"
+                            color="primary"
+                            onClick={() => handleEditSetting(item)}
+                          >
+                            <EditIcon />
+                          </IconButton>
+                          <IconButton
+                            edge="end"
+                            aria-label="delete"
+                            color="error"
+                            onClick={() => handleDeleteSetting(item._id)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </Stack>
+                      }
+                    >
+                      <ListItemAvatar>
+                        <Avatar>
+                          <SettingsIcon />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText primary={item.key} secondary={item.label} />
+                    </ListItem>
+                    <Divider sx={{ borderStyle: 'dashed', mb: 1 }} />
+                  </Box>
                 ))}
               </List>
             ) : (
               <EmptyContent
                 title="No Settings"
                 sx={{
-                  '& span.MuiBox-root': { height: 160 },
+                  '& span.MuiBox-root': { height: 160 }
                 }}
               />
             )}

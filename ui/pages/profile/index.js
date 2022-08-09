@@ -18,8 +18,6 @@ import ProfileCover from './ProfileCover';
 import ProfileSettings from './ProfileSettings';
 import ProfileGeneral from './ProfileGeneral';
 
-import account from '../../_mock/account';
-
 // import queries
 import { user as userQuery } from '../../_queries/Users.gql';
 // ----------------------------------------------------------------------
@@ -47,7 +45,7 @@ export default function UserProfile() {
   const isUser = user && user.name;
   if (!isUser) return <LoadingScreen />;
   const { _id, name, emailAddress, avatarUrl } = user;
-  const { coverURL } = account;
+  const coverURL = '/static/contact/contact-hero.jpg';
 
   const myProfile = {
     _id,

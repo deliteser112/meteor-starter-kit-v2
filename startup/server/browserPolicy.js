@@ -1,7 +1,5 @@
 import { BrowserPolicy } from 'meteor/browser-policy-common';
 
-// BrowserPolicy.content.allowOriginForAll('*');
-
 // Bootstrap
 BrowserPolicy.content.allowOriginForAll('*.bootstrapcdn.com');
 

@@ -30,7 +30,7 @@ import { user as userQuery } from '../../_queries/Users.gql';
 
 // ----------------------------------------------------------------------
 
-export default function UserNewEditForm({ isEdit, currentUser }) {
+export default function ProfileGeneral({ isEdit, currentUser }) {
   const [updateUser] = useMutation(updateUserMutation);
 
   const [userType, setUserType] = useState('password');
@@ -345,7 +345,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
   );
 }
 
-UserNewEditForm.propTypes = {
+ProfileGeneral.propTypes = {
   isEdit: PropTypes.bool,
   currentUser: PropTypes.object
 };
