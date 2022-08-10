@@ -12,6 +12,7 @@ import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton } from '@
 import { PATH_AUTH, PATH_DASHBOARD } from '../../routes/paths';
 // components
 import MenuPopover from '../../components/MenuPopover';
+import MyAvatar from '../../components/MyAvatar';
 
 // hooks
 import useAuth from '../../hooks/useAuth';
@@ -108,7 +109,7 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <Avatar src={avatarUrl} alt="photoURL" />
+        <MyAvatar avatarUrl={avatarUrl} displayName={displayName} />
       </IconButton>
 
       <MenuPopover
