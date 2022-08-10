@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
+import { Cloudinary } from 'meteor/socialize:cloudinary';
 
 import './accounts';
 import './api';
@@ -14,6 +15,12 @@ const SEED_LASTNAME = 'Admin';
 const SEED_EMAIL = 'meteor@admin.com';
 const SEED_PASSWORD = 'root';
 
+Cloudinary.config({
+  cloud_name: 'deliteser112',
+  api_key: '169463763492816',
+  api_secret: 'OUTYfegL2nqj2CxYY2csgykbNCs'
+});
+
 Meteor.startup(() => {
   if (!Accounts.findUserByEmail(SEED_EMAIL)) {
     Roles.createRole('user');
@@ -24,9 +31,26 @@ Meteor.startup(() => {
       profile: {
         name: {
           first: SEED_FIRSTNAME,
-          last: SEED_LASTNAME,
-        },
-      },
+          last: SEED_LASTNAME
+        }
+      }
     });
   }
+
+  // Rules are bound to the connection from which they are are executed. This means you have a userId available as this.userId if there is a logged in user. Throw a new Meteor.Error to stop the method from executing and propagate the error to the client. If rule is not set a standard error will be thrown.
+  Cloudinary.rules.delete = function (publicId) {
+    if (!this.userId && !publicId) throw new Meteor.Error('Not Authorized', "Sorry, you can't do that!");
+  };
+
+  Cloudinary.rules.sign_upload = function () {
+    if (!this.userId) throw new Meteor.Error('Not Authorized', "Sorry, you can't do that!");
+  };
+
+  Cloudinary.rules.private_resource = function (publicId) {
+    if (!this.userId && !publicId) throw new Meteor.Error('Not Authorized', "Sorry, you can't do that!");
+  };
+
+  Cloudinary.rules.download_url = function (publicId) {
+    if (!this.userId && !publicId) throw new Meteor.Error('Not Authorized', "Sorry, you can't do that!");
+  };
 });

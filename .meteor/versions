@@ -96,6 +96,7 @@ service-configuration@1.3.0
 session@1.2.0
 sha@1.0.9
 shell-server@0.5.0
+socialize:cloudinary@1.0.8
 socket-stream-client@0.5.0
 spacebars@1.3.0
 spacebars-compiler@1.3.1
@@ -109,6 +110,7 @@ templating-compiler@1.4.1
 templating-runtime@1.6.0
 templating-tools@1.2.2
 themeteorchef:bert@2.2.2
+tmeasday:check-npm-versions@1.0.2
 tracker@1.2.0
 typescript@4.5.4
 underscore@1.0.10

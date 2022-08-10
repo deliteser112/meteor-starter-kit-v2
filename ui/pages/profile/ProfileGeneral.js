@@ -1,5 +1,6 @@
 import { Accounts } from 'meteor/accounts-base';
 import { useMutation } from '@apollo/react-hooks';
+import { Cloudinary } from 'meteor/socialize:cloudinary';
 
 import PropTypes from 'prop-types';
 import { capitalCase } from 'change-case';
@@ -16,7 +17,7 @@ import { Box, Card, Grid, Stack, Switch, Typography, FormControlLabel, Button, I
 
 // utils
 import { fData } from '../../utils/formatNumber';
-import resizeBase64Img from '../../utils/resizeBase64Img'
+// import resizeBase64Img from '../../utils/resizeBase64Img';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // components
@@ -166,11 +167,18 @@ export default function ProfileGeneral({ isEdit, currentUser }) {
           })
         );
 
+        // const uploads = Cloudinary.uploadFiles(acceptedFiles);
+        // console.log(uploads);
+        
+
         const fileReader = new FileReader();
         fileReader.readAsDataURL(file);
         fileReader.onload = async (e) => {
+          const imageInfo = await Cloudinary.uploadFile(fileReader.result);
 
-          const avatarUrl = await resizeBase64Img(fileReader, 150);
+          const avatarUrl = imageInfo.url;
+
+          // const avatarUrl = await resizeBase64Img(fileReader, 150);
 
           updateUser({
             variables: {
