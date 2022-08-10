@@ -15,10 +15,12 @@ const SEED_LASTNAME = 'Admin';
 const SEED_EMAIL = 'meteor@admin.com';
 const SEED_PASSWORD = 'root';
 
+const { cloud_name, api_key, api_secret } = Meteor.settings.private.cloudinary;
+
 Cloudinary.config({
-  cloud_name: 'deliteser112',
-  api_key: '169463763492816',
-  api_secret: 'OUTYfegL2nqj2CxYY2csgykbNCs'
+  cloud_name,
+  api_key,
+  api_secret
 });
 
 Meteor.startup(() => {

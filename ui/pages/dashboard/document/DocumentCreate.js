@@ -29,7 +29,7 @@ export default function Document() {
   const currentDocument = (isEdit && data && data.document) || {};
   return (
     <Page title="Document">
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <HeaderBreadcrumbs
           heading="Documents"
           links={[

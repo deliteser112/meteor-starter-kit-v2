@@ -39,7 +39,7 @@ export default function Document() {
 
   return (
     <Page title="Document">
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <HeaderBreadcrumbs
           heading="Documents"
           links={[{ name: 'Dashboard', href: PATH_DASHBOARD.root }, { name: 'Documents' }]}

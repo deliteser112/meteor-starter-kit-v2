@@ -36,7 +36,7 @@ export default function Users() {
 
   return (
     <Page title="User">
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <HeaderBreadcrumbs
           heading="Users"
           links={[{ name: 'Dashboard', href: PATH_DASHBOARD.root }, { name: 'Users' }]}

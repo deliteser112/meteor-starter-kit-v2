@@ -30,6 +30,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
 // utils
 import { fData } from '../../../utils/formatNumber';
+import resizeBase64Img from '../../../utils/resizeBase64Img';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
@@ -188,8 +189,9 @@ export default function ProfileGeneral({ isEdit, currentUser }) {
 
         const fileReader = new FileReader();
         fileReader.readAsDataURL(file);
-        fileReader.onload = (e) => {
-          const avatarUrl = fileReader.result;
+        fileReader.onload = async (e) => {
+          const avatarUrl = await resizeBase64Img(fileReader, 150);
+
           updateUser({
             variables: {
               user: {

@@ -87,15 +87,7 @@ export default function UserSettings() {
 
   return (
     <Page title="User">
-      <SettingDialog
-        addUserSetting={addUserSetting}
-        updateUserSetting={updateUserSetting}
-        isOpen={showAddSetting}
-        isEdit={isEdit}
-        currentSetting={currentSetting}
-        onClose={() => setShowAddSetting(false)}
-      />
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <HeaderBreadcrumbs
           heading="User Settings"
           links={[{ name: 'Dashboard', href: PATH_DASHBOARD.root }, { name: 'User Settings' }]}
@@ -104,6 +96,14 @@ export default function UserSettings() {
               Add Setting
             </Button>
           }
+        />
+        <SettingDialog
+          addUserSetting={addUserSetting}
+          updateUserSetting={updateUserSetting}
+          isOpen={showAddSetting}
+          isEdit={isEdit}
+          currentSetting={currentSetting}
+          onClose={() => setShowAddSetting(false)}
         />
         <Card>
           <CardContent sx={{ padding: { xs: 0, md: 2 }, paddingBottom: { xs: 0, md: 3 } }}>
