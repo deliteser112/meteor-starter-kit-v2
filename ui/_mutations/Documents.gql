@@ -1,21 +1,29 @@
-mutation addDocument($title: String, $body: String) {
-  addDocument(title: $title, body: $body) {
+mutation addDocument($title: String, $body: String, $cover: CoverInput) {
+  addDocument(title: $title, body: $body, cover: $cover) {
     _id
     isPublic
     title
     body
+    cover {
+      url
+      public_id
+    }
     createdAt
     updatedAt
     owner
   }
 }
 
-mutation updateDocument($_id: String!, $title: String, $body: String, $isPublic: Boolean) {
-  updateDocument(_id: $_id, title: $title, body: $body, isPublic: $isPublic) {
+mutation updateDocument($_id: String!, $title: String, $body: String, $cover: CoverInput, $isPublic: Boolean) {
+  updateDocument(_id: $_id, title: $title, body: $body, cover: $cover, isPublic: $isPublic) {
     _id
     isPublic
     title
     body
+    cover {
+      url
+      public_id
+    }
     createdAt
     updatedAt
     owner

@@ -1,8 +1,12 @@
 fragment DocumentAttributes on Document {
-  _id
-  isPublic
-  title
-  body
-  updatedAt
-  createdAt
+	_id
+	isPublic
+	title
+	body
+	cover {
+		url
+		public_id
+	}
+	updatedAt
+	createdAt
 }

@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { useSnackbar } from 'notistack';
+import { Cloudinary } from 'meteor/socialize:cloudinary';
+
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import React, { useEffect, useMemo } from 'react';
 
 // import mutations
 import { useMutation } from '@apollo/react-hooks';
@@ -16,7 +18,7 @@ import { Card, Grid, Stack, Typography, Box, IconButton } from '@mui/material';
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
-import { FormProvider, RHFSwitch, RHFEditor, RHFTextField } from '../../../components/hook-form';
+import { FormProvider, RHFSwitch, RHFEditor, RHFTextField, RHFUploadSingleFile } from '../../../components/hook-form';
 import Iconify from '../../../components/Iconify';
 
 // mutations
@@ -48,15 +50,19 @@ export default function DocumentNewEditForm({ isEdit, currentDocument }) {
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
+  const [coverImg, setCoverImg] = useState('');
+
   const NewDocumentSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
-    body: Yup.string().required('Description is required')
+    body: Yup.string().required('Description is required'),
+    cover: Yup.mixed().required('Cover is required')
   });
 
   const defaultValues = useMemo(
     () => ({
       title: currentDocument?.title || '',
       body: currentDocument?.body || '',
+      cover: (currentDocument?.cover && currentDocument?.cover.url) || null,
       isPublic: currentDocument?.isPublic || false
     }),
     [currentDocument]
@@ -69,6 +75,7 @@ export default function DocumentNewEditForm({ isEdit, currentDocument }) {
 
   const {
     reset,
+    setValue,
     handleSubmit,
     formState: { isSubmitting }
   } = methods;
@@ -84,18 +91,38 @@ export default function DocumentNewEditForm({ isEdit, currentDocument }) {
 
   const onSubmit = async (values) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
       const { body, isPublic, title } = values;
+      let cover;
+      if (coverImg !== '') {
+        const imageInfo = await Cloudinary.uploadFile(coverImg);
+        cover = {
+          url: imageInfo.url,
+          public_id: imageInfo.public_id
+        };
+      } else {
+        cover = {
+          url: currentDocument.cover.url,
+          public_id: currentDocument.cover.public_id
+        };
+      }
+
       const mutation = isEdit ? updateDocument : addDocument;
       const documentToAddOrUpdate = {
         title,
-        body
+        body,
+        cover
       };
 
       if (isEdit) {
         documentToAddOrUpdate.isPublic = isPublic;
         documentToAddOrUpdate._id = currentDocument._id;
+        if (coverImg !== '' && currentDocument.cover) {
+          const { public_id } = currentDocument.cover;
+          await Cloudinary.delete(public_id);
+        }
       }
+
+      console.log(documentToAddOrUpdate);
 
       mutation({
         variables: {
@@ -119,6 +146,30 @@ export default function DocumentNewEditForm({ isEdit, currentDocument }) {
     }
   };
 
+  const handleDrop = useCallback(
+    (acceptedFiles) => {
+      const file = acceptedFiles[0];
+
+      if (file) {
+        setValue(
+          'cover',
+          Object.assign(file, {
+            preview: URL.createObjectURL(file)
+          })
+        );
+
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+        fileReader.onload = async (e) => {
+          setCoverImg(fileReader.result);
+        };
+
+        fileReader.readAsArrayBuffer(file);
+      }
+    },
+    [setValue]
+  );
+
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
@@ -131,6 +182,7 @@ export default function DocumentNewEditForm({ isEdit, currentDocument }) {
                 <LabelStyle>Document Content</LabelStyle>
                 <RHFEditor simple name="body" />
               </div>
+              <RHFUploadSingleFile name="cover" accept="image/*" maxSize={3145728} onDrop={handleDrop} />
             </Stack>
             <Box m={2} />
             <LoadingButton type="submit" variant="contained" loading={isSubmitting}>

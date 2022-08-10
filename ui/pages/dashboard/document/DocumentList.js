@@ -86,6 +86,7 @@ export default function DocumentList({ documentList, isLoading, onDelete }) {
     const deleteRow = tableData.filter((row) => row._id !== id);
     setSelected([]);
     setTableData(deleteRow);
+    onDelete(id);
   };
 
   const handleDeleteRows = (selected) => {

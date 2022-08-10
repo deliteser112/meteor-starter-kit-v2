@@ -5,6 +5,10 @@ query documents {
     _id
     isPublic
     title
+    cover {
+      url
+      public_id
+    }
     updatedAt
     createdAt
   }

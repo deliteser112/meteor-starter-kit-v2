@@ -2,9 +2,10 @@ import PropTypes from 'prop-types';
 import { sentenceCase } from 'change-case';
 import React, { useState } from 'react';
 // @mui
-import { TableRow, TableCell, MenuItem, Checkbox } from '@mui/material';
+import { TableRow, TableCell, MenuItem, Checkbox, Typography } from '@mui/material';
 // components
 import Label from '../../../components/Label';
+import Image from '../../../components/Image';
 import { TableMoreMenu } from '../../../components/table';
 import Iconify from '../../../components/Iconify';
 
@@ -21,7 +22,9 @@ DocumentTableRow.propTypes = {
 };
 
 export default function DocumentTableRow({ row, selected, onEditRow, onSelectRow, onDeleteRow }) {
-  const { title, isPublic, createdAt } = row;
+  const { title, isPublic, cover, createdAt } = row;
+
+  const mockImageUrl = '/assets/document.jpg';
 
   const [openMenu, setOpenMenuActions] = useState(null);
 
@@ -38,7 +41,17 @@ export default function DocumentTableRow({ row, selected, onEditRow, onSelectRow
       <TableCell padding="checkbox">
         <Checkbox checked={selected} onClick={onSelectRow} />
       </TableCell>
-      <TableCell align="left">{title}</TableCell>
+      <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
+        <Image
+          disabledEffect
+          alt={title}
+          src={(cover && cover.url) || mockImageUrl}
+          sx={{ borderRadius: 1.5, width: 48, height: 48, mr: 2 }}
+        />
+        <Typography variant="subtitle2" noWrap>
+          {title}
+        </Typography>
+      </TableCell>
       <TableCell align="left">
         <Label variant="ghost" color={isPublic ? 'success' : 'primary'}>
           {sentenceCase(isPublic ? 'Public' : 'Private')}
