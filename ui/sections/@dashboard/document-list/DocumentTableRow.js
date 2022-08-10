@@ -53,7 +53,7 @@ export default function DocumentTableRow({ row, selected, onEditRow, onSelectRow
         </Typography>
       </TableCell>
       <TableCell align="left">
-        <Label variant="ghost" color={isPublic ? 'success' : 'primary'}>
+        <Label variant="ghost" color={isPublic ? 'secondary' : 'primary'}>
           {sentenceCase(isPublic ? 'Public' : 'Private')}
         </Label>
       </TableCell>

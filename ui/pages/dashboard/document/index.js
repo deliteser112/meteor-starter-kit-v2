@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
+import { Cloudinary } from 'meteor/socialize:cloudinary';
+
 // import queries
 import { useQuery, useMutation } from '@apollo/react-hooks';
 // @mui
@@ -18,22 +20,29 @@ import Iconify from '../../../components/Iconify';
 import DocumentList from './DocumentList';
 
 // queries & mutations
-import { documents as documentsQuery } from '../../../_queries/Documents.gql';
+import { documents as documentsQuery, editDocument as editDocumentQuery } from '../../../_queries/Documents.gql';
 import { removeDocument as removeDocumentMutation } from '../../../_mutations/Documents.gql';
 // ----------------------------------------------------------------------
 
 export default function Document() {
   const [removeDocument] = useMutation(removeDocumentMutation);
+
   const { loading, data } = useQuery(documentsQuery);
-  
+
   const documents = (data && data.documents) || [];
 
   const deleteDocument = (_id) => {
+    const deleteDoc = documents.find((doc) => doc._id === _id);
+    const public_id = deleteDoc && deleteDoc.cover && deleteDoc.cover.public_id;
     removeDocument({
       variables: {
-        _id,
+        _id
       },
-      refetchQueries: [{ query: documentsQuery }],
+      refetchQueries: [{ query: documentsQuery }]
+    }).then(async (res) => {
+      if (public_id) {
+        await Cloudinary.delete(public_id);
+      }
     });
   };
 

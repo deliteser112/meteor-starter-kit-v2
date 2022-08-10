@@ -170,8 +170,6 @@ export default function ProfileGeneral({ isEdit, currentUser }) {
         const fileReader = new FileReader();
         fileReader.readAsDataURL(file);
         fileReader.onload = async (e) => {
-          // const imageInfo = await Cloudinary.uploadFile(fileReader.result);
-          // const avatarUrl = imageInfo.url;
 
           const avatarUrl = await resizeBase64Img(fileReader, 150);
 

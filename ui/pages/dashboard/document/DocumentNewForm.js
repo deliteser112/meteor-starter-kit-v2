@@ -122,8 +122,6 @@ export default function DocumentNewEditForm({ isEdit, currentDocument }) {
         }
       }
 
-      console.log(documentToAddOrUpdate);
-
       mutation({
         variables: {
           ...documentToAddOrUpdate
