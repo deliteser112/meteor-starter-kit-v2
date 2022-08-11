@@ -50,10 +50,8 @@ export const PATH_DASHBOARD = {
   user: {
     root: path(ROOTS_DASHBOARD, '/users'),
     edit: (name) => path(ROOTS_DASHBOARD, `/users/${name}/edit`),
+    settings: path(ROOTS_DASHBOARD, '/user-settings'),
   },
-
-  // userSettings
-  userSettings: path(ROOTS_DASHBOARD, '/user-settings'),
 
   permissionDenied: path(ROOTS_DASHBOARD, '/permission-denied')
 };

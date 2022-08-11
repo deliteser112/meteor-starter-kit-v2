@@ -34,7 +34,7 @@ const navConfig = [
       },
       {
         title: 'user settings',
-        path: `${PATH_DASHBOARD.userSettings}`,
+        path: `${PATH_DASHBOARD.user.settings}`,
         icon: getIcon('fluent:people-settings-28-regular'),
       },
     ],
