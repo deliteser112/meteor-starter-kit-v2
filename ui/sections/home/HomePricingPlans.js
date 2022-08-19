@@ -1,19 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { m } from 'framer-motion';
 // @mui
 import { useTheme, styled } from '@mui/material/styles';
-import {
-  Box,
-  Grid,
-  Card,
-  Link,
-  Stack,
-  Button,
-  Divider,
-  Container,
-  Typography,
-} from '@mui/material';
+import { Box, Grid, Card, Link, Stack, Button, Divider, Container, Typography } from '@mui/material';
 // _mock_
 import { _pricingPlans } from '../../_mock/_plans';
 // components
@@ -28,8 +17,8 @@ const RootStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(10, 0),
   backgroundColor: theme.palette.background.neutral,
   [theme.breakpoints.up('md')]: {
-    padding: theme.spacing(15, 0),
-  },
+    padding: theme.spacing(15, 0)
+  }
 }));
 
 // ----------------------------------------------------------------------
@@ -43,25 +32,19 @@ export default function HomePricingPlans() {
     <RootStyle>
       <Container>
         <Box sx={{ mb: 10, textAlign: 'center' }}>
-          <m.div variants={varFade().inUp}>
-            <Typography component="div" variant="overline" sx={{ mb: 2, color: 'text.disabled' }}>
-              pricing plans
-            </Typography>
-          </m.div>
-          <m.div variants={varFade().inDown}>
-            <Typography variant="h2" sx={{ mb: 3 }}>
-              The right plan for your business
-            </Typography>
-          </m.div>
-          <m.div variants={varFade().inDown}>
-            <Typography
-              sx={{
-                color: isLight ? 'text.secondary' : 'text.primary',
-              }}
-            >
-              Choose the perfect plan for your needs. Always flexible to grow
-            </Typography>
-          </m.div>
+          <Typography component="div" variant="overline" sx={{ mb: 2, color: 'text.disabled' }}>
+            pricing plans
+          </Typography>
+          <Typography variant="h2" sx={{ mb: 3 }}>
+            The right plan for your business
+          </Typography>
+          <Typography
+            sx={{
+              color: isLight ? 'text.secondary' : 'text.primary'
+            }}
+          >
+            Choose the perfect plan for your needs. Always flexible to grow
+          </Typography>
         </Box>
 
         <Grid container spacing={3}>
@@ -72,29 +55,20 @@ export default function HomePricingPlans() {
           ))}
         </Grid>
 
-        <m.div variants={varFade().in}>
-          <Box sx={{ p: 5, mt: 10, textAlign: 'center' }}>
-            <m.div variants={varFade().inDown}>
-              <Typography variant="h3">Still have questions?</Typography>
-            </m.div>
+        <Box sx={{ p: 5, mt: 10, textAlign: 'center' }}>
+          <Typography variant="h3">Still have questions?</Typography>
+          <Typography sx={{ mt: 3, mb: 5, color: 'text.secondary' }}>
+            Please describe your case to receive the most accurate advice.
+          </Typography>
 
-            <m.div variants={varFade().inDown}>
-              <Typography sx={{ mt: 3, mb: 5, color: 'text.secondary' }}>
-                Please describe your case to receive the most accurate advice.
-              </Typography>
-            </m.div>
-
-            <m.div variants={varFade().inUp}>
-              <Button
-                size="large"
-                variant="contained"
-                href="mailto:support@meteor.starter.kit?subject=[Feedback] from Customer"
-              >
-                Contact us
-              </Button>
-            </m.div>
-          </Box>
-        </m.div>
+          <Button
+            size="large"
+            variant="contained"
+            href="mailto:support@meteor.starter.kit?subject=[Feedback] from Customer"
+          >
+            Contact us
+          </Button>
+        </Box>
       </Container>
     </RootStyle>
   );
@@ -114,8 +88,8 @@ function PlanCard({ plan }) {
         p: 5,
         boxShadow: 0,
         ...(plus && {
-          boxShadow: (theme) => theme.customShadows.z24,
-        }),
+          boxShadow: (theme) => theme.customShadows.z24
+        })
       }}
     >
       <Stack spacing={5}>
@@ -139,10 +113,7 @@ function PlanCard({ plan }) {
         <Stack spacing={2.5}>
           {commons.map((option) => (
             <Stack key={option} spacing={1.5} direction="row" alignItems="center">
-              <Iconify
-                icon="eva:checkmark-fill"
-                sx={{ color: 'primary.main', width: 20, height: 20 }}
-              />
+              <Iconify icon="eva:checkmark-fill" sx={{ color: 'primary.main', width: 20, height: 20 }} />
               <Typography variant="body2">{option}</Typography>
             </Stack>
           ))}
@@ -162,7 +133,7 @@ function PlanCard({ plan }) {
                 direction="row"
                 alignItems="center"
                 sx={{
-                  ...(disabledLine && { color: 'text.disabled' }),
+                  ...(disabledLine && { color: 'text.disabled' })
                 }}
                 key={option}
               >
@@ -172,7 +143,7 @@ function PlanCard({ plan }) {
                     width: 20,
                     height: 20,
                     color: 'primary.main',
-                    ...(disabledLine && { color: 'text.disabled' }),
+                    ...(disabledLine && { color: 'text.disabled' })
                   }}
                 />
                 <Typography variant="body2">{option}</Typography>
@@ -193,13 +164,7 @@ function PlanCard({ plan }) {
           </Link>
         </Stack>
 
-        <Button
-          size="large"
-          fullWidth
-          variant={plus ? 'contained' : 'outlined'}
-          rel="noopener"
-          href="#"
-        >
+        <Button size="large" fullWidth variant={plus ? 'contained' : 'outlined'} rel="noopener" href="#">
           Choose Plan
         </Button>
       </Stack>
@@ -212,6 +177,6 @@ PlanCard.propTypes = {
     license: PropTypes.string,
     commons: PropTypes.arrayOf(PropTypes.string),
     icons: PropTypes.arrayOf(PropTypes.string),
-    options: PropTypes.arrayOf(PropTypes.string),
-  }),
+    options: PropTypes.arrayOf(PropTypes.string)
+  })
 };

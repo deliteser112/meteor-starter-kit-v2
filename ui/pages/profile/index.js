@@ -40,10 +40,11 @@ const TabsWrapperStyle = styled('div')(({ theme }) => ({
 
 export default function UserProfile() {
   const [currentTab, onChangeTab] = useState('profile');
-  const { data } = useQuery(userQuery);
+  const { loading, data } = useQuery(userQuery);
+
+  if (loading) return <LoadingScreen isDashboard />;
+  
   const user = data && data.user;
-  const isUser = user && user.name;
-  if (!isUser) return <LoadingScreen />;
   const { _id, name, emailAddress, avatarUrl } = user;
   const coverURL = '/static/contact/contact-hero.jpg';
 

@@ -68,7 +68,7 @@
     "eslint-plugin-testcafe": "^0.2.1",
     "express": "^4.17.3",
     "formik": "^2.2.6",
-    "framer-motion": "^4.1.13",
+    "framer-motion": "^6.2.9",
     "graphql": "^15.5.0",
     "graphql-load": "^0.1.1",
     "graphql-tag": "^2.11.0",

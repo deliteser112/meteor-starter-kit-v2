@@ -1,18 +1,11 @@
 import React from 'react';
-import { m } from 'framer-motion';
-import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Button, Box, Container, Typography, Stack } from '@mui/material';
-// routes
-import { PATH_DASHBOARD } from '../../routes/paths';
-// components
-import Iconify from '../../components/Iconify';
-import { varFade } from '../../components/animate';
+import { Box, Container, Typography, Stack } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
-const RootStyle = styled(m.div)(({ theme }) => ({
+const RootStyle = styled('div')(({ theme }) => ({
   position: 'relative',
   backgroundColor: theme.palette.grey[400],
   [theme.breakpoints.up('md')]: {
@@ -22,8 +15,8 @@ const RootStyle = styled(m.div)(({ theme }) => ({
     height: '100vh',
     display: 'flex',
     position: 'fixed',
-    alignItems: 'center',
-  },
+    alignItems: 'center'
+  }
 }));
 
 const ContentStyle = styled((props) => <Stack spacing={5} {...props} />)(({ theme }) => ({
@@ -36,19 +29,19 @@ const ContentStyle = styled((props) => <Stack spacing={5} {...props} />)(({ them
   paddingBottom: theme.spacing(15),
   [theme.breakpoints.up('md')]: {
     margin: 'unset',
-    textAlign: 'left',
-  },
+    textAlign: 'left'
+  }
 }));
 
-const HeroOverlayStyle = styled(m.img)({
+const HeroOverlayStyle = styled('img')({
   zIndex: 9,
   width: '100%',
   height: '100%',
   objectFit: 'cover',
-  position: 'absolute',
+  position: 'absolute'
 });
 
-const HeroImgStyle = styled(m.img)(({ theme }) => ({
+const HeroImgStyle = styled('img')(({ theme }) => ({
   top: 0,
   right: 0,
   bottom: 0,
@@ -59,8 +52,8 @@ const HeroImgStyle = styled(m.img)(({ theme }) => ({
   [theme.breakpoints.up('lg')]: {
     right: '8%',
     width: 'auto',
-    height: '75vh',
-  },
+    height: '75vh'
+  }
 }));
 
 // ----------------------------------------------------------------------
@@ -69,40 +62,24 @@ export default function HomeHero() {
   return (
     <Box>
       <RootStyle>
-        <HeroOverlayStyle alt="overlay" src="/static/home/overlay.svg" variants={varFade().in} />
+        <HeroOverlayStyle alt="overlay" src="/static/home/overlay.svg" />
 
-        <HeroImgStyle alt="hero" src="/static/home/hero.png" variants={varFade().inUp} />
+        <HeroImgStyle alt="hero" src="/static/home/hero.png" />
 
         <Container>
           <ContentStyle>
-            <m.div variants={varFade().inRight}>
-              <Typography variant="h1" sx={{ color: 'common.white' }}>
-                Start a <br />
-                new project <br /> with
-                <Typography component="span" variant="h1" sx={{ color: 'primary.main' }}>
-                  &nbsp;Meteor Starter Kit
-                </Typography>
+            <Typography variant="h1" sx={{ color: 'common.white' }}>
+              Start a <br />
+              new project <br /> with
+              <Typography component="span" variant="h1" sx={{ color: 'primary.main' }}>
+                &nbsp;Meteor Starter Kit
               </Typography>
-            </m.div>
+            </Typography>
 
-            <m.div variants={varFade().inRight}>
-              <Typography sx={{ color: 'common.white' }}>
-                The starting point for your next project based on easy-to-customize this template
-                helps you build apps faster and better.
-              </Typography>
-            </m.div>
-
-            <m.div variants={varFade().inRight}>
-              <Button
-                size="large"
-                variant="contained"
-                component={RouterLink}
-                to={PATH_DASHBOARD.root}
-                startIcon={<Iconify icon="eva:flash-fill" width={20} height={20} />}
-              >
-                Get Started
-              </Button>
-            </m.div>
+            <Typography sx={{ color: 'common.white' }}>
+              The starting point for your next project based on easy-to-customize this template helps you build apps
+              faster and better.
+            </Typography>
           </ContentStyle>
         </Container>
       </RootStyle>

@@ -1,5 +1,6 @@
-import React from 'react';
-import { Navigate, useRoutes } from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
+import { Navigate, useRoutes, useLocation } from 'react-router-dom';
+
 // guards
 import GuestGuard from '../guards/GuestGuard';
 import AuthGuard from '../guards/AuthGuard';
@@ -10,33 +11,22 @@ import MainLayout from '../layouts/main';
 import DashboardLayout from '../layouts/dashboard';
 import LogoOnlyLayout from '../layouts/LogoOnlyLayout';
 
-// main pages
-import HomePage from '../pages/external_pages/Home';
-import ContactPage from '../pages/external_pages/Contact';
+// components
+import LoadingScreen from '../components/LoadingScreen';
 
-// others
-import GeneralApp from '../pages/dashboard/GeneralApp';
-import Page404 from '../pages/other/Page404';
 
-// documents
-import Documents from '../pages/dashboard/document';
-import DocumentCreate from '../pages/dashboard/document/DocumentCreate';
+// ----------------------------------------------------------------------
 
-// users
-import User from '../pages/dashboard/user';
-import UserProfile from '../pages/dashboard/user-profile';
+const Loadable = (Component) => (props) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { pathname } = useLocation();
 
-// user settings
-import UserSettings from '../pages/dashboard/userSettings';
-
-import Profile from '../pages/profile';
-
-// authentications
-import Login from '../pages/authentication/Login';
-import Register from '../pages/authentication/Register';
-import ResetPassword from '../pages/authentication/ResetPassword';
-import NewPassword from '../pages/authentication/NewPassword';
-import VerifyEmail from '../pages/authentication/VerifyEmail';
+  return (
+    <Suspense fallback={<LoadingScreen isDashboard={pathname.includes('/dashboard')} />}>
+      <Component {...props} />
+    </Suspense>
+  );
+};
 
 // ----------------------------------------------------------------------
 
@@ -137,3 +127,31 @@ export default function Router() {
     { path: '*', element: <Navigate to="/404" replace /> }
   ]);
 }
+
+// main pages
+const HomePage = Loadable(lazy(() => import('../pages/external_pages/Home')));
+const ContactPage = Loadable(lazy(() => import('../pages/external_pages/Contact')));
+
+// others
+const GeneralApp = Loadable(lazy(() => import('../pages/dashboard/GeneralApp')));
+const Page404 = Loadable(lazy(() => import('../pages/other/Page404')));
+
+// documents
+const Documents = Loadable(lazy(() => import('../pages/dashboard/document')));
+const DocumentCreate = Loadable(lazy(() => import('../pages/dashboard/document/DocumentCreate')));
+
+// users
+const User = Loadable(lazy(() => import('../pages/dashboard/user')));
+const UserProfile = Loadable(lazy(() => import('../pages/dashboard/user-profile')));
+
+// user settings
+const UserSettings = Loadable(lazy(() => import('../pages/dashboard/userSettings')));
+
+const Profile = Loadable(lazy(() => import('../pages/profile')));
+
+// authentications
+const Login = Loadable(lazy(() => import('../pages/authentication/Login')));
+const Register = Loadable(lazy(() => import('../pages/authentication/Register')));
+const ResetPassword = Loadable(lazy(() => import('../pages/authentication/ResetPassword')));
+const NewPassword = Loadable(lazy(() => import('../pages/authentication/NewPassword')));
+const VerifyEmail = Loadable(lazy(() => import('../pages/authentication/VerifyEmail')));

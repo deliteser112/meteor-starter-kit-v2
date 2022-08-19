@@ -1,5 +1,4 @@
 import React from 'react';
-import { m } from 'framer-motion';
 // @mui
 import { styled } from '@mui/material/styles';
 import { Box, Container, Typography, Grid } from '@mui/material';
@@ -69,17 +68,13 @@ export default function ContactHero() {
           <Grid container spacing={5} sx={{ mt: 5, color: 'common.white' }}>
             {CONTACTS.map((contact) => (
               <Grid key={contact.country} item xs={12} sm={6} md={3} lg={2} sx={{ pr: { md: 5 } }}>
-                <m.div variants={varFade().in}>
                   <Typography variant="h6" paragraph>
                     {contact.country}
                   </Typography>
-                </m.div>
-                <m.div variants={varFade().inRight}>
                   <Typography variant="body2">
                     {contact.address}
                     <br /> {contact.phoneNumber}
                   </Typography>
-                </m.div>
               </Grid>
             ))}
           </Grid>
