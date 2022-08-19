@@ -30,6 +30,12 @@ export default function TableMoreMenu({ actions, open, onClose, onOpen }) {
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         arrow="right-top"
         sx={{
+          '& .arrow': {
+            zIndex: 0,
+            rotate: '90deg',
+            top: '20px',
+            right: '-7px'
+          },
           mt: -1,
           width: 230,
           '& .MuiMenuItem-root': {

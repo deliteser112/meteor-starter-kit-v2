@@ -59,7 +59,7 @@ export default function Login() {
         <HeaderStyle>
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
-              Don’t have an account?
+              Don’t have an account?{' '}
               <Link variant="subtitle2" component={RouterLink} to={PATH_AUTH.register}>
                 Get started
               </Link>

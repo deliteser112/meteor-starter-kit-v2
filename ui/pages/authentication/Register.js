@@ -18,8 +18,8 @@ import AuthSocial from '../../sections/auth/OAuthSocial';
 
 const RootStyle = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
-    display: 'flex',
-  },
+    display: 'flex'
+  }
 }));
 
 const HeaderStyle = styled('header')(({ theme }) => ({
@@ -34,8 +34,8 @@ const HeaderStyle = styled('header')(({ theme }) => ({
   justifyContent: 'flex-end',
   [theme.breakpoints.up('md')]: {
     alignItems: 'flex-start',
-    padding: theme.spacing(7, 5, 0, 7),
-  },
+    padding: theme.spacing(7, 5, 0, 7)
+  }
 }));
 
 const ContentStyle = styled('div')(({ theme }) => ({
@@ -45,7 +45,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'center',
   flexDirection: 'column',
-  padding: theme.spacing(12, 0),
+  padding: theme.spacing(12, 0)
 }));
 
 // ----------------------------------------------------------------------
@@ -59,7 +59,7 @@ export default function Register() {
         <HeaderStyle>
           {smUp && (
             <Typography variant="body2" sx={{ mt: { md: -2 } }}>
-              Already have an account?
+              Already have an account?{' '}
               <Link variant="subtitle2" component={RouterLink} to={PATH_AUTH.login}>
                 Login
               </Link>
@@ -73,9 +73,7 @@ export default function Register() {
               Sign up to Meteor Starter Kit.
             </Typography>
 
-            <Typography sx={{ color: 'text.secondary', mb: 5 }}>
-              Free forever. No credit card needed.
-            </Typography>
+            <Typography sx={{ color: 'text.secondary', mb: 5 }}>Free forever. No credit card needed.</Typography>
 
             <AuthSocial />
 
@@ -85,8 +83,8 @@ export default function Register() {
               By registering, I agree to Meteor Starter Kit&nbsp;
               <Link underline="always" color="text.primary" href="#">
                 Terms of Service
-              </Link>
-              and
+              </Link>{' '}
+              and{' '}
               <Link underline="always" color="text.primary" href="#">
                 Privacy Policy
               </Link>

@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
-import ReactLoading from 'react-loading';
 import { Icon } from '@iconify/react';
 import React, { useState } from 'react';
 // material
 import { alpha, styled } from '@mui/material/styles';
-import { Stack, Typography, Slide, Link, IconButton } from '@mui/material';
-import CheckIcon from '@mui/icons-material/Check';
+import { Stack, Typography, Slide, Link, IconButton, CircularProgress, Button } from '@mui/material';
+
+// components
+import Iconify from '../../components/Iconify';
+
 // ----------------------------------------------------------------------
 
 const APPBAR_MOBILE = 90;
@@ -25,11 +27,11 @@ const AlertbarStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 3),
   boxShadow: theme.customShadows.z8,
   // backgroundColor: 'green',
-  backgroundColor: `${alpha(theme.palette.primary.darker, 0.72)}`,
+  backgroundColor: `${alpha(theme.palette.info.lighter, 0.72)}`,
   [theme.breakpoints.up('md')]: {
     height: APPBAR_DESKTOP,
-    padding: theme.spacing(0, 7),
-  },
+    padding: theme.spacing(0, 7)
+  }
 }));
 
 // ----------------------------------------------------------------------
@@ -52,19 +54,14 @@ export default function EmailVerifyAlert({ email, verifyEmail }) {
       setTimeout(() => {
         setLoading(false);
         setSent(true);
-      }, 1000);
+      }, 2000);
     }
   };
 
   return (
     <Slide direction="down" in={isOpen} mountOnEnter unmountOnExit>
       <AlertbarStyle>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          sx={{ width: '100%' }}
-        >
+        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ width: '100%' }}>
           <Stack direction={{ xs: 'column', sm: 'row' }} alignItems="center">
             <Typography variant="body2" sx={{ color: 'text.primary', textAlign: 'center' }}>
               Hi friend! Can you
@@ -80,16 +77,9 @@ export default function EmailVerifyAlert({ email, verifyEmail }) {
                 &nbsp;for us? &nbsp;
               </Typography>
             </Typography>
-            <Link
-              color="primary"
-              variant="body2"
-              onClick={handleVerifyEmail}
-              sx={{ display: 'block', color: 'rgb(161 220 249)', marginRight: 1, '&:hover': { cursor: 'pointer' } }}
-            >
-              Send verification email
-            </Link>
-            {isLoading && <ReactLoading type="spin" color="grey" height={15} width={15} />}
-            {isSent && <CheckIcon color="success" sx={{ width: 20, heigth: 20 }} />}
+            <Button color="secondary" onClick={handleVerifyEmail}>Send verification email</Button>
+            {isLoading && <CircularProgress size={20} />}
+            {isSent && <Iconify icon={'emojione-v1:left-check-mark'} />}
           </Stack>
           <IconButton size="small" onClick={handleClose} sx={{ color: 'white' }}>
             <Icon icon="eva:close-fill" />
@@ -102,10 +92,10 @@ export default function EmailVerifyAlert({ email, verifyEmail }) {
 
 EmailVerifyAlert.defaultProps = {
   email: '',
-  verifyEmail: null,
+  verifyEmail: null
 };
 
 EmailVerifyAlert.propTypes = {
   email: PropTypes.string,
-  verifyEmail: PropTypes.func,
+  verifyEmail: PropTypes.func
 };

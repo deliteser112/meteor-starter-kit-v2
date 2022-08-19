@@ -4,11 +4,10 @@ import { capitalCase } from 'change-case';
 
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import ReactLoading from 'react-loading';
 
 // material
 import { styled } from '@mui/material/styles';
-import { Tabs, Tab, Card, Container, Box } from '@mui/material';
+import { Tabs, Tab, Card, Container, Box, CircularProgress } from '@mui/material';
 
 // components
 import Page from '../../../components/Page';
@@ -32,12 +31,12 @@ const TabsWrapperStyle = styled('div')(({ theme }) => ({
   position: 'absolute',
   backgroundColor: theme.palette.background.paper,
   [theme.breakpoints.up('sm')]: {
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   [theme.breakpoints.up('md')]: {
     justifyContent: 'flex-end',
-    paddingRight: theme.spacing(3),
-  },
+    paddingRight: theme.spacing(3)
+  }
 }));
 
 export default function UserProfile() {
@@ -49,7 +48,9 @@ export default function UserProfile() {
 
   if (loading)
     return (
-      <ReactLoading className="loading-icons" type="spin" color="grey" height={40} width={40} />
+      <Box sx={{ display: 'flex' }}>
+        <CircularProgress className="loading-icons" />
+      </Box>
     );
   const { _id, name, emailAddress, avatarUrl } = user;
   const coverURL = '/static/contact/contact-hero.jpg';
@@ -67,13 +68,13 @@ export default function UserProfile() {
     {
       value: 'profile',
       icon: <Iconify icon="ic:round-account-box" width={20} height={20} />,
-      component: <ProfileGeneral currentUser={user} isEdit />,
+      component: <ProfileGeneral currentUser={user} isEdit />
     },
     {
       value: 'settings',
       icon: <Iconify icon="eva:heart-fill" width={20} height={20} />,
-      component: <ProfileSettings settings={user.settings} userId={user._id} />,
-    },
+      component: <ProfileSettings settings={user.settings} userId={user._id} />
+    }
   ];
   return (
     <Page title="Profile">
@@ -82,7 +83,7 @@ export default function UserProfile() {
           sx={{
             mb: 3,
             height: 220,
-            position: 'relative',
+            position: 'relative'
           }}
         >
           <ProfileCover myProfile={myProfile} />
@@ -95,12 +96,7 @@ export default function UserProfile() {
               onChange={(event, newValue) => onChangeTab(newValue)}
             >
               {PROFILE_TABS.map((tab) => (
-                <Tab
-                  disableRipple
-                  key={tab.value}
-                  value={tab.value}
-                  label={capitalCase(tab.value)}
-                />
+                <Tab disableRipple key={tab.value} value={tab.value} label={capitalCase(tab.value)} />
               ))}
             </Tabs>
           </TabsWrapperStyle>

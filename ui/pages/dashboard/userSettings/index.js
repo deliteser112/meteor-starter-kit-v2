@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import ReactLoading from 'react-loading';
 // @mui
 import {
   Container,
@@ -14,7 +13,8 @@ import {
   Stack,
   Button,
   Box,
-  Divider
+  Divider,
+  CircularProgress
 } from '@mui/material';
 
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -108,7 +108,9 @@ export default function UserSettings() {
         <Card>
           <CardContent sx={{ padding: { xs: 0, md: 2 }, paddingBottom: { xs: 0, md: 3 } }}>
             {loading ? (
-              <ReactLoading className="loading-icons" type="spin" color="grey" height={30} width={30} />
+              <Box sx={{ display: 'flex' }}>
+                <CircularProgress className="loading-icons" />
+              </Box>
             ) : userSettings.length > 0 ? (
               <List>
                 {userSettings.map((item, index) => (

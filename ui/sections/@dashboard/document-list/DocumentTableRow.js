@@ -8,6 +8,7 @@ import Label from '../../../components/Label';
 import Image from '../../../components/Image';
 import { TableMoreMenu } from '../../../components/table';
 import Iconify from '../../../components/Iconify';
+import ConfirmDialog from '../../../components/ConfirmDialog';
 
 // utils
 import { fDate } from '../../../utils/formatTime';
@@ -27,6 +28,16 @@ export default function DocumentTableRow({ row, selected, onEditRow, onSelectRow
   const mockImageUrl = '/assets/document.jpg';
 
   const [openMenu, setOpenMenuActions] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  const handleDelete = () => {
+    setDialogOpen(true);
+  };
+
+  const handleAgree = (isAgree) => {
+    setDialogOpen(false);
+    if (isAgree) onDeleteRow();
+  };
 
   const handleOpenMenu = (event) => {
     setOpenMenuActions(event.currentTarget);
@@ -39,6 +50,12 @@ export default function DocumentTableRow({ row, selected, onEditRow, onSelectRow
   return (
     <TableRow hover selected={selected}>
       <TableCell padding="checkbox">
+        <ConfirmDialog
+          onAgree={handleAgree}
+          isOpen={dialogOpen}
+          title="Meteor Starter Kit | Confirm"
+          content="Are you sure to delete this item?"
+        />
         <Checkbox checked={selected} onClick={onSelectRow} />
       </TableCell>
       <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
@@ -67,7 +84,7 @@ export default function DocumentTableRow({ row, selected, onEditRow, onSelectRow
             <>
               <MenuItem
                 onClick={() => {
-                  onDeleteRow();
+                  handleDelete();
                   handleCloseMenu();
                 }}
                 sx={{ color: 'error.main' }}
