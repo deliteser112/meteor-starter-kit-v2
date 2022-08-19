@@ -37,7 +37,6 @@ export default function TableMoreMenu({ actions, open, onClose, onOpen }) {
             right: '-7px'
           },
           mt: -1,
-          width: 230,
           '& .MuiMenuItem-root': {
             px: 1,
             typography: 'body2',
