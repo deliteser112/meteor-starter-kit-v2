@@ -7,8 +7,8 @@ import { TableRow, TableCell, MenuItem, Checkbox, Stack, Avatar, Typography } fr
 import { TableMoreMenu } from '../../../components/table';
 import Iconify from '../../../components/Iconify';
 import ConfirmDialog from '../../../components/ConfirmDialog';
-// utils
-import stringAvatar from '../../../utils/stringAvatar';
+import MyAvatar from '../../../components/MyAvatar';
+
 // ----------------------------------------------------------------------
 
 UserTableRow.propTypes = {
@@ -49,7 +49,7 @@ export default function UserTableRow({ row, selected, onEditRow, onSelectRow, on
       </TableCell>
       <TableCell component="th" scope="row" padding="none">
         <Stack direction="row" alignItems="center" spacing={2}>
-          <Avatar src={avatarUrl} style={{ marginRight: 8, color: 'white' }} />
+          <MyAvatar src={avatarUrl} displayName={`${name.first} ${name.last ? name.last : ''}`} />
           <Typography variant="subtitle2" noWrap>
             {`${name.first} ${name.last ? name.last : ''}`}
           </Typography>
