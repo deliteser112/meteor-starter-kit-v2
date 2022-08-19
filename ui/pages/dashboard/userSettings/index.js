@@ -124,7 +124,7 @@ export default function UserSettings() {
                             color="primary"
                             onClick={() => handleEditSetting(item)}
                           >
-                            <EditIcon />
+                            <Iconify icon="eva:edit-2-outline" />
                           </IconButton>
                           <IconButton
                             edge="end"
@@ -132,7 +132,7 @@ export default function UserSettings() {
                             color="error"
                             onClick={() => handleDeleteSetting(item._id)}
                           >
-                            <DeleteIcon />
+                            <Iconify icon="eva:trash-2-outline" />
                           </IconButton>
                         </Stack>
                       }
