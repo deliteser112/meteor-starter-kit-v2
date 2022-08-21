@@ -17,9 +17,7 @@ import {
   CircularProgress
 } from '@mui/material';
 
-import DeleteIcon from '@mui/icons-material/Delete';
 import SettingsIcon from '@mui/icons-material/Settings';
-import EditIcon from '@mui/icons-material/Edit';
 
 // graphql & collections
 import { useQuery, useMutation } from '@apollo/react-hooks';
@@ -39,6 +37,7 @@ import Page from '../../../components/Page';
 import EmptyContent from '../../../components/EmptyContent';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import Iconify from '../../../components/Iconify';
+import { SkeletonUserSettins } from '../../../components/skeleton';
 
 import SettingDialog from './SettingDialog';
 
@@ -108,9 +107,7 @@ export default function UserSettings() {
         <Card>
           <CardContent sx={{ padding: { xs: 0, md: 2 }, paddingBottom: { xs: 0, md: 3 } }}>
             {loading ? (
-              <Box sx={{ display: 'flex' }}>
-                <CircularProgress className="loading-icons" />
-              </Box>
+              <SkeletonUserSettins />
             ) : userSettings.length > 0 ? (
               <List>
                 {userSettings.map((item, index) => (
