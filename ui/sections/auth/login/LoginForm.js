@@ -51,8 +51,6 @@ export default function LoginForm() {
       Meteor.loginWithPassword(email, password, function (error) {
         if (error) {
           setError('afterSubmit', { ...error, message: error.reason });
-        } else {
-          navigate(PATH_DASHBOARD.root);
         }
       });
     } catch (error) {
