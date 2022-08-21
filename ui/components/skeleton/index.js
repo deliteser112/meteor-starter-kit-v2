@@ -1,1 +1,1 @@
-export { default as SkeletonUserSettins } from './SkeletonUserSettins';
+export { default as SkeletonUserSettings } from './SkeletonUserSettings';

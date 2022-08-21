@@ -37,7 +37,7 @@ import Page from '../../../components/Page';
 import EmptyContent from '../../../components/EmptyContent';
 import HeaderBreadcrumbs from '../../../components/HeaderBreadcrumbs';
 import Iconify from '../../../components/Iconify';
-import { SkeletonUserSettins } from '../../../components/skeleton';
+import { SkeletonUserSettings } from '../../../components/skeleton';
 
 import SettingDialog from './SettingDialog';
 
@@ -107,7 +107,7 @@ export default function UserSettings() {
         <Card>
           <CardContent sx={{ padding: { xs: 0, md: 2 }, paddingBottom: { xs: 0, md: 3 } }}>
             {loading ? (
-              <SkeletonUserSettins />
+              <SkeletonUserSettings />
             ) : userSettings.length > 0 ? (
               <List>
                 {userSettings.map((item, index) => (

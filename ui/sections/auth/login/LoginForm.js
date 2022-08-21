@@ -1,131 +1,104 @@
-// meteors
-import { Meteor } from 'meteor/meteor';
-
 import * as Yup from 'yup';
 import React, { useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { useFormik, Form, FormikProvider } from 'formik';
-// material
-import {
-  Link,
-  Stack,
-  Checkbox,
-  TextField,
-  IconButton,
-  InputAdornment,
-  FormControlLabel,
-  Alert,
-} from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
+// form
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+// @mui
+import { Link, Stack, Alert, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // routes
-import { PATH_AUTH, PATH_DASHBOARD } from '../../../routes/paths';
-// component
+import { PATH_AUTH } from '../../../routes/paths';
+// hooks
+import useIsMountedRef from '../../../hooks/useIsMountedRef';
+// components
 import Iconify from '../../../components/Iconify';
+import { FormProvider, RHFTextField, RHFCheckbox } from '../../../components/hook-form';
 
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
-  const navigate = useNavigate();
+  const isMountedRef = useIsMountedRef();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [isError, setError] = useState(false);
-  const [errorText, setErrorText] = useState('');
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required'),
+    password: Yup.string().required('Password is required')
   });
 
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-      remember: true,
-    },
-    validationSchema: LoginSchema,
-    onSubmit: (values, { setSubmitting }) => {
-      const { email, password } = values;
+  const defaultValues = {
+    email: '',
+    password: '',
+    remember: true
+  };
+
+  const methods = useForm({
+    resolver: yupResolver(LoginSchema),
+    defaultValues
+  });
+
+  const {
+    reset,
+    setError,
+    handleSubmit,
+    formState: { errors, isSubmitting }
+  } = methods;
+
+  const onSubmit = async (data) => {
+    try {
+      const { email, password } = data;
       Meteor.loginWithPassword(email, password, function (error) {
         if (error) {
-          const { reason } = error;
-          setError(true);
-          setErrorText(reason);
-          setSubmitting(false);
+          setError('afterSubmit', { ...error, message: error.reason });
         } else {
-          setSubmitting(false);
           navigate(PATH_DASHBOARD.root);
         }
       });
-    },
-  });
+    } catch (error) {
+      console.error(error);
 
-  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
+      reset();
 
-  const handleShowPassword = () => {
-    setShowPassword((show) => !show);
+      if (isMountedRef.current) {
+        setError('afterSubmit', { ...error, message: error.message });
+      }
+    }
   };
 
   return (
-    <FormikProvider value={formik}>
-      <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        <Stack spacing={3}>
-          {isError && <Alert severity="error">{errorText}</Alert>}
-          <TextField
-            fullWidth
-            autoComplete="username"
-            type="email"
-            label="Email address"
-            {...getFieldProps('email')}
-            error={Boolean(touched.email && errors.email)}
-            helperText={touched.email && errors.email}
-          />
+    <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+      <Stack spacing={3}>
+        {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
 
-          <TextField
-            fullWidth
-            autoComplete="current-password"
-            type={showPassword ? 'text' : 'password'}
-            label="Password"
-            {...getFieldProps('password')}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={handleShowPassword} edge="end">
-                    <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-            error={Boolean(touched.password && errors.password)}
-            helperText={touched.password && errors.password}
-          />
-        </Stack>
+        <RHFTextField name="email" label="Email address" />
 
-        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-          <FormControlLabel
-            control={<Checkbox {...getFieldProps('remember')} checked={values.remember} />}
-            label="Remember me"
-          />
+        <RHFTextField
+          name="password"
+          label="Password"
+          type={showPassword ? 'text' : 'password'}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
+        />
+      </Stack>
 
-          <Link
-            component={RouterLink}
-            variant="subtitle2"
-            to={PATH_AUTH.resetPassword}
-            underline="hover"
-          >
-            Forgot password?
-          </Link>
-        </Stack>
+      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
+        <RHFCheckbox name="remember" label="Remember me" />
+        <Link component={RouterLink} variant="subtitle2" to={PATH_AUTH.resetPassword}>
+          Forgot password?
+        </Link>
+      </Stack>
 
-        <LoadingButton
-          fullWidth
-          size="large"
-          type="submit"
-          variant="contained"
-          loading={isSubmitting}
-        >
-          Login
-        </LoadingButton>
-      </Form>
-    </FormikProvider>
+      <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
+        Login
+      </LoadingButton>
+    </FormProvider>
   );
 }

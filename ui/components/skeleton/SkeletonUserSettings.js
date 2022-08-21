@@ -4,7 +4,7 @@ import { Stack, Skeleton } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
-export default function SkeletonUserSettins() {
+export default function SkeletonUserSettings() {
   return (
     <Stack spacing={1}>
       {[...Array(5)].map((_, index) => (
