@@ -8,7 +8,6 @@ import { _pricingPlans } from '../../_mock/_plans';
 // components
 import Image from '../../components/Image';
 import Iconify from '../../components/Iconify';
-import { varFade } from '../../components/animate';
 import { PricingPlanCard } from '../pricing';
 
 // ----------------------------------------------------------------------

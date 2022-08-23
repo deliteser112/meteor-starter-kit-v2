@@ -9,6 +9,7 @@ import {
   Link,
   Drawer,
   Collapse,
+  IconButton,
   ListItemText,
   ListItemIcon,
   ListItemButton,
@@ -19,7 +20,6 @@ import { NAVBAR } from '../../config';
 import Logo from '../../components/Logo';
 import Iconify from '../../components/Iconify';
 import Scrollbar from '../../components/Scrollbar';
-import { IconButtonAnimate } from '../../components/animate';
 import { NavSectionVertical } from '../../components/nav-section';
 
 // ----------------------------------------------------------------------
@@ -60,7 +60,7 @@ export default function MenuMobile({ isOffset, isHome, navConfig }) {
 
   return (
     <>
-      <IconButtonAnimate
+      <IconButton
         onClick={handleDrawerOpen}
         sx={{
           ml: 1,
@@ -69,7 +69,7 @@ export default function MenuMobile({ isOffset, isHome, navConfig }) {
         }}
       >
         <Iconify icon="eva:menu-2-fill" />
-      </IconButtonAnimate>
+      </IconButton>
 
       <Drawer
         open={drawerOpen}

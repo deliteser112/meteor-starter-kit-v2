@@ -3,8 +3,6 @@ import React from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Container, Typography, Grid } from '@mui/material';
 //
-import { TextAnimate, varFade } from '../../components/animate';
-
 // ----------------------------------------------------------------------
 
 const CONTACTS = [
@@ -57,13 +55,7 @@ export default function ContactHero() {
     <RootStyle>
       <Container sx={{ position: 'relative', height: '100%' }}>
         <ContentStyle>
-          <TextAnimate text="Where" sx={{ color: 'primary.main' }} variants={varFade().inRight} />
-          <br />
-          <Box sx={{ display: 'inline-flex', color: 'common.white' }}>
-            <TextAnimate text="to" sx={{ mr: 2 }} />
-            <TextAnimate text="find" sx={{ mr: 2 }} />
-            <TextAnimate text="us?" />
-          </Box>
+          <Typography variant="h4">Where to find us?</Typography>
 
           <Grid container spacing={5} sx={{ mt: 5, color: 'common.white' }}>
             {CONTACTS.map((contact) => (

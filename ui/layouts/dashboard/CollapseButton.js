@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 // @mui
-import { Box } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 // components
-import { IconButtonAnimate } from '../../components/animate';
 
 // ----------------------------------------------------------------------
 
@@ -14,7 +13,7 @@ CollapseButton.propTypes = {
 
 export default function CollapseButton({ onToggleCollapse, collapseClick }) {
   return (
-    <IconButtonAnimate onClick={onToggleCollapse}>
+    <IconButton onClick={onToggleCollapse}>
       <Box
         sx={{
           lineHeight: 0,
@@ -29,7 +28,7 @@ export default function CollapseButton({ onToggleCollapse, collapseClick }) {
       >
         {icon}
       </Box>
-    </IconButtonAnimate>
+    </IconButton>
   );
 }
 
