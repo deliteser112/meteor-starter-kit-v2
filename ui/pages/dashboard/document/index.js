@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSnackbar } from 'notistack';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { Cloudinary } from 'meteor/socialize:cloudinary';
@@ -6,7 +7,7 @@ import { Cloudinary } from 'meteor/socialize:cloudinary';
 // import queries
 import { useQuery, useMutation } from '@apollo/react-hooks';
 // @mui
-import { Button, Container } from '@mui/material';
+import { Button, Container, IconButton } from '@mui/material';
 
 // routes
 import { PATH_DASHBOARD } from '../../../routes/paths';
@@ -20,11 +21,12 @@ import Iconify from '../../../components/Iconify';
 import DocumentList from './DocumentList';
 
 // queries & mutations
-import { documents as documentsQuery, editDocument as editDocumentQuery } from '../../../_queries/Documents.gql';
+import { documents as documentsQuery } from '../../../_queries/Documents.gql';
 import { removeDocument as removeDocumentMutation } from '../../../_mutations/Documents.gql';
 // ----------------------------------------------------------------------
 
 export default function Document() {
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [removeDocument] = useMutation(removeDocumentMutation);
 
   const { loading, data } = useQuery(documentsQuery);
@@ -42,6 +44,16 @@ export default function Document() {
     }).then(async (res) => {
       if (public_id) {
         await Cloudinary.delete(public_id);
+
+        enqueueSnackbar('Deleted successfully!', {
+          variant: 'success',
+          autoHideDuration: 2500,
+          action: (key) => (
+            <IconButton size="small" onClick={() => closeSnackbar(key)}>
+              <Iconify icon="eva:close-outline" />
+            </IconButton>
+          )
+        });
       }
     });
   };

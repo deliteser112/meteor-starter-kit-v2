@@ -14,16 +14,7 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
-import {
-  Box,
-  FormControlLabel,
-  Switch,
-  InputLabel,
-  MenuItem,
-  FormControl,
-  Select,
-  TextField,
-} from '@mui/material';
+import { Box, FormControlLabel, Switch, InputLabel, MenuItem, FormControl, Select, TextField } from '@mui/material';
 
 // @mui
 import { LoadingButton } from '@mui/lab';
@@ -36,14 +27,14 @@ import userSettingsQuery from '../../../_queries/UserSettings.gql';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiPaper-root': {
-    width: '100%',
+    width: '100%'
   },
   '& .MuiDialogContent-root': {
-    padding: theme.spacing(2),
+    padding: theme.spacing(2)
   },
   '& .MuiDialogActions-root': {
-    padding: theme.spacing(1),
-  },
+    padding: theme.spacing(1)
+  }
 }));
 
 const Android12Switch = styled(Switch)(({ theme }) => ({
@@ -56,27 +47,27 @@ const Android12Switch = styled(Switch)(({ theme }) => ({
       top: '50%',
       transform: 'translateY(-50%)',
       width: 16,
-      height: 16,
+      height: 16
     },
     '&:before': {
       backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
-        theme.palette.getContrastText(theme.palette.primary.main),
+        theme.palette.getContrastText(theme.palette.primary.main)
       )}" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/></svg>')`,
-      left: 12,
+      left: 12
     },
     '&:after': {
       backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
-        theme.palette.getContrastText(theme.palette.primary.main),
+        theme.palette.getContrastText(theme.palette.primary.main)
       )}" d="M19,13H5V11H19V13Z" /></svg>')`,
-      right: 12,
-    },
+      right: 12
+    }
   },
   '& .MuiSwitch-thumb': {
     boxShadow: 'none',
     width: 16,
     height: 16,
-    margin: 2,
-  },
+    margin: 2
+  }
 }));
 
 function BootstrapDialogTitle(props) {
@@ -93,7 +84,7 @@ function BootstrapDialogTitle(props) {
             position: 'absolute',
             right: 8,
             top: 8,
-            color: (theme) => theme.palette.grey[500],
+            color: (theme) => theme.palette.grey[500]
           }}
         >
           <CloseIcon />
@@ -105,17 +96,10 @@ function BootstrapDialogTitle(props) {
 
 BootstrapDialogTitle.propTypes = {
   children: PropTypes.node,
-  onClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired
 };
 
-export default function SettingDialog({
-  addUserSetting,
-  updateUserSetting,
-  isOpen,
-  isEdit,
-  currentSetting,
-  onClose,
-}) {
+export default function SettingDialog({ addUserSetting, updateUserSetting, isOpen, isEdit, currentSetting, onClose }) {
   const [open, setOpen] = useState(false);
   const [settingType, setSettingType] = useState('boolean');
   const [defaultValue, setDefaultValue] = useState('true');
@@ -129,27 +113,27 @@ export default function SettingDialog({
 
   const NewSettingSchema = Yup.object().shape({
     key: Yup.string().required('Key Name is required'),
-    label: Yup.string().required('Label is required'),
+    label: Yup.string().required('Label is required')
   });
 
   const defaultValues = useMemo(
     () => ({
       key: currentSetting?.key || '',
-      label: currentSetting?.label || '',
+      label: currentSetting?.label || ''
     }),
-    [currentSetting],
+    [currentSetting]
   );
 
   const methods = useForm({
     resolver: yupResolver(NewSettingSchema),
-    defaultValues,
+    defaultValues
   });
 
   const {
     reset,
     setValue,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting }
   } = methods;
 
   useEffect(() => {
@@ -173,34 +157,35 @@ export default function SettingDialog({
       key,
       label: label.trim(),
       type: settingType,
-      value: defaultValue.toString(),
+      value: defaultValue.toString()
     };
 
     if (isEdit) {
       settingToAddOrUpdate._id = currentSetting._id;
       const confirmUpdate = confirm(
-        "Are you sure? This will overwrite this setting for all users immediately. If you're changing the Key Name or Type, double-check that your UI can support this to avoid rendering errors.",
+        "Are you sure? This will overwrite this setting for all users immediately. If you're changing the Key Name or Type, double-check that your UI can support this to avoid rendering errors."
       );
       if (!confirmUpdate) return;
     }
 
     mutation({
       variables: {
-        setting: settingToAddOrUpdate,
+        setting: settingToAddOrUpdate
       },
       refetchQueries: [{ query: userSettingsQuery }]
-    });
-    reset();
-    onClose(false);
+    }).then(() => {
+      enqueueSnackbar(isEdit ? 'Update success' : 'Add success', {
+        variant: 'success',
+        autoHideDuration: 2500,
+        action: (key) => (
+          <IconButton size="small" onClick={() => closeSnackbar(key)}>
+            <Iconify icon="eva:close-outline" />
+          </IconButton>
+        )
+      });
 
-    enqueueSnackbar(isEdit ? 'Update success' : 'Add success', {
-      variant: 'success',
-      autoHideDuration: 2500,
-      action: (key) => (
-        <IconButton size="small" onClick={() => closeSnackbar(key)}>
-          <Iconify icon="eva:close-outline" />
-        </IconButton>
-      )
+      reset();
+      onClose(false);
     });
   };
 
@@ -245,25 +230,18 @@ export default function SettingDialog({
                 rowGap: 3,
                 gridTemplateColumns: {
                   xs: 'repeat(1, 1fr)',
-                  sm: 'repeat(2, 1fr)',
-                },
+                  sm: 'repeat(2, 1fr)'
+                }
               }}
             >
               <RHFTextField name="key" label="Key Name" />
               <FormControlLabel
-                control={
-                  <Android12Switch checked={isGDPR} onChange={(e) => setIsGDPR(e.target.checked)} />
-                }
+                control={<Android12Switch checked={isGDPR} onChange={(e) => setIsGDPR(e.target.checked)} />}
                 label="Is this a GDPR setting?"
               />
             </Box>
             <Box m={2} />
-            <RHFTextField
-              name="label"
-              label="Label"
-              helperText="Some important text"
-              sx={{ width: '100%' }}
-            />
+            <RHFTextField name="label" label="Label" helperText="Some important text" sx={{ width: '100%' }} />
             <Box m={2} />
             <Box
               sx={{
@@ -272,8 +250,8 @@ export default function SettingDialog({
                 rowGap: 3,
                 gridTemplateColumns: {
                   xs: 'repeat(1, 1fr)',
-                  sm: 'repeat(2, 1fr)',
-                },
+                  sm: 'repeat(2, 1fr)'
+                }
               }}
             >
               <FormControl fullWidth>
@@ -332,5 +310,5 @@ SettingDialog.propTypes = {
   isOpen: PropTypes.bool,
   isEdit: PropTypes.bool,
   currentSetting: PropTypes.object,
-  onClose: PropTypes.func,
+  onClose: PropTypes.func
 };

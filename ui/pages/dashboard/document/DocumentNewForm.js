@@ -127,18 +127,19 @@ export default function DocumentNewEditForm({ isEdit, currentDocument }) {
           ...documentToAddOrUpdate
         },
         refetchQueries: [{ query: documentsQuery }]
+      }).then(() => {
+        reset();
+        enqueueSnackbar(!isEdit ? 'Created successfully!' : 'Updated successfully!', {
+          variant: 'success',
+          autoHideDuration: 2500,
+          action: (key) => (
+            <IconButton size="small" onClick={() => closeSnackbar(key)}>
+              <Iconify icon="eva:close-outline" />
+            </IconButton>
+          )
+        });
+        navigate(PATH_DASHBOARD.document.root);
       });
-      reset();
-      enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!', {
-        variant: 'success',
-        autoHideDuration: 2500,
-        action: (key) => (
-          <IconButton size="small" onClick={() => closeSnackbar(key)}>
-            <Iconify icon="eva:close-outline" />
-          </IconButton>
-        )
-      });
-      navigate(PATH_DASHBOARD.document.root);
     } catch (error) {
       console.error(error);
     }

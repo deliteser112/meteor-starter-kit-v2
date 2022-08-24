@@ -94,16 +94,16 @@ export default function ProfileSettings({ userId, settings }) {
         }
       },
       refetchQueries: [{ query: userSettingsQuery }]
-    });
-
-    enqueueSnackbar('Update success!', {
-      variant: 'success',
-      autoHideDuration: 2500,
-      action: (key) => (
-        <IconButton size="small" onClick={() => closeSnackbar(key)}>
-          <Iconify icon="eva:close-outline" />
-        </IconButton>
-      )
+    }).then(() => {
+      enqueueSnackbar('Update success!', {
+        variant: 'success',
+        autoHideDuration: 2500,
+        action: (key) => (
+          <IconButton size="small" onClick={() => closeSnackbar(key)}>
+            <Iconify icon="eva:close-outline" />
+          </IconButton>
+        )
+      });
     });
   };
 

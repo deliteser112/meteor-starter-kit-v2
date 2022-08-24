@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 
 // material
 import { styled } from '@mui/material/styles';
-import { Tabs, Tab, Card, Container, Box, CircularProgress } from '@mui/material';
+import { Tabs, Tab, Card, Container, Box } from '@mui/material';
 
 // components
 import Page from '../../../components/Page';

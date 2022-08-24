@@ -44,27 +44,27 @@ const Android12Switch = styled(Switch)(({ theme }) => ({
       top: '50%',
       transform: 'translateY(-50%)',
       width: 16,
-      height: 16,
+      height: 16
     },
     '&:before': {
       backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
-        theme.palette.getContrastText(theme.palette.primary.main),
+        theme.palette.getContrastText(theme.palette.primary.main)
       )}" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"/></svg>')`,
-      left: 12,
+      left: 12
     },
     '&:after': {
       backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 24 24"><path fill="${encodeURIComponent(
-        theme.palette.getContrastText(theme.palette.primary.main),
+        theme.palette.getContrastText(theme.palette.primary.main)
       )}" d="M19,13H5V11H19V13Z" /></svg>')`,
-      right: 12,
-    },
+      right: 12
+    }
   },
   '& .MuiSwitch-thumb': {
     boxShadow: 'none',
     width: 16,
     height: 16,
-    margin: 2,
-  },
+    margin: 2
+  }
 }));
 
 export default function ProfileSettings({ userId, settings }) {
@@ -92,15 +92,16 @@ export default function ProfileSettings({ userId, settings }) {
           })
         }
       }
-    });
-    enqueueSnackbar('Update success!', {
-      variant: 'success',
-      autoHideDuration: 2500,
-      action: (key) => (
-        <IconButton size="small" onClick={() => closeSnackbar(key)}>
-          <Iconify icon="eva:close-outline" />
-        </IconButton>
-      )
+    }).then(() => {
+      enqueueSnackbar('Update success!', {
+        variant: 'success',
+        autoHideDuration: 2500,
+        action: (key) => (
+          <IconButton size="small" onClick={() => closeSnackbar(key)}>
+            <Iconify icon="eva:close-outline" />
+          </IconButton>
+        )
+      });
     });
   };
 
@@ -133,7 +134,7 @@ export default function ProfileSettings({ userId, settings }) {
           value={value}
           onChange={(event) => onChange({ key, value: event.target.value })}
         />
-      ),
+      )
     }[type]());
 
   return (
@@ -145,11 +146,7 @@ export default function ProfileSettings({ userId, settings }) {
               <ListItem
                 key={index}
                 secondaryAction={
-                  <div>
-                    {renderSettingValue(type, key, value, (update) =>
-                      handleUpdateSetting({ ...update, _id }),
-                    )}
-                  </div>
+                  <div>{renderSettingValue(type, key, value, (update) => handleUpdateSetting({ ...update, _id }))}</div>
                 }
               >
                 <ListItemAvatar>
@@ -165,7 +162,7 @@ export default function ProfileSettings({ userId, settings }) {
           <EmptyContent
             title="No Settings"
             sx={{
-              '& span.MuiBox-root': { height: 160 },
+              '& span.MuiBox-root': { height: 160 }
             }}
           />
         )}
@@ -176,5 +173,5 @@ export default function ProfileSettings({ userId, settings }) {
 
 ProfileSettings.propTypes = {
   userId: PropTypes.string,
-  settings: PropTypes.array,
+  settings: PropTypes.array
 };
