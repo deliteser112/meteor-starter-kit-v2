@@ -13,6 +13,8 @@ const useStyles = makeStyles((theme) => {
   const isLight = theme.palette.mode === 'light';
 
   const createStyle = {
+    borderRadius: `${theme.shape.borderRadius} !important`,
+    boxShadow: `${theme.customShadows.z12} !important`,
     color: `${theme.palette.text.primary} !important`,
     backgroundColor: `${theme.palette.background.paper} !important`
   };
@@ -28,8 +30,6 @@ const useStyles = makeStyles((theme) => {
       width: '100%',
       padding: theme.spacing(1.5),
       margin: theme.spacing(0.25, 0),
-      boxShadow: theme.customShadows.z8,
-      borderRadius: theme.shape.borderRadius,
       color: theme.palette.grey[isLight ? 0 : 800],
       backgroundColor: theme.palette.grey[isLight ? 900 : 0]
     },
@@ -93,7 +93,7 @@ export default function NotistackProvider({ children }) {
       dense
       maxSnack={5}
       // preventDuplicate
-      autoHideDuration={3000}
+      // autoHideDuration={3000}
       anchorOrigin={{
         vertical: 'top',
         horizontal: 'right'

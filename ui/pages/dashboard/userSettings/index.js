@@ -13,8 +13,7 @@ import {
   Stack,
   Button,
   Box,
-  Divider,
-  CircularProgress
+  Divider
 } from '@mui/material';
 
 import SettingsIcon from '@mui/icons-material/Settings';

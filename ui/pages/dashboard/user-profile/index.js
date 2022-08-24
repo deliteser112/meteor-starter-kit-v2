@@ -11,7 +11,7 @@ import { Tabs, Tab, Card, Container, Box, CircularProgress } from '@mui/material
 
 // components
 import Page from '../../../components/Page';
-// import LoadingScreen from '../../../components/LoadingScreen';
+import LoadingScreen from '../../../components/LoadingScreen';
 import Iconify from '../../../components/Iconify';
 
 //
@@ -45,13 +45,9 @@ export default function UserProfile() {
   const [currentTab, onChangeTab] = useState('profile');
 
   const user = data && data.user;
+  
+  if (loading) return <LoadingScreen isDashboard />;
 
-  if (loading)
-    return (
-      <Box sx={{ display: 'flex' }}>
-        <CircularProgress className="loading-icons" />
-      </Box>
-    );
   const { _id, name, emailAddress, avatarUrl } = user;
   const coverURL = '/static/contact/contact-hero.jpg';
 
