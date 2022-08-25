@@ -116,7 +116,8 @@ export default function ProfileGeneral({ isEdit, currentUser }) {
           },
           avatarUrl
         }
-      }
+      },
+      refetchQueries: [{ query: userQuery }]
     }).then(async () => {
       if (newPassword) {
         Accounts.changePassword(oldPassword, newPassword, async (error) => {

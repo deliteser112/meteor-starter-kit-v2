@@ -140,6 +140,7 @@ export default function UserNewEditForm({ isEdit, currentUser }) {
 
     if (!isPasswordUser) {
       userUpdate = {
+        avatarUrl,
         roles
       };
     }
