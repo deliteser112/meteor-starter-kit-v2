@@ -7,23 +7,11 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 // form
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import {
-  Box,
-  Card,
-  Grid,
-  Stack,
-  Switch,
-  Typography,
-  FormControlLabel,
-  Autocomplete,
-  Checkbox,
-  TextField,
-  IconButton
-} from '@mui/material';
+import { Box, Card, Grid, Stack, Typography, Autocomplete, Checkbox, TextField } from '@mui/material';
 
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
@@ -47,30 +35,28 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 // ----------------------------------------------------------------------
 
-ProfileGeneral.propTypes = {
+UserNewEditForm.propTypes = {
   isEdit: PropTypes.bool,
   currentUser: PropTypes.object
 };
 
-export default function ProfileGeneral({ isEdit, currentUser }) {
+export default function UserNewEditForm({ isEdit, currentUser }) {
   const [updateUser] = useMutation(updateUserMutation);
   const [defaultRoles, setDefaultRoles] = useState([]);
   const [userType, setUserType] = useState('password');
   const [oAuthIcon, setOAuthIcon] = useState('github');
+  const [avatarUrl, setAvatarUrl] = useState('');
+
   const navigate = useNavigate();
 
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
 
   const NewUserSchema = Yup.object().shape({
     firstName: Yup.string().required('First name is required'),
     // lastName: Yup.string().required("Last name is required"),
     email: Yup.string().required('Email is required').email(),
     confirmNewPassword: Yup.string().oneOf([Yup.ref('newPassword'), null], 'Passwords must match')
-    // avatarUrl: Yup.mixed().test(
-    //   "required",
-    //   "Avatar is required",
-    //   (value) => value !== ""
-    // ),
+    // avatarUrl: Yup.mixed().test('required', 'Avatar is required', (value) => value !== '')
   });
 
   const defaultValues = useMemo(
@@ -141,6 +127,7 @@ export default function ProfileGeneral({ isEdit, currentUser }) {
       userUpdate = {
         email,
         password,
+        avatarUrl,
         profile: {
           name: {
             first: firstName,
@@ -158,20 +145,16 @@ export default function ProfileGeneral({ isEdit, currentUser }) {
     }
 
     if (existingUser) userUpdate._id = existingUser._id;
+
     await new Promise((resolve) => setTimeout(resolve, 500));
 
-    updateUser({ variables: { user: userUpdate } });
-    reset();
-    navigate(PATH_DASHBOARD.user.root)
-
-    enqueueSnackbar(!isEdit ? 'Create success!' : 'Update success!', {
-      variant: 'success',
-      autoHideDuration: 2500,
-      action: (key) => (
-        <IconButton size="small" onClick={() => closeSnackbar(key)}>
-          <Iconify icon="eva:close-outline" />
-        </IconButton>
-      )
+    updateUser({ variables: { user: userUpdate }, refetchQueries: usersQuery }).then(() => {
+      reset();
+      enqueueSnackbar('Update success!', {
+        variant: 'success',
+        autoHideDuration: 1500
+      });
+      navigate(PATH_DASHBOARD.user.root);
     });
   };
 
@@ -190,17 +173,8 @@ export default function ProfileGeneral({ isEdit, currentUser }) {
         const fileReader = new FileReader();
         fileReader.readAsDataURL(file);
         fileReader.onload = async (e) => {
-          const avatarUrl = await resizeBase64Img(fileReader, 150);
-
-          updateUser({
-            variables: {
-              user: {
-                _id: currentUser._id,
-                avatarUrl
-              }
-            },
-            refetchQueries: [{ query: usersQuery }]
-          });
+          const image = await resizeBase64Img(fileReader, 150);
+          setAvatarUrl(image);
         };
 
         fileReader.readAsArrayBuffer(file);
@@ -280,34 +254,6 @@ export default function ProfileGeneral({ isEdit, currentUser }) {
                 }
               />
             </Box>
-
-            <FormControlLabel
-              labelPlacement="start"
-              control={
-                <Controller
-                  name="status"
-                  control={control}
-                  render={({ field }) => (
-                    <Switch
-                      {...field}
-                      checked={field.value !== 'active'}
-                      onChange={(event) => field.onChange(event.target.checked ? 'banned' : 'active')}
-                    />
-                  )}
-                />
-              }
-              label={
-                <>
-                  <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
-                    Banned
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    Apply disable account
-                  </Typography>
-                </>
-              }
-              sx={{ mx: 0, mb: 3, width: 1, justifyContent: 'space-between' }}
-            />
           </Card>
         </Grid>
 
@@ -340,7 +286,6 @@ export default function ProfileGeneral({ isEdit, currentUser }) {
               <RHFTextField name="email" label="Email Address" disabled={userType === 'oauth'} />
             </Box>
             <Box m={2} />
-            {/* {currentUser && Roles.userIsInRole(currentUser._id, "admin") && ( */}
             <Autocomplete
               multiple
               id="checkboxes-tags-demo"

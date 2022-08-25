@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 const initialState = {
   isAuthenticated: false,
   isInitialized: false,
-  user: null,
+  user: null
 };
 
 const handlers = {
@@ -18,35 +18,29 @@ const handlers = {
       ...state,
       isAuthenticated,
       isInitialized: true,
-      user,
+      user
     };
-  },
+  }
 };
 
-const reducer = (state, action) =>
-  handlers[action.type] ? handlers[action.type](state, action) : state;
+const reducer = (state, action) => (handlers[action.type] ? handlers[action.type](state, action) : state);
 
 const AuthContext = createContext({
-  ...initialState,
+  ...initialState
 });
 
 function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
+
   const { isLoading, user } = useTracker(() => {
     const handler = Meteor.subscribe('app');
-
     let user = {};
-
     const userInfo = Meteor.user();
-
     const isUser = userInfo && userInfo.profile && userInfo.profile.name;
-
     if (!handler.ready() || !isUser) {
       return { isLoading: true };
     }
-
     if (isUser) user = userInfo;
-
     return { isLoading: false, user };
   });
 
@@ -59,16 +53,16 @@ function AuthProvider({ children }) {
             type: 'INITIALIZE',
             payload: {
               isAuthenticated: true,
-              user,
-            },
+              user
+            }
           });
         } else {
           dispatch({
             type: 'INITIALIZE',
             payload: {
               isAuthenticated: false,
-              user: null,
-            },
+              user: null
+            }
           });
         }
       } catch (err) {
@@ -77,8 +71,8 @@ function AuthProvider({ children }) {
           type: 'INITIALIZE',
           payload: {
             isAuthenticated: false,
-            user: null,
-          },
+            user: null
+          }
         });
       }
     };
@@ -86,11 +80,24 @@ function AuthProvider({ children }) {
     initialize();
   }, [isLoading]);
 
+  const refetchProfileInfo = async () => {
+    const userInfo = Meteor.user();
+
+    dispatch({
+      type: 'INITIALIZE',
+      payload: {
+        isAuthenticated: true,
+        user: userInfo
+      }
+    });
+  };
+
   return (
     <AuthContext.Provider
       value={{
         ...state,
         method: 'jwt',
+        refetchProfileInfo
       }}
     >
       {children}
@@ -99,7 +106,7 @@ function AuthProvider({ children }) {
 }
 
 AuthProvider.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node
 };
 
 export { AuthContext, AuthProvider };

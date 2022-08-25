@@ -1,6 +1,5 @@
 import { Accounts } from 'meteor/accounts-base';
 import { useMutation } from '@apollo/react-hooks';
-// import { Cloudinary } from 'meteor/socialize:cloudinary';
 
 import PropTypes from 'prop-types';
 import { capitalCase } from 'change-case';
@@ -9,11 +8,14 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 // form
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, Stack, Switch, Typography, FormControlLabel, Button, IconButton } from '@mui/material';
+import { Box, Card, Grid, Stack, Typography, Button, IconButton } from '@mui/material';
+
+// hooks
+import useAuth from '../../hooks/useAuth';
 
 // utils
 import { fData } from '../../utils/formatNumber';
@@ -33,10 +35,14 @@ import { user as userQuery } from '../../_queries/Users.gql';
 // ----------------------------------------------------------------------
 
 export default function ProfileGeneral({ isEdit, currentUser }) {
+  const { refetchProfileInfo } = useAuth();
+
   const [updateUser] = useMutation(updateUserMutation);
 
   const [userType, setUserType] = useState('password');
   const [oAuthIcon, setOAuthIcon] = useState('github');
+  const [avatarUrl, setAvatarUrl] = useState('');
+
   const navigate = useNavigate();
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -84,9 +90,10 @@ export default function ProfileGeneral({ isEdit, currentUser }) {
 
   useEffect(() => {
     if (isEdit && currentUser) {
-      const { oAuthProvider } = currentUser;
+      const { oAuthProvider, avatarUrl } = currentUser;
       setUserType(oAuthProvider ? 'oauth' : 'password');
       setOAuthIcon(oAuthProvider);
+      setAvatarUrl(avatarUrl);
       defaultValues;
     }
     if (!isEdit) {
@@ -95,8 +102,8 @@ export default function ProfileGeneral({ isEdit, currentUser }) {
   }, [isEdit, currentUser]);
 
   const onSubmit = async (values) => {
+    await new Promise((resolve) => setTimeout(resolve, 500));
     const { firstName, lastName, email, newPassword, oldPassword } = values;
-
     updateUser({
       variables: {
         user: {
@@ -106,53 +113,54 @@ export default function ProfileGeneral({ isEdit, currentUser }) {
               first: firstName,
               last: lastName
             }
-          }
+          },
+          avatarUrl
         }
       }
+    }).then(async () => {
+      if (newPassword) {
+        Accounts.changePassword(oldPassword, newPassword, async (error) => {
+          if (error) {
+            enqueueSnackbar(error.reason, {
+              variant: 'error',
+              autoHideDuration: 2500,
+              action: (key) => (
+                <IconButton size="small" onClick={() => closeSnackbar(key)}>
+                  <Iconify icon="eva:close-outline" />
+                </IconButton>
+              )
+            });
+          } else {
+            reset();
+            enqueueSnackbar('Update success', {
+              variant: 'success',
+              autoHideDuration: 2500,
+              action: (key) => (
+                <IconButton size="small" onClick={() => closeSnackbar(key)}>
+                  <Iconify icon="eva:close-outline" />
+                </IconButton>
+              )
+            });
+            navigate(PATH_DASHBOARD.root);
+          }
+        });
+      } else {
+        reset();
+        enqueueSnackbar('Update success', {
+          variant: 'success',
+          autoHideDuration: 2500,
+          action: (key) => (
+            <IconButton size="small" onClick={() => closeSnackbar(key)}>
+              <Iconify icon="eva:close-outline" />
+            </IconButton>
+          )
+        });
+        navigate(PATH_DASHBOARD.root);
+      }
+      setTimeout(async () => {
+        await refetchProfileInfo();
+      }, 2000);
     });
-
-    if (newPassword) {
-      Accounts.changePassword(oldPassword, newPassword, async (error) => {
-        if (error) {
-          enqueueSnackbar(error.reason, {
-            variant: 'error',
-            autoHideDuration: 2500,
-            action: (key) => (
-              <IconButton size="small" onClick={() => closeSnackbar(key)}>
-                <Iconify icon="eva:close-outline" />
-              </IconButton>
-            )
-          });
-        } else {
-          await new Promise((resolve) => setTimeout(resolve, 500));
-          reset();
-          enqueueSnackbar('Update success', {
-            variant: 'success',
-            autoHideDuration: 2500,
-            action: (key) => (
-              <IconButton size="small" onClick={() => closeSnackbar(key)}>
-                <Iconify icon="eva:close-outline" />
-              </IconButton>
-            )
-          });
-          navigate(PATH_DASHBOARD.root);
-        }
-      });
-    } else {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      reset();
-
-      enqueueSnackbar('Update success', {
-        variant: 'success',
-        autoHideDuration: 2500,
-        action: (key) => (
-          <IconButton size="small" onClick={() => closeSnackbar(key)}>
-            <Iconify icon="eva:close-outline" />
-          </IconButton>
-        )
-      });
-      navigate(PATH_DASHBOARD.root);
-    }
   };
 
   const handleDrop = useCallback(
@@ -170,18 +178,8 @@ export default function ProfileGeneral({ isEdit, currentUser }) {
         const fileReader = new FileReader();
         fileReader.readAsDataURL(file);
         fileReader.onload = async (e) => {
-
-          const avatarUrl = await resizeBase64Img(fileReader, 150);
-
-          updateUser({
-            variables: {
-              user: {
-                avatarUrl
-              }
-            },
-            refetchQueries: [{ query: userQuery }]
-          });
-          // Meteor.call('saveFile', buffer);
+          const image = await resizeBase64Img(fileReader, 150);
+          setAvatarUrl(image);
         };
 
         fileReader.readAsArrayBuffer(file);
@@ -257,34 +255,6 @@ export default function ProfileGeneral({ isEdit, currentUser }) {
                 }
               />
             </Box>
-
-            <FormControlLabel
-              labelPlacement="start"
-              control={
-                <Controller
-                  name="status"
-                  control={control}
-                  render={({ field }) => (
-                    <Switch
-                      {...field}
-                      checked={field.value !== 'active'}
-                      onChange={(event) => field.onChange(event.target.checked ? 'banned' : 'active')}
-                    />
-                  )}
-                />
-              }
-              label={
-                <>
-                  <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
-                    Banned
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    Apply disable account
-                  </Typography>
-                </>
-              }
-              sx={{ mx: 0, mb: 3, width: 1, justifyContent: 'space-between' }}
-            />
           </Card>
         </Grid>
 
