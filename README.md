@@ -1,4 +1,4 @@
-## Meteor Starter Kit (:MST)
+# Meteor Starter Kit (:MST)
 This template is meteor starter kit for react, graphql, subscription.
 
 [Read the Documentation](https://mst-guide.netlify.app/)
