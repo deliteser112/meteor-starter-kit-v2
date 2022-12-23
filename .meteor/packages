@@ -6,36 +6,36 @@
 
 meteor-base@1.5.1             # Packages every Meteor app needs to have
 mobile-experience@1.1.0       # Packages for a great mobile UX
-mongo@1.15.0                  # The database Meteor supports right now
+mongo@1.16.3                  # The database Meteor supports right now
 
-standard-minifier-css@1.8.1   # CSS minifier run for production mode
-standard-minifier-js@2.8.0    # JS minifier run for production mode
+standard-minifier-css@1.8.3   # CSS minifier run for production mode
+standard-minifier-js@2.8.1    # JS minifier run for production mode
 es5-shim@4.8.0                # ECMAScript 5 compatibility for older browsers
-ecmascript@0.16.2             # Enable ECMAScript2015+ syntax in app code
-typescript@4.5.4              # Enable TypeScript syntax in .ts and .tsx modules
+ecmascript@0.16.4             # Enable ECMAScript2015+ syntax in app code
+typescript@4.6.4              # Enable TypeScript syntax in .ts and .tsx modules
 shell-server@0.5.0            # Server-side component of the `meteor shell` command
-hot-module-replacement@0.5.1  # Update client in development without reloading the page
+hot-module-replacement@0.5.2  # Update client in development without reloading the page
 
 static-html@1.3.2             # Define static page content in .html files
 apollo                        # Basic Apollo integration for Meteor apps
 swydo:graphql                 # Import .graphql files
-accounts-password@2.3.1             # adds access to the meteor accounts package
+accounts-password@2.3.2             # adds access to the meteor accounts package
 quave:graphql
 react-meteor-data
 fourseven:scss
-service-configuration@1.3.0
+service-configuration@1.3.1
 accounts-github@1.5.0
 accounts-facebook@1.3.3
 accounts-google@1.4.0
 alanning:roles
 audit-argument-checks@1.0.7
 observe-sequence
-server-render@0.4.0
+server-render@0.4.1
 fortawesome:fontawesome
 jquery
 meteorhacks:picker
-session@1.2.0
-browser-policy@1.1.0
+session@1.2.1
+browser-policy@1.1.1
 blaze
 templating-runtime
 themeteorchef:bert
@@ -43,5 +43,5 @@ facebook-config-ui@1.0.3
 github-config-ui@1.0.2
 google-config-ui@1.0.3
 dynamic-import@0.7.2
-underscore@1.0.10
+underscore@1.0.11
 socialize:cloudinary
