@@ -1,0 +1,43 @@
+{
+  "public": {
+    "graphQL": {
+      "httpUri": "http://localhost:3000/graphql"
+    },
+    "services": ["google", "github", "facebook"],
+    "productName": "Product Name",
+    "copyrightStartYear": "2022",
+    "twitterUsername": "product",
+    "facebookUsername": "product",
+    "productAddress": "13 Forester Way Pakenham VIC 3810, Australia"
+  },
+  "private": {
+    "MAIL_URL": "",
+    "OAuth": {
+      "facebook": {
+        "enabled": true,
+        "appId": "",
+        "secret": "",
+        "loginStyle": "popup"
+      },
+      "google": {
+        "enabled": true,
+        "clientId": "",
+        "secret": "",
+        "loginStyle": "popup"
+      },
+      "github": {
+        "enabled": true,
+        "clientId": "",
+        "secret": "",
+        "loginStyle": "redirect"
+      }
+    },
+    "cloudinary": {
+      "cloud_name": "",
+      "api_key": "",
+      "api_secret": ""
+    },
+    "supportEmail": "Customer Support <support@product.com>"
+  }
+}
+
